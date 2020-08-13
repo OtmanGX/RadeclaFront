@@ -1,0 +1,115 @@
+<div class="d-flex flex-column align-items-center justify-content-center">
+  <mat-toolbar color="primary" class="m-0 mb-2 text-center">
+    <h1 mat-dialog-title>Réservation</h1>
+  </mat-toolbar>
+    <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
+      <div mat-dialog-content>
+        <p>Terrain: {{data.reservation.terrain}} réservé de {{data.reservation.start_date | date: 'HH:mm'}}
+        à {{data.reservation.end_date | date: 'HH:mm'}}
+        </p>
+        <mat-form-field>
+          <mat-label>Terrain</mat-label>
+          <mat-select name="terrain" value=1 [(ngModel)]="data.reservation.terrain">
+            <mat-option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">{{num}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-radio-group name="entrainement" [value]="false" [(ngModel)]="data.reservation.entrainement" aria-label="Select an option">
+          <mat-radio-button color="primary" class="ml-3 mr-2" [value]="true">Entrainement</mat-radio-button>
+          <mat-radio-button color="primary" [value]="false">Match</mat-radio-button>
+        </mat-radio-group> <br>
+
+
+        <!--      <mat-form-field>-->
+  <!--        <mat-label>Entrainement</mat-label>-->
+  <!--        <mat-select value="normal">-->
+  <!--          <mat-option value="match">match</mat-option>-->
+  <!--          <mat-option value="normal">avec</mat-option>-->
+  <!--        </mat-select>-->
+  <!--      </mat-form-field> <br>-->
+        <mat-label class="font-weight-bold text-secondary">Les joueurs</mat-label>
+        <div class="border row mb-1 ml-2 pb-3">
+        <div class="col">
+          <mat-form-field hintLabel="Max 10 caractères">
+            <mat-label>Nom</mat-label>
+            <input name="nom1" required [(ngModel)]="data.reservation.nom1" matInput #input maxlength="10">
+            <!--        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>-->
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Prenom</mat-label>
+            <input name="prenom1" required [(ngModel)]="data.reservation.prenom1" matInput #input maxlength="10">
+          </mat-form-field>
+          <br>
+          <mat-form-field hintLabel="Max 10 caractères">
+            <mat-label>Nom</mat-label>
+            <input name="nom2" [(ngModel)]="data.reservation.nom2" matInput #input maxlength="10">
+            <!--        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>-->
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Prenom</mat-label>
+            <input name="prenom2" [(ngModel)]="data.reservation.prenom2" matInput #input maxlength="10">
+          </mat-form-field>
+
+        </div>
+          <mat-divider [vertical]="true"></mat-divider>
+          <div class="col">
+            <mat-form-field hintLabel="Max 10 caractères">
+              <mat-label>Nom</mat-label>
+              <input name="nom3" required [(ngModel)]="data.reservation.nom3" matInput #input maxlength="10">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Prenom</mat-label>
+              <input name="prenom3" required [(ngModel)]="data.reservation.prenom3" matInput #input maxlength="10">
+            </mat-form-field>
+            <br>
+            <mat-form-field hintLabel="Max 10 caractères">
+              <mat-label>Nom</mat-label>
+              <input name="nom4" [(ngModel)]="data.reservation.nom4" matInput #input maxlength="10">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Prenom</mat-label>
+              <input name="prenom4" [(ngModel)]="data.reservation.prenom4" matInput #input maxlength="10">
+            </mat-form-field>
+          </div>
+        </div>
+
+          <div>
+            <label class="mr-4"><mat-icon>highlight</mat-icon>{{'Eclairage' | uppercase}}</label>
+              <mat-slide-toggle #slide name="eclairage" [ngModel]="data.reservation.eclairage"
+                class="mr-2 ml-3"
+                color="primary"
+                [checked]="false">
+                Activé
+              </mat-slide-toggle>
+
+              <mat-checkbox #checkbox name="eclairage_paye" [ngModel]="data.reservation.eclairage_paye" color="primary" [disabled]="!slide.checked" matInput>Payé</mat-checkbox>
+          </div>
+  <!--        <mat-label class="font-weight-bold">Eclairage</mat-label>-->
+  <!--        <mat-checkbox #activated >activé</mat-checkbox>-->
+  <!--        <mat-checkbox [disabled]="!activated.checked" matInput>payé</mat-checkbox>-->
+
+      </div>
+      <div class="d-flex justify-content-center align-items-center" mat-dialog-actions>
+  <!--      <button mat-button (click)="onNoClick()">Annuler</button>-->
+  <!--      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Valider</button>-->
+        <button mat-fab color="primary" matTooltip="Annuler" aria-label="cancel button" (click)="onNoClick()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <button type="submit" *ngIf="!data.edit" mat-fab color="accent" (click)="data.action = 'add'" matTooltip="Valider" aria-label="Add button" cdkFocusInitial>
+          <mat-icon>add</mat-icon>
+        </button>
+
+        <button type="submit" *ngIf="data.edit" mat-fab color="accent" (click)="data.action = 'modify'" matTooltip="Modifier" aria-label="Add button" cdkFocusInitial>
+          <mat-icon>update</mat-icon>
+        </button>
+
+        <button *ngIf="data.edit" type="submit" (click)="data.action = 'delete'" mat-fab color="warn" matTooltip="Supprimer" aria-label="Add button" cdkFocusInitial>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </form>
+</div>

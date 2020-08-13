@@ -1,0 +1,9 @@
+mat-label, mat-checkbox {
+  margin-right: 5px;
+}
+
+.border {
+  border-color: lightgray;
+  border-radius: 20px;
+}
+

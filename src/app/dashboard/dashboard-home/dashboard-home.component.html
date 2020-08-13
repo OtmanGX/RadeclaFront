@@ -1,0 +1,132 @@
+<!--Month template View-->
+<ng-template
+  #monthTemplate
+  let-day="day"
+  let-openDay="openDay"
+  let-locale="locale"
+  let-tooltipPlacement="tooltipPlacement"
+  let-highlightDay="highlightDay"
+  let-unhighlightDay="unhighlightDay"
+  let-eventClicked="eventClicked"
+  let-tooltipTemplate="tooltipTemplate"
+  let-tooltipAppendToBody="tooltipAppendToBody">
+  <div class="cal-cell-top">
+    <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+    <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+  </div>
+</ng-template>
+<div class="grid-container">
+  <mat-toolbar>
+    <h1>Tableau de bord</h1>
+  </mat-toolbar>
+</div>
+<div role="main" class="container-fluid">
+<!--  <mat-grid-list cols="2">-->
+<!--    <mat-grid-tile colspan="2">-->
+      <mat-card class="dashboard-card mb-2">
+        <mat-card-header>
+          <mat-card-title>
+            <div class="mat-h1">Calendrier des réservations</div>
+<!--            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">-->
+<!--              <mat-icon>more_vert</mat-icon>-->
+<!--            </button>-->
+<!--            <mat-menu #menu="matMenu" xPosition="before">-->
+<!--              <button mat-menu-item>Expand</button>-->
+<!--              <button mat-menu-item>Remove</button>-->
+<!--            </mat-menu>-->
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div class="row mb-4 text-center">
+            <div class="col-md-4">
+              <div class="btn-group">
+                <div
+                  class="btn btn-primary"
+                  mwlCalendarPreviousView
+                  [view]="view"
+                  [(viewDate)]="viewDate"
+                  (viewDateChange)="closeOpenMonthViewDay()"
+                >
+                  Précedent
+                </div>
+                <div
+                  class="btn btn-outline-secondary"
+                  mwlCalendarToday
+                  [(viewDate)]="viewDate"
+                >
+                  Aujourd'hui
+                </div>
+                <div
+                  class="btn btn-primary"
+                  mwlCalendarNextView
+                  [view]="view"
+                  [(viewDate)]="viewDate"
+                  (viewDateChange)="closeOpenMonthViewDay()"
+                >
+                  Suivant
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'fr' }}</h3>
+            </div>
+            <div class="col-md-4">
+              <div class="btn-group">
+                <div
+                  class="btn btn-primary"
+                  (click)="setView(CalendarView.Month)"
+                  [class.active]="view === CalendarView.Month"
+                >
+                  Mois
+                </div>
+                <div
+                  class="btn btn-primary"
+                  (click)="setView(CalendarView.Day)"
+                  [class.active]="view === CalendarView.Day"
+                >
+                  Jour
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #loading>
+            <mat-spinner></mat-spinner>
+          </ng-template>
+          <div [ngSwitch]="view" *ngIf="events$ | async; else loading; let events" class="mb-2">
+            <mwl-calendar-month-view
+              *ngSwitchCase="CalendarView.Month"
+              [viewDate]="viewDate"
+              [events]="events"
+              [refresh]="refresh"
+              [locale]="locale"
+              [weekStartsOn]="weekStartsOn"
+              [weekendDays]="weekendDays"
+              [cellTemplate]="monthTemplate"
+              (dayClicked)="dayClicked($event.day)"
+              (eventClicked)="handleEvent('Clicked', $event.event)"
+              (eventTimesChanged)="eventTimesChanged($event)"
+            >
+            </mwl-calendar-month-view>
+            <app-day-view-scheduler
+              *ngSwitchCase="CalendarView.Day"
+              [viewDate]="viewDate"
+              [events]="events"
+              [locale]="locale"
+              [terrains]="terrains"
+              [refresh]="refresh"
+              [dayStartHour]="8"
+              (eventClicked)="handleEvent('clicked', $event.event)"
+              [hourSegments]="1"
+              (hourSegmentClicked)="hourSegmentClicked($event.date)"
+              (eventTimesChanged)="eventTimesChanged($event)"
+              (userChanged)="userChanged($event)"
+            >
+            </app-day-view-scheduler>
+            <app-reservation-table (editEvent)="openDialog($event, true)" (deleteEvent)="deleteEvent($event)"
+                                   [dataSource]="events" *ngIf="view===CalendarView.Day && events.length">
+
+            </app-reservation-table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+</div>

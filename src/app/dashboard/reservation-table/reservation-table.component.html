@@ -1,0 +1,60 @@
+<table mat-table [dataSource]="reservations" class="mat-elevation-z2">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="terrain">
+    <th mat-header-cell *matHeaderCellDef> Terrain </th>
+    <td mat-cell *matCellDef="let element "> {{element.terrain}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="start_date">
+    <th mat-header-cell *matHeaderCellDef> Heure de début </th>
+    <td mat-cell *matCellDef="let element"> {{element.start_date | date: 'HH:mm'}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="end_date">
+    <th mat-header-cell *matHeaderCellDef> Heure de Fin </th>
+    <td mat-cell *matCellDef="let element"> {{element.end_date| date:'HH:mm'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lightning">
+    <th mat-header-cell *matHeaderCellDef> Eclairage </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon *ngIf="element.eclairage ; else not" style="color: green">check_circle</mat-icon>
+      <ng-template #not>
+        <mat-icon color="warn">highlight_off</mat-icon>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="paid">
+    <th mat-header-cell *matHeaderCellDef> Payé </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon *ngIf="element.eclairage_paye ; else not" style="color: green">check_circle</mat-icon>
+      <ng-template #not>
+        <mat-icon color="warn">highlight_off</mat-icon>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element; let i = index;">
+        <button mat-mini-fab color="accent" (click)="editEvent.emit(dataSource[i])" aria-label="edit butoon">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" (click)="deleteEvent.emit(dataSource[i])" aria-label="delete button">
+          <mat-icon>delete</mat-icon>
+        </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
