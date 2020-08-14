@@ -70,9 +70,9 @@ export class TokenInterceptor implements HttpInterceptor {
       return this.authService.refreshToken().pipe(
         switchMap((res) => {
           this.refreshingInProgress = false;
-          this.accessTokenSubject.next(res.accessToken);
+          this.accessTokenSubject.next(res.access);
           // repeat failed request with new token
-          return next.handle(this.addAuthorizationHeader(request, res.accessToken));
+          return next.handle(this.addAuthorizationHeader(request, res.access));
         })
       );
     } else {

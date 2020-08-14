@@ -21,6 +21,7 @@ export class ReservationdialogComponent {
   }
 
   submit(value: any) {
+    console.log(value);
     if (this.data.action != undefined) {
       switch (this.data.action) {
         case 'add':
@@ -28,20 +29,20 @@ export class ReservationdialogComponent {
           value.end_date = this.data.reservation.end_date;
           // value.end_date = new Date(value.start_date);
           // value.end_date.setMinutes(value.end_date.getMinutes() + 59);
-          this.service.create(value).subscribe((result) => console.log(result));
+          this.service.create(value).subscribe((result) => this.dialogRef.close(this.data));
           break;
         case 'modify':
           value.start_date = this.data.reservation.start_date;
           value.end_date = this.data.reservation.end_date;
-          this.service.update(this.data.reservation.id, value).subscribe((result) => console.log(result));
+          this.service.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
           break;
         case 'delete':
           console.log('delete');
           this.service.delete(this.data.reservation.id)
-            .subscribe((result) => console.log(result), error => console.log(error))
+            .subscribe((result) => this.dialogRef.close(this.data), error => console.log(error))
           break;
       }
-      this.dialogRef.close(this.data);
+      // this.dialogRef.close(this.data);
       // console.log(value);
     }
   }

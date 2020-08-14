@@ -75,17 +75,16 @@
             </mat-form-field>
           </div>
         </div>
-
           <div>
             <label class="mr-4"><mat-icon>highlight</mat-icon>{{'Eclairage' | uppercase}}</label>
-              <mat-slide-toggle #slide name="eclairage" [ngModel]="data.reservation.eclairage"
+              <mat-slide-toggle #slide name="eclairage_paye" [ngModel]="data.reservation.eclairage_paye"
                 class="mr-2 ml-3"
                 color="primary"
                 [checked]="false">
-                Activé
+                Payé
               </mat-slide-toggle>
 
-              <mat-checkbox #checkbox name="eclairage_paye" [ngModel]="data.reservation.eclairage_paye" color="primary" [disabled]="!slide.checked" matInput>Payé</mat-checkbox>
+              <mat-checkbox #checkbox [checked]="slide.checked" name="eclairage" [disabled]="true" [ngModel]="data.reservation.eclairage" color="primary" matInput>Activé</mat-checkbox>
           </div>
   <!--        <mat-label class="font-weight-bold">Eclairage</mat-label>-->
   <!--        <mat-checkbox #activated >activé</mat-checkbox>-->
