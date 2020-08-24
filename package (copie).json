@@ -1,15 +1,13 @@
 {
   "name": "radecla-front",
-  "version": "0.1.0",
-  "main": "electron/main.js",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "start:electron": "ng build --base-href ./ && electron electron/main.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -31,7 +29,6 @@
     "electron": "^9.2.1",
     "hammerjs": "^2.0.8",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.27.0",
     "rxjs": "~6.5.5",
     "serialport": "^9.0.1",
     "tslib": "^2.0.0",
