@@ -9,7 +9,7 @@ import {CalendarEvent} from 'angular-calendar';
 })
 export class ReservationService extends APIService{
 
-  baseurl = 'http://localhost:8000/reservation/';
+  baseurl = 'http://192.168.1.144:8000/reservation/';
   constructor(public http: HttpClient) {
     super(http);
   }
