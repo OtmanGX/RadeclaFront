@@ -3,6 +3,7 @@ import {map} from 'rxjs/operators';
 // Calendar
 import {
   addHours,
+  isAfter,
   endOfDay,
   endOfMonth,
   isSameDay,
@@ -147,7 +148,7 @@ export class DashboardHomeComponent implements OnInit{
       .pipe(map(( results: any ) => {
         return results.map((reservation: ReservationData) => {
           return {
-            title: 'Réservation',
+            title: 'Réservé',
             color: terrains[reservation.terrain-1].color,
             start: new Date(reservation.start_date),
             end: new Date(reservation.end_date),
@@ -156,8 +157,8 @@ export class DashboardHomeComponent implements OnInit{
               reservation: reservation,
             },
             resizable: {
-              beforeStart: true,
-              afterEnd: true,
+              beforeStart: false,
+              afterEnd: false,
             },
             draggable: true,
           };
@@ -232,7 +233,7 @@ export class DashboardHomeComponent implements OnInit{
         ...events,
         {
           title: 'Réservation',
-          color: terrains[0].color,
+          color: colors.yellow,
           start: data.start_date,
           end: addMinutes(data.start_date, 50),
           meta: {
@@ -240,8 +241,8 @@ export class DashboardHomeComponent implements OnInit{
             reservation: data,
           },
           resizable: {
-            beforeStart: true,
-            afterEnd: true,
+            beforeStart: false,
+            afterEnd: false,
           },
           draggable: true,
         },
@@ -274,14 +275,15 @@ export class DashboardHomeComponent implements OnInit{
   }
 
   userChanged({ event, newUser }) {
-    event.color = newUser.color;
-    event.meta.terrain = newUser;
-    // this.events = [...this.events];
+    // event.color = newUser.color;
+    // event.meta.terrain = newUser;
+    this.events = [...this.events];
   }
 
   hourSegmentClicked(date) {
     console.log(date);
-    this.openDialog(date);
+    if (isAfter(date, new Date()))
+      this.openDialog(date);
   }
 
   openDialog(event, edit= false): void {
@@ -295,6 +297,7 @@ export class DashboardHomeComponent implements OnInit{
 
     const dialogRef = this.dialog.open(ReservationdialogComponent, {
       width: '850px',
+      panelClass: 'panel-dialog',
       data: {reservation: reservation, edit:edit}
     });
 

@@ -1,0 +1,68 @@
+<div class="container">
+
+  <div class="float-right">
+    <mat-form-field>
+      <mat-label>Mot de recherche</mat-label>
+      <input matInput #searchInput type="search">
+      <button mat-icon-button [hidden]="hide" matSuffix (click)="hide = !hide; searchInput.value=''" [attr.aria-label]="'cancel Search'" [attr.aria-pressed]="hide">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-mini-fab color="accent" (click)="search(searchInput.value)">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="opendialog()" mat-mini-fab color="primary">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <table mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z2">
+
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+      <td mat-cell *matCellDef="let element ;let i = index;"> {{i+1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+      <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tel">
+      <th mat-header-cell *matHeaderCellDef> Tel </th>
+      <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="E-mail">
+      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+      <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+    </ng-container>
+
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element;">
+        <button mat-icon-button color="accent" (click)="opendialog(true, element)" aria-label="edit butoon">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteMembre(element.id)" aria-label="delete button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [length]="length"
+                 [pageIndex]="pageIndex"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]" (page)="setPageOptions($event)">
+  </mat-paginator>
+
+</div>
+
+
+

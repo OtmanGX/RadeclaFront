@@ -1,0 +1,44 @@
+<div class="d-flex flex-column align-items-center justify-content-center">
+  <mat-toolbar color="primary" class="m-0 mb-2 text-center">
+    <h1 mat-dialog-title>Membre</h1>
+  </mat-toolbar>
+  <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput name="nom" [(ngModel)]="data.membre.nom" required maxlength="35">
+      </mat-form-field><br>
+
+      <mat-form-field>
+        <mat-label>Télephone</mat-label>
+        <input matInput name="tel" [(ngModel)]="data.membre.tel" type="tel">
+        <mat-icon matSuffix>local_phone</mat-icon>
+      </mat-form-field><br>
+
+      <mat-form-field>
+        <mat-label>E-mail</mat-label>
+        <input matInput name="mail" [(ngModel)]="data.membre.mail" type="email">
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field><br>
+    </div>
+    <div class="d-flex justify-content-center align-items-center" mat-dialog-actions>
+      <!--      <button mat-button (click)="onNoClick()">Annuler</button>-->
+      <!--      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Valider</button>-->
+      <button type="button" mat-fab color="primary" matTooltip="Annuler" aria-label="cancel button" (click)="onNoClick()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <button type="submit" *ngIf="!data.edit" mat-fab color="accent" (click)="data.action = 'add'" matTooltip="Valider" aria-label="Add button" cdkFocusInitial>
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button type="submit" *ngIf="data.edit" mat-fab color="accent" (click)="data.action = 'modify'" matTooltip="Modifier" aria-label="Add button" cdkFocusInitial>
+        <mat-icon>update</mat-icon>
+      </button>
+
+      <button *ngIf="data.edit" type="submit" (click)="data.action = 'delete'" mat-fab color="warn" matTooltip="Supprimer" aria-label="Add button" cdkFocusInitial>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

@@ -19,62 +19,155 @@
         </mat-radio-group> <br>
 
 
-        <!--      <mat-form-field>-->
-  <!--        <mat-label>Entrainement</mat-label>-->
-  <!--        <mat-select value="normal">-->
-  <!--          <mat-option value="match">match</mat-option>-->
-  <!--          <mat-option value="normal">avec</mat-option>-->
-  <!--        </mat-select>-->
-  <!--      </mat-form-field> <br>-->
+
         <mat-label class="font-weight-bold text-secondary">Les joueurs</mat-label>
-        <div class="border row mb-1 ml-2 pb-3">
-        <div class="col">
-          <mat-form-field hintLabel="Max 10 caractères">
-            <mat-label>Nom</mat-label>
-            <input name="nom1" required [(ngModel)]="data.reservation.nom1" matInput #input maxlength="10">
-            <!--        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>-->
-          </mat-form-field>
+        <mat-accordion class="example-headers-align">
+          <div class="row mb-1 ml-2 pb-3">
 
-          <mat-form-field>
-            <mat-label>Prenom</mat-label>
-            <input name="prenom1" required [(ngModel)]="data.reservation.prenom1" matInput #input maxlength="10">
-          </mat-form-field>
-          <br>
-          <mat-form-field hintLabel="Max 10 caractères">
-            <mat-label>Nom</mat-label>
-            <input name="nom2" [(ngModel)]="data.reservation.nom2" matInput #input maxlength="10">
-            <!--        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>-->
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Prenom</mat-label>
-            <input name="prenom2" [(ngModel)]="data.reservation.prenom2" matInput #input maxlength="10">
-          </mat-form-field>
-
-        </div>
-          <mat-divider [vertical]="true"></mat-divider>
           <div class="col">
-            <mat-form-field hintLabel="Max 10 caractères">
-              <mat-label>Nom</mat-label>
-              <input name="nom3" required [(ngModel)]="data.reservation.nom3" matInput #input maxlength="10">
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>Prenom</mat-label>
-              <input name="prenom3" required [(ngModel)]="data.reservation.prenom3" matInput #input maxlength="10">
-            </mat-form-field>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Joueur1
+                </mat-panel-title>
+                <mat-panel-description>
+                  <mat-icon>account_circle</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+            <mat-form-field hintLabel="Max 35 caractères">
+                <mat-label>Nom</mat-label>
+                <input name="membre1" required
+                       (change)="member1Verified=false"
+                       matInput
+                       #input
+                       maxlength="35"
+                       [(ngModel)]="member1.nom"
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto">
+                <!--        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>-->
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option (onSelectionChange)="member1Verified=true" *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field><br>
+              <mat-form-field [hidden]="member1Verified">
+                <mat-label>Tel</mat-label>
+                <input name="tel1" [(ngModel)]="member1.tel" matInput type="tel" #input>
+              </mat-form-field><br>
+              <mat-form-field [hidden]="member1Verified">
+                <mat-label>E-mail</mat-label>
+                <input name="email1" [(ngModel)]="member1.mail" matInput type="email" #input>
+              </mat-form-field>
+            </mat-expansion-panel>
             <br>
-            <mat-form-field hintLabel="Max 10 caractères">
-              <mat-label>Nom</mat-label>
-              <input name="nom4" [(ngModel)]="data.reservation.nom4" matInput #input maxlength="10">
-            </mat-form-field>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Joueur2
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon>account_circle</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
 
-            <mat-form-field>
-              <mat-label>Prenom</mat-label>
-              <input name="prenom4" [(ngModel)]="data.reservation.prenom4" matInput #input maxlength="10">
-            </mat-form-field>
+                <mat-form-field hintLabel="Max 35 caractères">
+                  <mat-label>Nom</mat-label>
+                  <input name="membre2" (change)="member2Verified=false"
+                         [(ngModel)]="member2.nom"
+                         matInput #input maxlength="35"
+                         [formControl]="myControl2"
+                         [matAutocomplete]="auto2">
+                  <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                    <mat-option (onSelectionChange)="member2Verified=true" *ngFor="let option of filteredOptions2 | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+
+                </mat-form-field> <br>
+                <mat-form-field [hidden]="member2Verified">
+                <mat-label>Tel</mat-label>
+                <input name="tel2" [(ngModel)]="member2.tel" matInput type="tel" #input>
+              </mat-form-field><br>
+                <mat-form-field [hidden]="member2Verified">
+                  <mat-label>E-mail</mat-label>
+                  <input name="email2" [(ngModel)]="member2.mail" matInput type="email" #input>
+                </mat-form-field>
+              </mat-expansion-panel>
+
           </div>
-        </div>
+            <mat-divider [vertical]="true"></mat-divider>
+            <div class="col">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Joueur3
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon>account_circle</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-form-field hintLabel="Max 35 caractères">
+                  <mat-label>Nom</mat-label>
+                  <input name="membre3" (change)="member3Verified=false"
+                         required [(ngModel)]="member3.nom"
+                         matInput #input maxlength="35"
+                         [formControl]="myControl3"
+                         [matAutocomplete]="auto3">
+                  <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+                    <mat-option (onSelectionChange)="member3Verified=true" *ngFor="let option of filteredOptions3 | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <br>
+                <mat-form-field [hidden]="member3Verified">
+                  <mat-label>Tel</mat-label>
+                  <input name="tel3" [(ngModel)]="member3.tel" matInput type="tel" #input>
+                </mat-form-field><br>
+                <mat-form-field [hidden]="member3Verified">
+                  <mat-label>E-mail</mat-label>
+                  <input name="email3" [(ngModel)]="member3.mail" matInput type="email" #input>
+                </mat-form-field>
+              </mat-expansion-panel>
+              <br>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Joueur4
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon>account_circle</mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-form-field hintLabel="Max 35 caractères">
+                  <mat-label>Nom</mat-label>
+                  <input name="membre4"
+                         (change)="member4Verified=false"
+                         [(ngModel)]="member4.nom"
+                         matInput #input maxlength="35"
+                         [formControl]="myControl4"
+                         [matAutocomplete]="auto4">
+                  <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete">
+                    <mat-option (onSelectionChange)="member4Verified=true" *ngFor="let option of filteredOptions4 | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field> <br>
+                <mat-form-field [hidden]="member4Verified">
+                  <mat-label>Tel</mat-label>
+                  <input name="tel4" [(ngModel)]="member4.tel" matInput type="tel" #input>
+                </mat-form-field><br>
+                <mat-form-field [hidden]="member4Verified">
+                  <mat-label>E-mail</mat-label>
+                  <input name="email4" [(ngModel)]="member4.mail" matInput type="email" #input>
+                </mat-form-field>
+              </mat-expansion-panel>
+
+            </div>
+
+          </div>
+        </mat-accordion>
           <div>
             <label class="mr-4"><mat-icon>highlight</mat-icon>{{'Eclairage' | uppercase}}</label>
               <mat-slide-toggle #slide name="eclairage_paye" [ngModel]="data.reservation.eclairage_paye"
@@ -94,7 +187,7 @@
       <div class="d-flex justify-content-center align-items-center" mat-dialog-actions>
   <!--      <button mat-button (click)="onNoClick()">Annuler</button>-->
   <!--      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Valider</button>-->
-        <button mat-fab color="primary" matTooltip="Annuler" aria-label="cancel button" (click)="onNoClick()">
+        <button type="button" mat-fab color="primary" matTooltip="Annuler" aria-label="cancel button" (click)="onNoClick()">
           <mat-icon>close</mat-icon>
         </button>
 
@@ -102,11 +195,11 @@
           <mat-icon>add</mat-icon>
         </button>
 
-        <button type="submit" *ngIf="data.edit" mat-fab color="accent" (click)="data.action = 'modify'" matTooltip="Modifier" aria-label="Add button" cdkFocusInitial>
+        <button type="submit" *ngIf="data.edit" [disabled]="editable" mat-fab color="accent" (click)="data.action = 'modify'" matTooltip="Modifier" aria-label="Add button" cdkFocusInitial>
           <mat-icon>update</mat-icon>
         </button>
 
-        <button *ngIf="data.edit" type="submit" (click)="data.action = 'delete'" mat-fab color="warn" matTooltip="Supprimer" aria-label="Add button" cdkFocusInitial>
+        <button *ngIf="data.edit" type="submit" [disabled]="editable" (click)="data.action = 'delete'" mat-fab color="warn" matTooltip="Supprimer" aria-label="Add button" cdkFocusInitial>
           <mat-icon>delete</mat-icon>
         </button>
       </div>

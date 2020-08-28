@@ -1,0 +1,44 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
+               (closed)="events.push('close!')">
+    <mat-list>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['calendar']" color="primary">
+          <mat-icon>event</mat-icon>Calendrier
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['membres']" color="primary">
+          <mat-icon>people</mat-icon>Membres
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['history']" color="primary">
+          <mat-icon>history</mat-icon>Historique
+        </button>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-sidenav>
+  <p>
+    <mat-toolbar color="primary">
+
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span><mat-icon svgIcon="tennis"></mat-icon>Radecla</span>
+      <span class="example-spacer"></span>
+      <!--    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">-->
+      <!--      <mat-icon>favorite</mat-icon>-->
+      <!--    </button>-->
+      <!--    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">-->
+      <!--      <mat-icon>share</mat-icon>-->
+      <!--    </button>-->
+    </mat-toolbar>
+  </p>
+
+  <router-outlet></router-outlet>
+
+</mat-sidenav-container>

@@ -1,0 +1,24 @@
+div.cal-day-headers {
+  background-color: rgb(255,215,0);
+}
+div.cal-header {
+  background-color: rgb(255,215,0);
+}
+
+div.cal-hour-segment {
+  background-color: aqua;
+}
+
+.cal-hour-odd {
+  background-color: rgb(107, 142, 35);
+}
+
+ .cal-hour-pair {
+   background-color: rgb(43, 188, 143);
+ }
+
+.cal-week-view .cal-event {
+  background-color: darkblue;
+  color: white;
+}
+

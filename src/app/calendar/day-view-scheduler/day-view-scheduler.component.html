@@ -8,10 +8,9 @@
   let-tooltipDisabled="tooltipDisabled">
   <div
     class="cal-event"
-    [style.backgroundColor]="weekEvent.event.color?.secondary"
-    [style.borderColor]="weekEvent.event.color?.primary"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"
+
     [tooltipEvent]="weekEvent.event"
     [tooltipTemplate]="tooltipTemplate"
     [tooltipAppendToBody]="tooltipAppendToBody"
@@ -23,6 +22,7 @@
 <!--    </mwl-calendar-event-actions>-->
     &ngsp;
     <mwl-calendar-event-title
+      class="font-weight-bold d-inline"
       [event]="weekEvent.event"
       [customTemplate]="eventTitleTemplate"
       view="week">
@@ -40,9 +40,13 @@
       class="cal-header"
       *ngFor="let user of terrains; trackBy: trackByUserId"
       tabindex="0"
+      style="padding-top: 10px; padding-bottom: 10px;"
       role="columnheader"
     >
-      <b>{{ user.name }}</b>
+      <mat-icon svgIcon="tennis"></mat-icon>
+      <b>
+        {{ user.name }}
+      </b>
     </div>
   </div>
   <div
@@ -140,6 +144,7 @@
         "
         class="cal-hour"
         [class.cal-hour-odd]="odd"
+        [class.cal-hour-pair]="!odd"
       >
         <mwl-calendar-week-view-hour-segment
           *ngFor="let segment of hour.segments; trackBy: trackByHourSegment"
@@ -256,6 +261,7 @@
           *ngFor="let hour of column.hours; trackBy: trackByHour; let odd = odd"
           class="cal-hour"
           [class.cal-hour-odd]="odd"
+          [class.cal-hour-pair]="!odd"
         >
           <mwl-calendar-week-view-hour-segment
             *ngFor="let segment of hour.segments; trackBy: trackByHourSegment"

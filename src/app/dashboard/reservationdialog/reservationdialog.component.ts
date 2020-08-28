@@ -2,26 +2,125 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ReservationData} from '../../models/reservation-data';
 import {ReservationService} from '../../services/reservation.service';
+import {Observable} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
+import {MembreService} from '../../services/membre.service';
+import {Membre} from '../../models/membre';
+// Calendar
+import {
+  isSameDay,
+} from 'date-fns';
 
 @Component({
   selector: 'app-reservationdialog',
   templateUrl: './reservationdialog.component.html',
   styleUrls: ['./reservationdialog.component.css']
 })
-export class ReservationdialogComponent {
+export class ReservationdialogComponent implements OnInit{
 
+  editable = true;
   eclairage = false;
+  // options:string[];
+  filteredOptions: Observable<string[]>;
+  filteredOptions2: Observable<string[]>;
+  filteredOptions3: Observable<string[]>;
+  filteredOptions4: Observable<string[]>;
+  myControl = new FormControl();
+  myControl2 = new FormControl();
+  myControl3 = new FormControl();
+  myControl4 = new FormControl();
+
+  // members
+  membres: Membre[];
+  member1Verified = false;
+  member2Verified = false;
+  member3Verified = false;
+  member4Verified = false;
+  member1 = new Membre();
+  member2 = new Membre();
+  member3 = new Membre();
+  member4 = new Membre();
+
   constructor(
     public dialogRef: MatDialogRef<ReservationdialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private service:ReservationService) {}
+    private resService:ReservationService,
+    private memService:MembreService,
+    ) {
+  }
+
+  ngOnInit(): void {
+    if (this.data.edit) {
+      console.log("edit");
+      this.editable = !isSameDay(new Date(this.data.reservation.start_date), new Date());
+    }
+    this.memService.getAllByPage({all:true}).subscribe(value => {
+      this.membres = value;
+      this.setFiltering();
+      if (this.data.reservation.membre1 !== null) {
+        this.member1Verified = true;
+        this.member1 = this.getMember(this.data.reservation.membre1);
+      }
+      if (this.data.reservation.membre2 !== null) {
+        console.log("membre2 not null");
+        this.member2Verified = true;
+        this.member2 = this.getMember(this.data.reservation.membre2);
+      }
+      if (this.data.reservation.membre3 !== null) {
+        console.log("membre3 not null");
+        this.member3Verified = true;
+        this.member3 = this.getMember(this.data.reservation.membre3);
+      }
+      if (this.data.reservation.membre4 != null) {
+        console.log("membre4 not null");
+        this.member4Verified = true;
+        this.member4 = this.getMember(this.data.reservation.membre4);
+      }
+
+    })
+
+  }
+
+  setFiltering() {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+    this.filteredOptions2 = this.myControl2.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+    this.filteredOptions3 = this.myControl3.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+    this.filteredOptions4 = this.myControl4.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.membres.map(value1 => value1.nom).filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  getMember(num:number): Membre {
+    for (let m of this.membres){
+      if (m.id === num)
+      {
+        return m;
+      }
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   submit(value: any) {
-    console.log(value);
     if (this.data.action != undefined) {
       switch (this.data.action) {
         case 'add':
@@ -29,16 +128,22 @@ export class ReservationdialogComponent {
           value.end_date = this.data.reservation.end_date;
           // value.end_date = new Date(value.start_date);
           // value.end_date.setMinutes(value.end_date.getMinutes() + 59);
-          this.service.create(value).subscribe((result) => this.dialogRef.close(this.data));
+          this.membresProcessing(value);
+          setTimeout(() =>
+            {
+              this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
+            },
+            1000);
           break;
         case 'modify':
           value.start_date = this.data.reservation.start_date;
           value.end_date = this.data.reservation.end_date;
-          this.service.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
+          this.membresProcessing(value);
+          this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
           break;
         case 'delete':
           console.log('delete');
-          this.service.delete(this.data.reservation.id)
+          this.resService.delete(this.data.reservation.id)
             .subscribe((result) => this.dialogRef.close(this.data), error => console.log(error))
           break;
       }
@@ -46,4 +151,49 @@ export class ReservationdialogComponent {
       // console.log(value);
     }
   }
+
+  membresProcessing(value: any) {
+    if (this.member1Verified)
+      value.membre1 = this.getMembreId(this.member1.nom);
+    else if (this.member1.nom != undefined && this.member1.nom !== '')
+        this.memService.create(this.member1).toPromise().then(value1 =>
+        {
+          value.membre1 = (<Membre>value1).id;
+        }, reason => console.log(reason));
+      if (this.member2Verified)
+        value.membre2 = this.getMembreId(this.member2.nom);
+      else if (this.member2.nom != undefined && this.member2.nom !== '')
+        this.memService.create(this.member2).toPromise().then(value1 =>
+          console.log(value1), reason => console.log(reason));
+      if (this.member3Verified)
+        value.membre3 = this.getMembreId(this.member3.nom);
+      else if (this.member3.nom != undefined && this.member3.nom !== '')
+        this.memService.create(this.member3).toPromise().then(value1 =>
+          console.log(value1), reason => console.log(reason));
+      if (this.member4Verified)
+        value.membre4 = this.getMembreId(this.member4.nom);
+      else if (this.member4.nom != undefined && this.member4.nom !== '')
+        this.memService.create(this.member4).toPromise().then(value1 =>
+          console.log(value1), reason => console.log(reason));
+    }
+
+  getMembreId(nom:String): number {
+    let res = null;
+    for (let elem of this.membres)
+      if (elem.nom === nom){
+        res = elem.id;
+        break;
+      }
+    return res;
+  }
+
+  // changed($event: any, f) {
+  //   console.log($event);
+  //   f.membre1 = $event;
+  // }
+
+  // showSelected($event: MatOptionSelectionChange) {
+  //   console.log($event.source.value);
+  //   this.member3Verified = true;
+  // }
 }

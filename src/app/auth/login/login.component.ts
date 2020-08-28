@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.formSubmitAttempt = false;
     if (this.form.valid) {
       this.authService.login(this.form.value).subscribe(() => {
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/admin');
       }, err => {
         this.errorMessage = err && err.error;
       });

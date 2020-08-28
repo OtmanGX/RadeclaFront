@@ -36,6 +36,18 @@ import { ReservationTableComponent } from './dashboard/reservation-table/reserva
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {TokenInterceptor} from './services/token.interceptor';
+import { MainViewComponent } from './main-view/main-view.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import { MembreComponent } from './membre/membre.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { AddMembreComponent } from './membre/add-membre/add-membre.component';
+import {MatSortModule} from '@angular/material/sort';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { HistoryComponent } from './history/history.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 registerLocaleData(localeFr);
 
@@ -47,37 +59,49 @@ registerLocaleData(localeFr);
     DayViewSchedulerComponent,
     ReservationdialogComponent,
     ReservationTableComponent,
+    MainViewComponent,
+    MembreComponent,
+    AddMembreComponent,
+    HistoryComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatFormFieldModule,
-    MatIconModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatDividerModule,
-    MatMenuModule,
-    LayoutModule,
-    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
-    FormsModule,
-    NgbModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatBadgeModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatRadioModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatDividerModule,
+        MatMenuModule,
+        LayoutModule,
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
+        FormsModule,
+        NgbModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatToolbarModule,
+        MatBadgeModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatRadioModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatSnackBarModule,
+        MatSidenavModule,
+        MatListModule,
+        AppRoutingModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatAutocompleteModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]

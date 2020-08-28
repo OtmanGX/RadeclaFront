@@ -17,6 +17,17 @@
   right: 10px;
 }
 
-.dashboard-card-content {
-  /*text-align: center;*/
+
+div.cal-day-headers {
+  background-color: rgb(255,215,0);
+}
+div.cal-header {
+  background-color: rgb(255,215,0);
+}
+
+:root {
+  background-image: url("../../../assets/tennis.jpg");
+  /*background-position: center;*/
+  background-repeat: round;
+  background-attachment: fixed;
 }
