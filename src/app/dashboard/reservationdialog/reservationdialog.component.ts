@@ -128,7 +128,7 @@ export class ReservationdialogComponent implements OnInit{
           value.end_date = this.data.reservation.end_date;
           // value.end_date = new Date(value.start_date);
           // value.end_date.setMinutes(value.end_date.getMinutes() + 59);
-          this.membresProcessing(value);
+          value = this.membresProcessing(value);
           setTimeout(() =>
             {
               this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
@@ -164,17 +164,24 @@ export class ReservationdialogComponent implements OnInit{
         value.membre2 = this.getMembreId(this.member2.nom);
       else if (this.member2.nom != undefined && this.member2.nom !== '')
         this.memService.create(this.member2).toPromise().then(value1 =>
-          console.log(value1), reason => console.log(reason));
+        {
+          value.membre2 = (<Membre>value1).id;
+        }, reason => console.log(reason));
       if (this.member3Verified)
         value.membre3 = this.getMembreId(this.member3.nom);
       else if (this.member3.nom != undefined && this.member3.nom !== '')
         this.memService.create(this.member3).toPromise().then(value1 =>
-          console.log(value1), reason => console.log(reason));
+        {
+          value.membre3 = (<Membre>value1).id;
+        }, reason => console.log(reason));
       if (this.member4Verified)
         value.membre4 = this.getMembreId(this.member4.nom);
       else if (this.member4.nom != undefined && this.member4.nom !== '')
         this.memService.create(this.member4).toPromise().then(value1 =>
-          console.log(value1), reason => console.log(reason));
+        {
+          value.membre4 = (<Membre>value1).id;
+        }, reason => console.log(reason));
+          return value;
     }
 
   getMembreId(nom:String): number {
