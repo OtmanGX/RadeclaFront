@@ -282,7 +282,7 @@ export class DashboardHomeComponent implements OnInit{
 
   hourSegmentClicked(date) {
     console.log(date);
-    if (isAfter(date, new Date()))
+    if (isAfter(date, subMinutes(new Date(), 30)))
       this.openDialog(date);
   }
 

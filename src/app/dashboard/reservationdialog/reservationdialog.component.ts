@@ -2,14 +2,17 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ReservationData} from '../../models/reservation-data';
 import {ReservationService} from '../../services/reservation.service';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, tap} from 'rxjs/operators';
 import {MembreService} from '../../services/membre.service';
 import {Membre} from '../../models/membre';
 // Calendar
 import {
   isSameDay,
+  addDays,
+  isAfter,
+  isBefore,
 } from 'date-fns';
 
 @Component({
@@ -53,7 +56,7 @@ export class ReservationdialogComponent implements OnInit{
   ngOnInit(): void {
     if (this.data.edit) {
       console.log("edit");
-      this.editable = !isSameDay(new Date(this.data.reservation.start_date), new Date());
+      this.editable = isAfter(new Date(), addDays(new Date(this.data.reservation.start_date), 1));
     }
     this.memService.getAllByPage({all:true}).subscribe(value => {
       this.membres = value;
@@ -128,12 +131,13 @@ export class ReservationdialogComponent implements OnInit{
           value.end_date = this.data.reservation.end_date;
           // value.end_date = new Date(value.start_date);
           // value.end_date.setMinutes(value.end_date.getMinutes() + 59);
-          value = this.membresProcessing(value);
-          setTimeout(() =>
-            {
+          let calls = this.membresProcessing(value);
+          if (calls.length)
+            forkJoin(calls).subscribe(allResults => {
+              console.log(allResults);
               this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
-            },
-            1000);
+            });
+          else this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
           break;
         case 'modify':
           value.start_date = this.data.reservation.start_date;
@@ -153,35 +157,25 @@ export class ReservationdialogComponent implements OnInit{
   }
 
   membresProcessing(value: any) {
+    let calls = [];
+
     if (this.member1Verified)
       value.membre1 = this.getMembreId(this.member1.nom);
     else if (this.member1.nom != undefined && this.member1.nom !== '')
-        this.memService.create(this.member1).toPromise().then(value1 =>
-        {
-          value.membre1 = (<Membre>value1).id;
-        }, reason => console.log(reason));
-      if (this.member2Verified)
-        value.membre2 = this.getMembreId(this.member2.nom);
-      else if (this.member2.nom != undefined && this.member2.nom !== '')
-        this.memService.create(this.member2).toPromise().then(value1 =>
-        {
-          value.membre2 = (<Membre>value1).id;
-        }, reason => console.log(reason));
-      if (this.member3Verified)
-        value.membre3 = this.getMembreId(this.member3.nom);
-      else if (this.member3.nom != undefined && this.member3.nom !== '')
-        this.memService.create(this.member3).toPromise().then(value1 =>
-        {
-          value.membre3 = (<Membre>value1).id;
-        }, reason => console.log(reason));
-      if (this.member4Verified)
-        value.membre4 = this.getMembreId(this.member4.nom);
-      else if (this.member4.nom != undefined && this.member4.nom !== '')
-        this.memService.create(this.member4).toPromise().then(value1 =>
-        {
-          value.membre4 = (<Membre>value1).id;
-        }, reason => console.log(reason));
-          return value;
+      calls.push(this.memService.create(this.member1).pipe(tap(res => value.membre1 = (<Membre>res).id)));
+    if (this.member2Verified)
+      value.membre2 = this.getMembreId(this.member2.nom);
+    else if (this.member2.nom != undefined && this.member2.nom !== '')
+      calls.push(this.memService.create(this.member2).pipe(tap(res => value.membre2 = (<Membre>res).id)));
+    if (this.member3Verified)
+      value.membre3 = this.getMembreId(this.member3.nom);
+    else if (this.member3.nom != undefined && this.member3.nom !== '')
+      calls.push(this.memService.create(this.member3).pipe(tap(res => value.membre3 = (<Membre>res).id)));
+    if (this.member4Verified)
+      value.membre4 = this.getMembreId(this.member4.nom);
+    else if (this.member4.nom != undefined && this.member4.nom !== '')
+      calls.push(this.memService.create(this.member4).pipe(tap(res => value.membre4 = (<Membre>res).id)));
+    return calls;
     }
 
   getMembreId(nom:String): number {

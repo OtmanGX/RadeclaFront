@@ -1,7 +1,6 @@
 {
   "name": "radecla-front",
   "version": "0.1.0",
-  "main": "electron/main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
