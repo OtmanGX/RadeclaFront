@@ -190,7 +190,8 @@ export class DayViewSchedulerComponent extends CalendarWeekViewComponent impleme
         hour: this.dayEndHour,
         minute: this.dayEndMinute,
       },
-      segmentHeight: this.hourSegmentHeight,
+      segmentHeight: 50,
+      // segmentHeight: this.hourSegmentHeight,
       weekendDays: this.weekendDays,
       ...getWeekViewPeriod(
         this.dateAdapter,

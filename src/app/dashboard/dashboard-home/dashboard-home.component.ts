@@ -143,6 +143,7 @@ export class DashboardHomeComponent implements OnInit{
     }
      else {
        params = {start_date: startOfMonth(this.viewDate).toISOString(), end_date: endOfMonth(this.viewDate).toISOString()}
+       console.log(params);
     }
     this.events$ = this.service.getall(params)
       .pipe(map(( results: any ) => {
@@ -158,7 +159,7 @@ export class DashboardHomeComponent implements OnInit{
             },
             resizable: {
               beforeStart: false,
-              afterEnd: false,
+              afterEnd: true,
             },
             draggable: true,
           };
@@ -242,7 +243,7 @@ export class DashboardHomeComponent implements OnInit{
           },
           resizable: {
             beforeStart: false,
-            afterEnd: false,
+            afterEnd: true,
           },
           draggable: true,
         },
@@ -271,7 +272,7 @@ export class DashboardHomeComponent implements OnInit{
 
   closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
-    this.fetchData(!this.activeDayIsOpen);
+    this.fetchData(this.activeDayIsOpen);
   }
 
   userChanged({ event, newUser }) {

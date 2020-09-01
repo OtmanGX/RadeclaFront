@@ -10,7 +10,6 @@
     class="cal-event"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"
-
     [tooltipEvent]="weekEvent.event"
     [tooltipTemplate]="tooltipTemplate"
     [tooltipAppendToBody]="tooltipAppendToBody"
@@ -148,9 +147,10 @@
       >
         <mwl-calendar-week-view-hour-segment
           *ngFor="let segment of hour.segments; trackBy: trackByHourSegment"
-          [style.height.px]="hourSegmentHeight"
+          [style.height.px]="50"
           [segment]="segment"
-          [segmentHeight]="hourSegmentHeight"
+          [segmentHeight]="50"
+
           [locale]="'fr'"
           [customTemplate]="hourSegmentTemplate"
           [isTimeLabel]="true"

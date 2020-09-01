@@ -14,11 +14,26 @@ div.cal-hour-segment {
 }
 
  .cal-hour-pair {
-   background-color: rgb(43, 188, 143);
+   background-color: #8AE234;
  }
 
 .cal-week-view .cal-event {
   background-color: darkblue;
   color: white;
+  font-size: 10px;
 }
 
+
+
+/*.cal-cell-row {*/
+/*  height: 100%;*/
+/*}*/
+/*.cal-weekend {*/
+/*  background-color: red;*/
+/*}*/
+/*.ng-star-inserted {*/
+/*  height: 51px;*/
+/*}*/
+/*.cal-cell .cal-day-cell {*/
+/*  height: 100%;*/
+/*}*/
