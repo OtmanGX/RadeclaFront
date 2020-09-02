@@ -91,6 +91,7 @@ export class DayViewSchedulerCalendarUtils extends CalendarUtils {
 })
 export class DayViewSchedulerComponent extends CalendarWeekViewComponent implements OnChanges {
   @Input() terrains: Terrain[] = [];
+  @Input() extra: boolean = false;
 
   @Output() userChanged = new EventEmitter();
 
@@ -190,7 +191,7 @@ export class DayViewSchedulerComponent extends CalendarWeekViewComponent impleme
         hour: this.dayEndHour,
         minute: this.dayEndMinute,
       },
-      segmentHeight: 50,
+      segmentHeight: this.hourSegmentHeight,
       // segmentHeight: this.hourSegmentHeight,
       weekendDays: this.weekendDays,
       ...getWeekViewPeriod(

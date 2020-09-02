@@ -63,22 +63,22 @@ export class ReservationdialogComponent implements OnInit{
       this.setFiltering();
       if (this.data.reservation.membre1 !== null) {
         this.member1Verified = true;
-        this.member1 = this.getMember(this.data.reservation.membre1);
+        this.member1 = this.getMember(this.data.reservation.membre1.id);
       }
       if (this.data.reservation.membre2 !== null) {
         console.log("membre2 not null");
         this.member2Verified = true;
-        this.member2 = this.getMember(this.data.reservation.membre2);
+        this.member2 = this.getMember(this.data.reservation.membre2.id);
       }
       if (this.data.reservation.membre3 !== null) {
         console.log("membre3 not null");
         this.member3Verified = true;
-        this.member3 = this.getMember(this.data.reservation.membre3);
+        this.member3 = this.getMember(this.data.reservation.membre3.id);
       }
       if (this.data.reservation.membre4 != null) {
         console.log("membre4 not null");
         this.member4Verified = true;
-        this.member4 = this.getMember(this.data.reservation.membre4);
+        this.member4 = this.getMember(this.data.reservation.membre4.id);
       }
 
     })
@@ -142,8 +142,13 @@ export class ReservationdialogComponent implements OnInit{
         case 'modify':
           value.start_date = this.data.reservation.start_date;
           value.end_date = this.data.reservation.end_date;
-          this.membresProcessing(value);
-          this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
+          let calls2 = this.membresProcessing(value);
+          if (calls2.length)
+            forkJoin(calls2).subscribe(allResults => {
+              console.log(allResults);
+              this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
+            });
+          else this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
           break;
         case 'delete':
           console.log('delete');

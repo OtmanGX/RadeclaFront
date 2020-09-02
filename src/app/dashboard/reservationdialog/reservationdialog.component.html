@@ -4,12 +4,12 @@
   </mat-toolbar>
     <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
       <div mat-dialog-content>
-        <p>Terrain: {{data.reservation.terrain}} réservé de {{data.reservation.start_date | date: 'HH:mm'}}
+        <p>Terrain: {{data.reservation.terrain.id}} réservé de {{data.reservation.start_date | date: 'HH:mm'}}
         à {{data.reservation.end_date | date: 'HH:mm'}}
         </p>
         <mat-form-field>
           <mat-label>Terrain</mat-label>
-          <mat-select name="terrain" value=1 [(ngModel)]="data.reservation.terrain">
+          <mat-select name="terrain" value=1 [(ngModel)]="data.reservation.terrain.id">
             <mat-option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">{{num}}</mat-option>
           </mat-select>
         </mat-form-field>

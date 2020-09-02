@@ -48,6 +48,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { HistoryComponent } from './history/history.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { TvshowComponent } from './tvshow/tvshow.component';
 
 registerLocaleData(localeFr);
 
@@ -63,6 +64,7 @@ registerLocaleData(localeFr);
     MembreComponent,
     AddMembreComponent,
     HistoryComponent,
+    TvshowComponent,
   ],
     imports: [
         BrowserModule,

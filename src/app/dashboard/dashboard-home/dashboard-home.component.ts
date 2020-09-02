@@ -22,6 +22,7 @@ import {ReservationdialogComponent} from '../reservationdialog/reservationdialog
 import {ReservationData} from '../../models/reservation-data';
 import {ReservationService} from '../../services/reservation.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Membre} from '../../models/membre';
 
 const colors: any = {
   red: {
@@ -75,11 +76,6 @@ const terrains: Terrain[] = [
     color: colors.blue,
   },
 {
-    id: 7,
-    name: 'Terrain 8',
-    color: colors.blue,
-  },
-{
     id: 8,
     name: 'Terrain 9',
     color: colors.blue,
@@ -123,13 +119,13 @@ export class DashboardHomeComponent implements OnInit{
   refresh: Subject<any> = new Subject();
   events: CalendarEvent[] = [];
   activeDayIsOpen = false;
-
-
+  membres: Array<Membre>;
   events$: Observable<CalendarEvent<{ reservation: any }>[]>;
 
   constructor(public dialog: MatDialog,
               private _snackBar: MatSnackBar,
-              private service:ReservationService) {}
+              private service:ReservationService,
+              ) {}
 
   ngOnInit(): void {
     this.fetchData();
@@ -149,12 +145,12 @@ export class DashboardHomeComponent implements OnInit{
       .pipe(map(( results: any ) => {
         return results.map((reservation: ReservationData) => {
           return {
-            title: 'Réservé',
-            color: terrains[reservation.terrain-1].color,
+            title: '',
+            color: terrains[reservation.terrain.id-1].color,
             start: new Date(reservation.start_date),
             end: new Date(reservation.end_date),
             meta: {
-              terrain: terrains[reservation.terrain-1],
+              terrain: terrains[reservation.terrain.id-1],
               reservation: reservation,
             },
             resizable: {
@@ -196,15 +192,18 @@ export class DashboardHomeComponent implements OnInit{
     this.events$ = this.events$.pipe(map(events => { return events.map((iEvent) => {
       if (iEvent.meta.reservation.id === event.meta.reservation.id) {
         console.log('found');
+        newEnd = endOfHour(subMinutes(newEnd, 2));
         event.meta.reservation.start_date = newStart;
         event.meta.reservation.end_date = newEnd;
-        event.meta.reservation.terrain = event.meta.terrain.id+1;
-        this.service.update(event.meta.reservation.id, event.meta.reservation)
+        event.meta.reservation.terrain = {id: event.meta.terrain.id+1};
+        this.service.patch(event.meta.reservation.id, {start_date: event.meta.reservation.start_date,
+          end_date: event.meta.reservation.end_date,})
           .subscribe((result) => console.log(result), error => console.log(error));
         return {
           ...event,
           start: newStart,
           end: newEnd,
+          // end: subMinutes(newEnd, 1),
         };
       }
       return iEvent;
@@ -292,7 +291,7 @@ export class DashboardHomeComponent implements OnInit{
     if (!edit) {
       reservation.start_date = event;
       reservation.end_date = addMinutes(event, 59);
-      reservation.terrain = 1;
+      reservation.terrain = {id: 1};
     } else
       reservation = event.meta.reservation;
 

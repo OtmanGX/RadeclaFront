@@ -19,17 +19,24 @@
 <!--      [event]="weekEvent.event"-->
 <!--      [customTemplate]="eventActionsTemplate">-->
 <!--    </mwl-calendar-event-actions>-->
-    &ngsp;
-    <mwl-calendar-event-title
-      class="font-weight-bold d-inline"
-      [event]="weekEvent.event"
-      [customTemplate]="eventTitleTemplate"
-      view="week">
-    </mwl-calendar-event-title>
     <div class="d-inline">
+      Réservé ({{weekEvent.event.meta.reservation.entrainement?'Entrainement':'Match'}})
       <mat-icon *ngIf="weekEvent.event.meta.reservation.eclairage">highlight</mat-icon>
-      <mat-icon *ngIf="weekEvent.event.meta.reservation.eclairage_paye">attach_money</mat-icon>
+      <mat-icon style="font-size: 16px;" inline *ngIf="weekEvent.event.meta.reservation.eclairage_paye">attach_money</mat-icon>
     </div>
+    <div *ngIf="extra">
+      <div>
+        <mat-divider style="border-top-color: white" [vertical]="false"></mat-divider>
+        <mwl-calendar-event-title
+          class="font-weight-bold d-inline"
+          [event]="weekEvent.event"
+          [customTemplate]="eventTitleTemplate"
+          view="week">
+        </mwl-calendar-event-title>
+      </div>
+
+    </div>
+
   </div>
 </ng-template>
 
@@ -147,9 +154,9 @@
       >
         <mwl-calendar-week-view-hour-segment
           *ngFor="let segment of hour.segments; trackBy: trackByHourSegment"
-          [style.height.px]="50"
+          [style.height.px]="hourSegmentHeight"
           [segment]="segment"
-          [segmentHeight]="50"
+          [segmentHeight]="hourSegmentHeight"
 
           [locale]="'fr'"
           [customTemplate]="hourSegmentTemplate"
