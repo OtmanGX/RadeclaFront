@@ -22,9 +22,11 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private authService: AuthService) {
+    this.authService.getCurrentUser().subscribe(() => this.router.navigate(['admin']));
   }
 
   ngOnInit(): void {
+
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
