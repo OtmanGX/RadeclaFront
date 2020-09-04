@@ -58,7 +58,7 @@ export class DayViewSchedulerCalendarUtils extends CalendarUtils {
 
     view.terrains.forEach((terrain, columnIndex) => {
       const events = args.events.filter(
-        (event) => event.meta.terrain.id === terrain.id
+        (event) => event.meta.reservation.terrain.id === terrain.id+1
       );
       const columnView = super.getWeekView({
         ...args,

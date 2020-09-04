@@ -3,25 +3,25 @@
                (closed)="events.push('close!')">
     <mat-list>
       <mat-list-item routerLinkActive="active-button">
-        <button mat-button [routerLink]="['calendar']" color="primary">
+        <button mat-button [routerLink]="['calendar']" >
           <mat-icon>event</mat-icon>Calendrier
         </button>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item routerLinkActive="active-button">
-        <button mat-button [routerLink]="['membres']" color="primary">
+        <button mat-button [routerLink]="['membres']">
           <mat-icon>people</mat-icon>Membres
         </button>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item routerLinkActive="active-button">
-        <button mat-button [routerLink]="['history']" color="primary">
+        <button mat-button [routerLink]="['history']">
           <mat-icon>history</mat-icon>Historique
         </button>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item routerLinkActive="active-button">
-        <button mat-button [routerLink]="['tvshow']" color="primary">
+        <button mat-button [routerLink]="['tvshow']">
           <mat-icon>assignment</mat-icon>Emploi du jour
         </button>
       </mat-list-item>
@@ -29,18 +29,20 @@
 
   </mat-sidenav>
   <p>
-    <mat-toolbar color="primary">
-
+    <mat-toolbar color="accent">
+      <div>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
       <span><mat-icon svgIcon="tennis"></mat-icon>Radecla</span>
-      <span class="example-spacer"></span>
-      <div style="text-align: right;">
-        <button mat-icon-button>
-          <mat-icon>exit_to_app</mat-icon>
-        </button>
       </div>
+      <img src="../../assets/mglogo.png" height="50px" class="ml-auto">
+<!--      <span class="example-spacer"></span>-->
+<!--      <div style="text-align: right;">-->
+<!--        <button mat-icon-button>-->
+<!--          <mat-icon>exit_to_app</mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
       <!--    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">-->
       <!--      <mat-icon>favorite</mat-icon>-->
       <!--    </button>-->
@@ -51,5 +53,20 @@
   </p>
 
   <router-outlet></router-outlet>
+<!--  <mat-toolbar style="clear: both;-->
+<!--    position: relative;-->
+<!--    height: 35px;-->
+<!--    ">-->
+<!--    <a href="mailto:mgat.contact@gmail.com">-->
+<!--      mgat.contact@gmail.com-->
+<!--    </a>-->
+<!--  </mat-toolbar>-->
+
 
 </mat-sidenav-container>
+
+<div class="footer font-weight-bold">
+  <p><a href="mailto:mgat.contact@gmail.com">
+    mgat.contact@gmail.com
+   </a></p>
+</div>

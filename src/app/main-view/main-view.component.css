@@ -1,7 +1,7 @@
 .example-container {
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 35px;
   left: 0;
   right: 0;
   background-image: url("../../assets/tennis.jpg");
@@ -15,4 +15,17 @@ mat-sidenav {
 }
 .active-button {
   background-color: #ffe6d0;
+}
+
+.footer {
+  position: fixed;
+  height: 35px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #FFD740;
+  text-align: center;
+}
+.footer a:link {
+  color: black;
 }

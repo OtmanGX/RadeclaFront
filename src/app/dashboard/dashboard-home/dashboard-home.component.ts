@@ -74,6 +74,10 @@ const terrains: Terrain[] = [
     id: 6,
     name: 'Terrain 7',
     color: colors.blue,
+  },{
+    id: 8,
+    name: 'Terrain 8',
+    color: colors.blue,
   },
 {
     id: 8,
@@ -86,6 +90,7 @@ const terrains: Terrain[] = [
     color: colors.blue,
   },
 ];
+
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
@@ -144,8 +149,9 @@ export class DashboardHomeComponent implements OnInit{
     this.events$ = this.service.getall(params)
       .pipe(map(( results: any ) => {
         return results.map((reservation: ReservationData) => {
+          console.log(reservation.terrain.id);
           return {
-            title: '',
+            title: 'Réservé',
             color: terrains[reservation.terrain.id-1].color,
             start: new Date(reservation.start_date),
             end: new Date(reservation.end_date),
@@ -188,7 +194,6 @@ export class DashboardHomeComponent implements OnInit{
                     }: CalendarEventTimesChangedEvent): void {
     // newEnd = subMinutes(endOfHour(newEnd), 1);
     console.log('eventTimesChanged');
-    console.log(event);
     this.events$ = this.events$.pipe(map(events => { return events.map((iEvent) => {
       if (iEvent.meta.reservation.id === event.meta.reservation.id) {
         console.log('found');
@@ -237,7 +242,7 @@ export class DashboardHomeComponent implements OnInit{
           start: data.start_date,
           end: addMinutes(data.start_date, 50),
           meta: {
-            terrain: terrains[data.terrain-1],
+            terrain: terrains[data.terrain],
             reservation: data,
           },
           resizable: {

@@ -7,7 +7,7 @@
   let-tooltipAppendToBody="tooltipAppendToBody"
   let-tooltipDisabled="tooltipDisabled">
   <div
-    class="cal-event"
+    class="cal-event font-weight-bold row m-0 p-0"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"
     [tooltipEvent]="weekEvent.event"
@@ -19,22 +19,27 @@
 <!--      [event]="weekEvent.event"-->
 <!--      [customTemplate]="eventActionsTemplate">-->
 <!--    </mwl-calendar-event-actions>-->
-    <div class="d-inline">
-      Réservé ({{weekEvent.event.meta.reservation.entrainement?'Entrainement':'Match'}})
-      <mat-icon *ngIf="weekEvent.event.meta.reservation.eclairage">highlight</mat-icon>
-      <mat-icon style="font-size: 16px;" inline *ngIf="weekEvent.event.meta.reservation.eclairage_paye">attach_money</mat-icon>
-    </div>
-    <div *ngIf="extra">
-      <div>
-        <mat-divider style="border-top-color: white" [vertical]="false"></mat-divider>
+<!--    <div class="d-inline">-->
+<!--      Réservé ({{weekEvent.event.meta.reservation.entrainement?'Entrainement':'Match'}})-->
+<!--      <mat-icon *ngIf="weekEvent.event.meta.reservation.eclairage">highlight</mat-icon>-->
+<!--      <mat-icon style="font-size: 16px;" inline *ngIf="weekEvent.event.meta.reservation.eclairage_paye">attach_money</mat-icon>-->
+<!--    </div>-->
+    <div class="col-8 m-0 p-0 text-center align-self-center font-weight-bolder">
+<!--        <mat-divider style="border-top-color: white" [vertical]="false"></mat-divider>-->
         <mwl-calendar-event-title
-          class="font-weight-bold d-inline"
           [event]="weekEvent.event"
+          class="font-weight-bolder"
           [customTemplate]="eventTitleTemplate"
           view="week">
         </mwl-calendar-event-title>
-      </div>
-
+      <mat-icon style="font-size: 20px;" inline *ngIf="weekEvent.event.meta.reservation.eclairage_paye && !extra">attach_money</mat-icon>
+    </div>
+    <div class="col-4 text-right align-content-end align-self-center p-0" *ngIf="extra">
+<!--            <mat-icon *ngIf="weekEvent.event.meta.reservation.eclairage">highlight</mat-icon>-->
+            <mat-icon style="font-size: 20px;" inline *ngIf="weekEvent.event.meta.reservation.eclairage_paye">attach_money</mat-icon><br>
+<!--            <img *ngIf="weekEvent.event.meta.reservation.entrainement" height="20px" src="../../../assets/trainer.png">-->
+            <img *ngIf="!weekEvent.event.meta.reservation.entrainement" height="20px" src="../../../assets/player.png">
+            <img *ngIf="weekEvent.event.meta.reservation.entrainement" height="20px" src="../../../assets/trainer.png">
     </div>
 
   </div>
