@@ -123,6 +123,11 @@ export class ReservationdialogComponent implements OnInit{
     this.dialogRef.close();
   }
 
+  isNight() {
+    let d = new Date(this.data.reservation.start_date);
+    return d.getHours() >= 17;
+  }
+
   submit(value: any) {
     if (this.data.action != undefined) {
       switch (this.data.action) {
@@ -134,7 +139,6 @@ export class ReservationdialogComponent implements OnInit{
           let calls = this.membresProcessing(value);
           if (calls.length)
             forkJoin(calls).subscribe(allResults => {
-              console.log(allResults);
               this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
             });
           else this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
@@ -145,7 +149,6 @@ export class ReservationdialogComponent implements OnInit{
           let calls2 = this.membresProcessing(value);
           if (calls2.length)
             forkJoin(calls2).subscribe(allResults => {
-              console.log(allResults);
               this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
             });
           else this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));

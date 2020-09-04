@@ -49,7 +49,6 @@ export class HistoryComponent implements OnInit {
   }
 
   changeDate(date) {
-    console.log(date);
     this.fetchData(<Date>date);
   }
 }

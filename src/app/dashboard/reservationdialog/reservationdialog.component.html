@@ -168,7 +168,7 @@
 
           </div>
         </mat-accordion>
-          <div>
+          <div [hidden]="!isNight()">
             <label class="mr-4"><mat-icon>highlight</mat-icon>{{'Eclairage' | uppercase}}</label>
               <mat-slide-toggle #slide name="eclairage_paye" [ngModel]="data.reservation.eclairage_paye"
                 class="mr-2 ml-3"

@@ -98,7 +98,6 @@ export class MembreComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == null) return;
-      console.log(result);
       switch (result.action) {
         case 'add':{
           this.service.create(membre).subscribe(value => {

@@ -142,14 +142,11 @@ export class DashboardHomeComponent implements OnInit{
     {
       params = {start_date: addHours(startOfDay(this.viewDate),8).toISOString(), end_date: endOfDay(this.viewDate).toISOString()}
     }
-     else {
+     else
        params = {start_date: startOfMonth(this.viewDate).toISOString(), end_date: endOfMonth(this.viewDate).toISOString()}
-       console.log(params);
-    }
     this.events$ = this.service.getall(params)
       .pipe(map(( results: any ) => {
         return results.map((reservation: ReservationData) => {
-          console.log(reservation.terrain.id);
           return {
             title: 'Réservé',
             color: terrains[reservation.terrain.id-1].color,
@@ -202,7 +199,7 @@ export class DashboardHomeComponent implements OnInit{
         event.meta.reservation.end_date = newEnd;
         event.meta.reservation.terrain = {id: event.meta.terrain.id+1};
         this.service.patch(event.meta.reservation.id, {start_date: event.meta.reservation.start_date,
-          end_date: event.meta.reservation.end_date,})
+          end_date: event.meta.reservation.end_date, terrain: event.meta.reservation.terrain.id})
           .subscribe((result) => console.log(result), error => console.log(error));
         return {
           ...event,
@@ -281,12 +278,11 @@ export class DashboardHomeComponent implements OnInit{
 
   userChanged({ event, newUser }) {
     // event.color = newUser.color;
-    // event.meta.terrain = newUser;
+    event.meta.terrain = newUser;
     this.events = [...this.events];
   }
 
   hourSegmentClicked(date) {
-    console.log(date);
     if (isAfter(date, subMinutes(new Date(), 30)))
       this.openDialog(date);
   }

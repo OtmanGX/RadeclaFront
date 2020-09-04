@@ -20,6 +20,7 @@ mat-sidenav {
 .footer {
   position: fixed;
   height: 35px;
+  padding: 5px;
   left: 0;
   bottom: 0;
   width: 100%;

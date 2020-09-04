@@ -58,7 +58,7 @@ export class DayViewSchedulerCalendarUtils extends CalendarUtils {
 
     view.terrains.forEach((terrain, columnIndex) => {
       const events = args.events.filter(
-        (event) => event.meta.reservation.terrain.id === terrain.id+1
+        (event) => event.meta.terrain.id === terrain.id
       );
       const columnView = super.getWeekView({
         ...args,
@@ -125,6 +125,7 @@ export class DayViewSchedulerComponent extends CalendarWeekViewComponent impleme
 
   dragMove(dayEvent: WeekViewTimeEvent, dragEvent: DragMoveEvent) {
     if (this.snapDraggedEvents) {
+      console.log("drag move");
       const newUser = this.getDraggedUserColumn(dayEvent, dragEvent.x);
       const newEventTimes = this.getDragMovedEventTimes(
         dayEvent,
@@ -192,7 +193,6 @@ export class DayViewSchedulerComponent extends CalendarWeekViewComponent impleme
         minute: this.dayEndMinute,
       },
       segmentHeight: this.hourSegmentHeight,
-      // segmentHeight: this.hourSegmentHeight,
       weekendDays: this.weekendDays,
       ...getWeekViewPeriod(
         this.dateAdapter,
