@@ -11,6 +11,7 @@ export class MainViewComponent implements OnInit {
 
   events: string[] = [];
   opened: boolean;
+  date: Date;
   links: [
     {'name': 'Calendrier', link:'sss'},
     {'name': 'Membres', link:'sss'},
@@ -25,6 +26,7 @@ export class MainViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.date = new Date();
   }
 
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild,} from '@angular/core';
 import {map} from 'rxjs/operators';
 // Calendar
 import {
@@ -106,6 +106,8 @@ export class TvshowComponent implements OnInit {
   membres: Array<Membre>;
   events$: Observable<CalendarEvent<{ reservation: any }>[]>;
   params:any;
+  @Output() dateChange = new EventEmitter<Date>();
+
   constructor(private service:ReservationService) { }
 
   ngOnInit(): void {
