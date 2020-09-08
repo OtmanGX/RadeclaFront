@@ -10,7 +10,7 @@
         <mat-form-field>
           <mat-label>Terrain</mat-label>
           <mat-select name="terrain" value=1 [(ngModel)]="data.reservation.terrain.id">
-            <mat-option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">{{num}}</mat-option>
+            <mat-option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 9, 10]" [value]="num">{{num}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-radio-group name="entrainement" [value]="false" [(ngModel)]="data.reservation.entrainement" aria-label="Select an option">

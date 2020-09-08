@@ -73,11 +73,12 @@ const terrains: Terrain[] = [
     id: 6,
     name: 'Terrain 7',
     color: colors.blue,
-  },{
-    id: 8,
-    name: 'Terrain 8',
-    color: colors.blue,
   },
+  // {
+  //   id: 7,
+  //   name: 'Terrain 8',
+  //   color: colors.blue,
+  // },
   {
     id: 8,
     name: 'Terrain 9',
@@ -111,16 +112,24 @@ export class TvshowComponent implements OnInit {
   constructor(private service:ReservationService) { }
 
   ngOnInit(): void {
+
+    setInterval(()=> {this.fetchData()}, 10000);
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.viewDate = new Date();
+    this.params = {start_date: addHours(startOfDay(this.viewDate),8).toISOString(), end_date: endOfDay(this.viewDate).toISOString()}
     this.events$ = this.service.getall(this.params)
       .pipe(map(( results: any ) => {
           return results.map((reservation: ReservationData) => {
             return {
               title: this.getExtraData(reservation),
-              color: terrains[reservation.terrain.id-1].color,
+              color: terrains[reservation.terrain.matricule-1].color,
               start: new Date(reservation.start_date),
               end: new Date(reservation.end_date),
               meta: {
-                terrain: terrains[reservation.terrain.id-1],
+                terrain: terrains[reservation.terrain.matricule-1],
                 reservation: reservation,
               },
               resizable: {
@@ -132,14 +141,6 @@ export class TvshowComponent implements OnInit {
           });
         })
       );
-    setInterval(()=> {this.fetchData()}, 10000);
-    this.fetchData();
-  }
-
-  fetchData() {
-    this.viewDate = new Date();
-    this.params = {start_date: addHours(startOfDay(this.viewDate),8).toISOString(), end_date: endOfDay(this.viewDate).toISOString()}
-
     this.events$.subscribe(value => this.events = value);
   }
 

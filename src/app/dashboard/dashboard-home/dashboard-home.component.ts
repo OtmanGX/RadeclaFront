@@ -74,11 +74,12 @@ const terrains: Terrain[] = [
     id: 6,
     name: 'Terrain 7',
     color: colors.blue,
-  },{
-    id: 8,
-    name: 'Terrain 8',
-    color: colors.blue,
   },
+  // ,{
+  //   id: 7,
+  //   name: 'Terrain 8',
+  //   color: colors.blue,
+  // },
 {
     id: 8,
     name: 'Terrain 9',
@@ -149,11 +150,11 @@ export class DashboardHomeComponent implements OnInit{
         return results.map((reservation: ReservationData) => {
           return {
             title: 'Réservé',
-            color: terrains[reservation.terrain.id-1].color,
+            color: terrains[reservation.terrain.matricule-1].color,
             start: new Date(reservation.start_date),
             end: new Date(reservation.end_date),
             meta: {
-              terrain: terrains[reservation.terrain.id-1],
+              terrain: terrains[reservation.terrain.matricule-1],
               reservation: reservation,
             },
             resizable: {
@@ -181,6 +182,7 @@ export class DashboardHomeComponent implements OnInit{
       this.view = CalendarView.Day;
     }
     console.log('view changed');
+    this.activeDayIsOpen = true;
     this.fetchData(true);
   }
 
@@ -266,13 +268,18 @@ export class DashboardHomeComponent implements OnInit{
   }
 
   setView(view: CalendarView): void {
-    if (view === CalendarView.Month) this.fetchData();
-    else this.fetchData(true);
+    if (view === CalendarView.Month) {
+      this.activeDayIsOpen = false;
+    }
+    else {
+      this.activeDayIsOpen = true;
+    }
+    this.fetchData(this.activeDayIsOpen);
     this.view = view;
   }
 
   closeOpenMonthViewDay(): void {
-    this.activeDayIsOpen = false;
+    // this.activeDayIsOpen = false;
     this.fetchData(this.activeDayIsOpen);
   }
 
