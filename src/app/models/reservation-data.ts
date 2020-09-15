@@ -3,6 +3,7 @@ export class ReservationData {
   terrain: any;
   start_date : Date;
   end_date : Date;
+  duration: number;
   membre1 : any = null;
   membre2 : any = null;
   membre3 : any = null;

@@ -1,0 +1,138 @@
+<div class="container">
+
+  <mat-toolbar color="primary" class="m-0 mb-2 text-center">
+    <h1 mat-dialog-title>Membre</h1>
+  </mat-toolbar>
+  <mat-card >
+    <!--  <mat-toolbar color="primary" class="m-0 mb-2 text-center">-->
+    <!--    -->
+    <!--  </mat-toolbar>-->
+    <mat-card-content >
+      <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="formGroup">
+          <ng-template matStepLabel>Liste des personnes</ng-template>
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel *ngFor="let form of firstFormGroups; index as i">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Personne {{i+1}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  &nbsp;&nbsp;&nbsp;
+                  <mat-icon>account_circle</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <ng-template matExpansionPanelContent>
+                <form class="d-flex flex-column align-items-center justify-content-center" #f="ngForm" [formGroup]="form">
+                  <div>
+                    <mat-form-field>
+                      <mat-label>Nom</mat-label>
+                      <input matInput formControlName="nom" required maxlength="35">
+                    </mat-form-field><br>
+
+                    <mat-radio-group formControlName="sexe" aria-label="Selectionner">
+                      <mat-radio-button class="mr-2" value="H">Homme</mat-radio-button>
+                      <mat-radio-button value="F">Femme</mat-radio-button>
+                    </mat-radio-group><br>
+
+
+                    <mat-form-field>
+                      <mat-label>Télephone</mat-label>
+                      <input matInput formControlName="tel" type="tel">
+                      <mat-icon matSuffix>local_phone</mat-icon>
+                    </mat-form-field><br>
+
+                    <mat-form-field>
+                      <mat-label>E-mail</mat-label>
+                      <input matInput formControlName="mail" type="email">
+                      <mat-icon matSuffix>email</mat-icon>
+                    </mat-form-field><br>
+
+                    <mat-form-field>
+                      <mat-label>Date naissance</mat-label>
+                      <input matInput formControlName="date_naissance" type="date">
+                    </mat-form-field><br>
+
+                    <mat-form-field>
+                      <mat-label>Age</mat-label>
+                      <input matInput formControlName="age" type="number" min="3" max="100">
+                    </mat-form-field><br>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Catégorie</mat-label>
+                      <mat-select formControlName="categorie" multiple>
+                        <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+                      </mat-select>
+                    </mat-form-field> <br>
+                    <mat-slide-toggle formControlName="licence_fideration">Licence de fédération</mat-slide-toggle>
+                  </div>
+                </form>
+                <mat-action-row class="m-0 p-0">
+                  <button [disabled]="i<2" mat-icon-button color="warn" aria-label="delete button">
+                    <mat-icon (click)="deletePersonForm(i)">delete</mat-icon>
+                  </button>
+                </mat-action-row>
+              </ng-template>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <button [hidden]="!family" mat-mini-fab color="primary" class="float-right m-2" aria-label="Example icon button with a menu icon">
+            <mat-icon (click)="addPersonForm()">add</mat-icon>
+          </button>
+
+          <div class="mt-5">
+            <button mat-button color="primary" matStepperNext>Suivant</button>
+          </div>
+
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Cotisation</ng-template>
+
+          <div class="d-flex flex-column align-items-center justify-content-center">
+            <form #f="ngForm" [formGroup]="secondFormGroup">
+
+              <mat-form-field>
+                <mat-label>Type</mat-label>
+                <input matInput  formControlName="_type">
+              </mat-form-field><br>
+              <!--                <input type="hidden" formControlName="type" />-->
+
+              <mat-slide-toggle class="my-2" formControlName="paye">Payé</mat-slide-toggle>
+              <br>
+              <mat-form-field>
+                <mat-label>Montant payé</mat-label>
+                <input matInput formControlName="montant_paye" type="number">
+              </mat-form-field><br>
+
+
+
+              <mat-form-field>
+                <mat-label>Reste à payer</mat-label>
+                <input matInput formControlName="reste_paye" type="number">
+              </mat-form-field><br>
+
+              <div class="mt-4">
+                <button mat-button matStepperPrevious>Précédent</button>
+                <button mat-button color="primary" matStepperNext>Suivant</button>
+              </div>
+            </form>
+          </div>
+
+
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Fin.</ng-template>
+          <p>
+            Vous avez terminé maintenant.
+          </p>
+          <div>
+            <button mat-button matStepperPrevious>Précédent</button>
+            <button mat-button color="warn" (click)="stepper.reset()">Réinitialiser</button>
+            <button mat-button color="primary" (click)="submit()" >Valider</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </mat-card-content>
+  </mat-card>
+
+</div>

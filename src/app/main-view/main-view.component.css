@@ -13,6 +13,7 @@
 mat-sidenav {
   padding: 10px;
 }
+
 .active-button {
   background-color: #ffe6d0;
 }
@@ -30,3 +31,4 @@ mat-sidenav {
 .footer a:link {
   color: black;
 }
+

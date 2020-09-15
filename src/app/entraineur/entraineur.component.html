@@ -10,26 +10,13 @@
     <button mat-mini-fab color="accent" (click)="search(searchInput.value)">
       <mat-icon>search</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <button mat-mini-fab color="primary" (click)="opendialog()">
       <mat-icon>add</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="opendialog()">
-        <mat-icon>person</mat-icon>
-        <span>Individuel</span>
-      </button>
-      <button mat-menu-item [routerLink]="['/admin/groupe', {type: 'couple'}]">
-        <mat-icon color="warn">wc</mat-icon>
-        <span>Couple</span>
-      </button>
-      <button [routerLink]="['/admin/groupe', {type: 'family'}]" mat-menu-item>
-        <mat-icon color="primary">group</mat-icon>
-        <span>Famille</span>
-      </button>
-    </mat-menu>
+
   </div>
 
-  <table mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z2">
+  <table class="clearfix" mat-table  [dataSource]="dataSource" matSort class="mat-elevation-z2">
 
 
     <ng-container matColumnDef="id">
@@ -52,31 +39,6 @@
       <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="cat">
-      <th mat-header-cell *matHeaderCellDef> Catégorie </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-chip-list aria-label="Fish selection">
-          <mat-chip *ngFor="let cat of element.categorie">{{cat}}</mat-chip>
-        </mat-chip-list>
-
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="cot">
-      <th mat-header-cell *matHeaderCellDef> Cotisation </th>
-      <td mat-cell *matCellDef="let element"> {{element.cotisation?.type}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="paye">
-      <th mat-header-cell *matHeaderCellDef> Cotisation payé </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.cotisation?.paye ; else not" style="color: green">check_circle</mat-icon>
-        <ng-template #not>
-          <mat-icon color="warn">highlight_off</mat-icon>
-        </ng-template>
-      </td>
-    </ng-container>
-
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="actions">
@@ -85,7 +47,7 @@
         <button mat-icon-button color="accent" (click)="opendialog(true, element)" aria-label="edit butoon">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteMembre(element)" aria-label="delete button">
+        <button mat-icon-button color="warn" (click)="deleteEntraineur(element)" aria-label="delete button">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

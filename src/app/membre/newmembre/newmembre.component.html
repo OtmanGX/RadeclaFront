@@ -1,0 +1,141 @@
+<div class="container">
+
+  <mat-toolbar color="primary" class="m-0 mb-2 text-center">
+    <h1 mat-dialog-title>Membre</h1>
+  </mat-toolbar>
+  <mat-card >
+    <!--  <mat-toolbar color="primary" class="m-0 mb-2 text-center">-->
+    <!--    -->
+    <!--  </mat-toolbar>-->
+    <mat-card-content *ngIf="firstFormGroup">
+      <mat-horizontal-stepper [linear]="true" #stepper>
+          <mat-step [stepControl]="firstFormGroup">
+            <ng-template matStepLabel>Informations générales</ng-template>
+            <form class="d-flex flex-column align-items-center justify-content-center" #f="ngForm" [formGroup]="firstFormGroup">
+              <div>
+                <mat-form-field>
+                  <mat-label>Nom</mat-label>
+                  <input matInput formControlName="nom" required maxlength="35">
+                </mat-form-field><br>
+
+                <mat-radio-group formControlName="sexe" aria-label="Selectionner">
+                  <mat-radio-button class="mr-2" value="H">Homme</mat-radio-button>
+                  <mat-radio-button value="F">Femme</mat-radio-button>
+                </mat-radio-group><br>
+
+                <mat-radio-group formControlName="entraineur" [value]="false" aria-label="Selectionner">
+                  <mat-radio-button color="primary" class="mr-2" [value]="false">Joueur</mat-radio-button>
+                  <mat-radio-button color="primary" [value]="true">Entraineur</mat-radio-button>
+                </mat-radio-group><br>
+
+
+                <mat-form-field>
+                  <mat-label>Télephone</mat-label>
+                  <input matInput formControlName="tel" type="tel">
+                  <mat-icon matSuffix>local_phone</mat-icon>
+                </mat-form-field><br>
+
+                <mat-form-field>
+                  <mat-label>E-mail</mat-label>
+                  <input matInput formControlName="mail" type="email">
+                  <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field><br>
+
+                <mat-form-field>
+                  <mat-label>Date naissance</mat-label>
+                  <input matInput formControlName="date_naissance" type="date">
+                </mat-form-field><br>
+
+                <mat-form-field>
+                  <mat-label>Age</mat-label>
+                  <input matInput formControlName="age" type="number" min="3" max="100">
+                </mat-form-field><br>
+                <mat-form-field appearance="fill">
+                  <mat-label>Catégorie</mat-label>
+                  <mat-select formControlName="categorie" multiple>
+                    <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+                  </mat-select>
+                </mat-form-field> <br>
+                <mat-slide-toggle formControlName="tournoi">Participe aux tournois</mat-slide-toggle><br>
+                <mat-slide-toggle color="primary" formControlName="licence_fideration">Licence de fédération</mat-slide-toggle>
+              </div>
+              <div class="mt-4">
+                <button mat-button color="primary" matStepperNext>Suivant</button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>Cotisation</ng-template>
+
+            <div class="d-flex flex-column align-items-center justify-content-center">
+
+              <mat-slide-toggle color="warn" #cotisation class="my-2">Cotisation</mat-slide-toggle>
+              <form *ngIf="cotisation.checked" #f="ngForm" [formGroup]="secondFormGroup">
+
+
+                <mat-form-field>
+                  <mat-label>Type</mat-label>
+                  <input matInput  formControlName="_type">
+                </mat-form-field><br>
+<!--                <input type="hidden" formControlName="type" />-->
+
+                <mat-slide-toggle class="my-2" formControlName="paye">Payé</mat-slide-toggle>
+                <br>
+                <mat-form-field>
+                  <mat-label>Montant payé</mat-label>
+                  <input matInput formControlName="montant_paye" type="number">
+                </mat-form-field><br>
+
+
+
+                <mat-form-field>
+                  <mat-label>Reste à payer</mat-label>
+                  <input matInput formControlName="reste_paye" type="number">
+                </mat-form-field><br>
+
+                <mat-tree *ngIf="cotisation" [dataSource]="dataSource" [treeControl]="treeControl">
+                  <!-- This is the tree node template for leaf nodes -->
+                  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <!-- use a disabled button to provide padding for tree leaf -->
+                    <button mat-icon-button disabled></button>
+                    {{node.name}}
+                  </mat-tree-node>
+                  <!-- This is the tree node template for expandable nodes -->
+                  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                    <button mat-icon-button matTreeNodeToggle
+                            [attr.aria-label]="'Toggle ' + node.name">
+                      <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                      </mat-icon>
+                    </button>
+                    {{node.name}}
+                  </mat-tree-node>
+                </mat-tree>
+              </form>
+
+              <div class="mt-4">
+                <button mat-button matStepperPrevious>Précédent</button>
+                <button mat-button color="primary" matStepperNext>Suivant</button>
+              </div>
+            </div>
+
+
+          </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Fin.</ng-template>
+          <p>
+            Vous avez terminé maintenant.
+          </p>
+          <div>
+            <button mat-button matStepperPrevious>Précédent</button>
+            <button mat-button color="warn" (click)="stepper.reset()">Réinitialiser</button>
+            <button mat-button color="primary" (click)="submit()" >Valider</button>
+          </div>
+          </mat-step>
+      </mat-horizontal-stepper>
+    </mat-card-content>
+  </mat-card>
+
+</div>

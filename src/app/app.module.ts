@@ -49,6 +49,13 @@ import { HistoryComponent } from './history/history.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { TvshowComponent } from './tvshow/tvshow.component';
+import { NewmembreComponent } from './membre/newmembre/newmembre.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatChipsModule} from '@angular/material/chips';
+import { AddGroupComponent } from './membre/add-group/add-group.component';
+import { EntraineurComponent } from './entraineur/entraineur.component';
+import {MatTreeModule} from '@angular/material/tree';
+import { DhomeComponent } from './dhome/dhome.component';
 
 registerLocaleData(localeFr);
 
@@ -65,6 +72,10 @@ registerLocaleData(localeFr);
     AddMembreComponent,
     HistoryComponent,
     TvshowComponent,
+    NewmembreComponent,
+    AddGroupComponent,
+    EntraineurComponent,
+    DhomeComponent,
   ],
     imports: [
         BrowserModule,
@@ -103,6 +114,9 @@ registerLocaleData(localeFr);
         MatExpansionModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatStepperModule,
+        MatChipsModule,
+        MatTreeModule,
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],

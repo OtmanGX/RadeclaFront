@@ -1,7 +1,20 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {ReservationData} from '../../models/reservation-data';
 import {CalendarEvent} from 'angular-calendar';
-
+import {
+  addHours,
+  isAfter,
+  endOfDay,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  startOfDay,
+  startOfMonth,
+  addMinutes,
+  subMinutes,
+  endOfHour,
+  differenceInHours
+} from 'date-fns';
 
 @Component({
   selector: 'app-reservation-table',
@@ -19,7 +32,9 @@ export class ReservationTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.reservations = this.dataSource.map((item:CalendarEvent) => {
-      return item.meta.reservation;
+      let reservation = item.meta.reservation;
+      reservation.end_date = addHours(new Date(reservation.start_date), reservation.duration);
+      return reservation;
     })
   }
 

@@ -3,6 +3,11 @@
                (closed)="events.push('close!')">
     <mat-list>
       <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['dashboard']" >
+          <mat-icon>dashboard</mat-icon>Tableau de bord
+        </button>
+      </mat-list-item>
+      <mat-list-item routerLinkActive="active-button">
         <button mat-button [routerLink]="['calendar']" >
           <mat-icon>event</mat-icon>Calendrier
         </button>
@@ -11,6 +16,12 @@
       <mat-list-item routerLinkActive="active-button">
         <button mat-button [routerLink]="['membres']">
           <mat-icon>people</mat-icon>Membres
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['entraineur']">
+          <mat-icon>sports</mat-icon>Entraineurs
         </button>
       </mat-list-item>
       <mat-divider></mat-divider>

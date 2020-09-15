@@ -1,9 +1,10 @@
 <div class="d-flex flex-column align-items-center justify-content-center">
   <mat-toolbar color="primary" class="m-0 mb-2 text-center">
-    <h1 mat-dialog-title>Membre</h1>
+    <h1 mat-dialog-title>Entraineur</h1>
   </mat-toolbar>
   <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
     <div mat-dialog-content>
+      <input name="entraineur" type="hidden" [(ngModel)]="data.membre.entraineur">
       <mat-form-field>
         <mat-label>Nom</mat-label>
         <input matInput name="nom" [(ngModel)]="data.membre.nom" required maxlength="35">
@@ -38,6 +39,7 @@
 
       <button *ngIf="data.edit" type="submit" (click)="data.action = 'delete'" mat-fab color="warn" matTooltip="Supprimer" aria-label="Add button" cdkFocusInitial>
         <mat-icon>delete</mat-icon>
+
       </button>
     </div>
   </form>

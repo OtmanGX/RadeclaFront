@@ -10,6 +10,7 @@ import {Membre} from '../../models/membre';
 // Calendar
 import {
   isSameDay,
+  addHours,
   addDays,
   isAfter,
   isBefore,
@@ -61,25 +62,38 @@ export class ReservationdialogComponent implements OnInit{
     this.memService.getAllByPage({all:true}).subscribe(value => {
       this.membres = value;
       this.setFiltering();
-      if (this.data.reservation.membre1 !== null) {
-        this.member1Verified = true;
-        this.member1 = this.getMember(this.data.reservation.membre1.id);
-      }
-      if (this.data.reservation.membre2 !== null) {
-        console.log("membre2 not null");
-        this.member2Verified = true;
-        this.member2 = this.getMember(this.data.reservation.membre2.id);
-      }
-      if (this.data.reservation.membre3 !== null) {
-        console.log("membre3 not null");
-        this.member3Verified = true;
-        this.member3 = this.getMember(this.data.reservation.membre3.id);
-      }
-      if (this.data.reservation.membre4 != null) {
-        console.log("membre4 not null");
-        this.member4Verified = true;
-        this.member4 = this.getMember(this.data.reservation.membre4.id);
-      }
+      if (this.data.edit)
+        if (this.data.reservation.players.length == 2) {
+          if (this.data.reservation.players[0] !== null) {
+            this.member1Verified = true;
+            this.member1 = this.getMember(this.data.reservation.players[0].id);
+          }
+          if (this.data.reservation.players[1] !== null) {
+            console.log("membre3 not null");
+            this.member3Verified = true;
+            this.member3 = this.getMember(this.data.reservation.players[1].id);
+          }
+        } else {
+          if (this.data.reservation.players[0] !== null) {
+            this.member1Verified = true;
+            this.member1 = this.getMember(this.data.reservation.players[0].id);
+          }
+          if (this.data.reservation.players[1] !== null) {
+            console.log("membre2 not null");
+            this.member2Verified = true;
+            this.member2 = this.getMember(this.data.reservation.players[1].id);
+          }
+          if (this.data.reservation.players[2] !== null) {
+            console.log("membre3 not null");
+            this.member3Verified = true;
+            this.member3 = this.getMember(this.data.reservation.players[2].id);
+          }
+          if (this.data.reservation.players[3] != null) {
+            console.log("membre4 not null");
+            this.member4Verified = true;
+            this.member4 = this.getMember(this.data.reservation.players[3].id);
+          }
+        }
 
     })
 
@@ -133,7 +147,8 @@ export class ReservationdialogComponent implements OnInit{
       switch (this.data.action) {
         case 'add':
           value.start_date = this.data.reservation.start_date;
-          value.end_date = this.data.reservation.end_date;
+          value.duration = 1;
+          // value.end_date = this.data.reservation.end_date;
           // value.end_date = new Date(value.start_date);
           // value.end_date.setMinutes(value.end_date.getMinutes() + 59);
           let calls = this.membresProcessing(value);
@@ -166,23 +181,23 @@ export class ReservationdialogComponent implements OnInit{
 
   membresProcessing(value: any) {
     let calls = [];
-
+    value.players = []
     if (this.member1Verified)
-      value.membre1 = this.getMembreId(this.member1.nom);
+    value.players.push(this.getMembreId(this.member1.nom));
     else if (this.member1.nom != undefined && this.member1.nom !== '')
-      calls.push(this.memService.create(this.member1).pipe(tap(res => value.membre1 = (<Membre>res).id)));
-    if (this.member2Verified)
-      value.membre2 = this.getMembreId(this.member2.nom);
-    else if (this.member2.nom != undefined && this.member2.nom !== '')
-      calls.push(this.memService.create(this.member2).pipe(tap(res => value.membre2 = (<Membre>res).id)));
+      calls.push(this.memService.create(this.member1).pipe(tap(res => value.players.push((<Membre>res).id))));
     if (this.member3Verified)
-      value.membre3 = this.getMembreId(this.member3.nom);
+      value.players.push(this.getMembreId(this.member3.nom));
     else if (this.member3.nom != undefined && this.member3.nom !== '')
-      calls.push(this.memService.create(this.member3).pipe(tap(res => value.membre3 = (<Membre>res).id)));
+      calls.push(this.memService.create(this.member3).pipe(tap(res => value.players.push((<Membre>res).id))));
+    if (this.member2Verified)
+      value.players.push(this.getMembreId(this.member2.nom));
+    else if (this.member2.nom != undefined && this.member2.nom !== '')
+      calls.push(this.memService.create(this.member2).pipe(tap(res => value.players.push((<Membre>res).id))));
     if (this.member4Verified)
-      value.membre4 = this.getMembreId(this.member4.nom);
+      value.players.push(this.getMembreId(this.member4.nom));
     else if (this.member4.nom != undefined && this.member4.nom !== '')
-      calls.push(this.memService.create(this.member4).pipe(tap(res => value.membre4 = (<Membre>res).id)));
+      calls.push(this.memService.create(this.member4).pipe(tap(res => value.players.push((<Membre>res).id))));
     return calls;
     }
 

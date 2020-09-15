@@ -7,13 +7,21 @@ import {MainViewComponent} from './main-view/main-view.component';
 import {MembreComponent} from './membre/membre.component';
 import {HistoryComponent} from './history/history.component';
 import {TvshowComponent} from './tvshow/tvshow.component';
+import {NewmembreComponent} from './membre/newmembre/newmembre.component';
+import {AddGroupComponent} from './membre/add-group/add-group.component';
+import {EntraineurComponent} from './entraineur/entraineur.component';
+import {DhomeComponent} from './dhome/dhome.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', component: LoginComponent},
   {path: 'admin',canActivate:[AuthGuard], component: MainViewComponent, children: [
-      {path:'', redirectTo: 'calendar', pathMatch: 'full'},
+      {path:'', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path:'dashboard', component: DhomeComponent},
       {path:'membres', component: MembreComponent},
+      {path:'entraineur', component: EntraineurComponent},
+      {path:'membre', component: NewmembreComponent},
+      {path:'groupe', component: AddGroupComponent},
       {path:'calendar', component: DashboardHomeComponent},
       {path:'history', component: HistoryComponent},
       {path:'tvshow', component: TvshowComponent},

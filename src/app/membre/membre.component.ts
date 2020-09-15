@@ -11,6 +11,8 @@ import {Membre} from '../models/membre';
 import {exitCodeFromResult} from '@angular/compiler-cli';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute, Route, Router} from '@angular/router';
+import {CotisationService} from '../services/cotisation.service';
 
 @Component({
   selector: 'app-membre',
@@ -19,7 +21,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class MembreComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail', 'actions'];
+  displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail','cat','cot', 'paye', 'actions'];
   membres$: Observable<any>;
   membres: Array<Membre>;
   length: number;
@@ -29,25 +31,30 @@ export class MembreComponent implements OnInit {
   private _hide: boolean = true;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private service: MembreService,
+  constructor(
+              private membreService: MembreService,
+              private cotisationService: CotisationService,
               private matPaginator: MatPaginatorIntl,
               private _snackBar: MatSnackBar,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public router:Router) {
   }
 
 
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
-    this.httpParams = {page_size: 10, page: this.pageIndex + 1};
+    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false};
     this.matPaginator.itemsPerPageLabel = "Elements par page:";
     this.matPaginator.nextPageLabel = "Page suivante";
     this.matPaginator.previousPageLabel = "Page précédente";
+    this.matPaginator.firstPageLabel = "Première Page";
+    this.matPaginator.lastPageLabel = "Dernière Page";
     this.fetchData();
   }
 
   fetchData() {
-    this.membres$ = this.service.getAllByPage(this.httpParams);
+    this.membres$ = this.membreService.getAllByPage(this.httpParams);
     this.membres$.subscribe(
       value => {
         // this.dataSource = new MatTableDataSource(value.results);
@@ -91,37 +98,26 @@ export class MembreComponent implements OnInit {
     if (membre == null) {
       membre = new Membre();
     }
-    const dialogRef = this.dialog.open(AddMembreComponent, {
-      width: '850px',
-      panelClass: 'panel-dialog',
-      data: {membre: membre, edit: edit},
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == null) return;
-      switch (result.action) {
-        case 'add':{
-          this.service.create(membre).subscribe(value => {
-            console.log(value);
-            this.openSnackBar('Membre a été ajouté avec succès', 'Ok')
-            this.fetchData();
-          })
-          break;
-        }
-        case 'modify': {
-          this.service.update(membre.id, membre).subscribe(value => {
-            console.log(value);
-            this.openSnackBar('Membre a été modifié avec succès', 'Ok')
-            this.fetchData();
-          })
-          break;
-        }
-        case 'delete': {
-          this.deleteMembre(membre.id);
-          break;
-        }
-      }
-    });
+    let params = {};
+    if (edit)
+        params = {id: membre.id};
+    // if (edit) {
+    //   if (membre.cotisation?.type === "individuel")
+    //   {
+    //     params = {id: membre.id};
+    //     this.router.navigate(['/admin/membre', params]);
+    //   } else {
+    //     params = {id: membre.cotisation.id};
+    //     this.router.navigate(['/admin/groupe', params]);
+    //   }
+    // }
+    this.router.navigate(['/admin/membre', params]);
   }
+
+  addgroup() {
+
+  }
+
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
@@ -129,11 +125,12 @@ export class MembreComponent implements OnInit {
     });
   }
 
-  deleteMembre(id:number) {
-    this.service.delete(id).subscribe(value => {
+  deleteMembre(membre: Membre) {
+    this.membreService.delete(membre.id).subscribe(value => {
       console.log(value);
       this.openSnackBar('Membre a été supprimé avec succès', 'Ok')
       this.fetchData();
+      this.cotisationService.delete(membre.cotisation.id).subscribe();
     })
   }
 }

@@ -12,7 +12,10 @@ import {
   startOfMonth,
   addMinutes,
   subMinutes,
-  endOfHour
+  endOfHour,
+  differenceInHours,
+  differenceInMinutes
+  , isBefore,
 } from 'date-fns';
 import {Observable, Subject} from 'rxjs';
 import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, DAYS_OF_WEEK,} from 'angular-calendar';
@@ -136,6 +139,7 @@ export class DashboardHomeComponent implements OnInit{
   ngOnInit(): void {
     this.fetchData();
   }
+
   fetchData(day=false) {
     let params = {};
     // @ts-ignore
@@ -152,7 +156,7 @@ export class DashboardHomeComponent implements OnInit{
             title: 'Réservé',
             color: terrains[reservation.terrain.matricule-1].color,
             start: new Date(reservation.start_date),
-            end: new Date(reservation.end_date),
+            end: addMinutes(new Date(reservation.start_date), reservation.duration*60-1),
             meta: {
               terrain: terrains[reservation.terrain.matricule-1],
               reservation: reservation,
@@ -196,12 +200,17 @@ export class DashboardHomeComponent implements OnInit{
     this.events$ = this.events$.pipe(map(events => { return events.map((iEvent) => {
       if (iEvent.meta.reservation.id === event.meta.reservation.id) {
         console.log('found');
-        newEnd = endOfHour(subMinutes(newEnd, 2));
+        // newEnd = endOfHour(subMinutes(newEnd, 2));
         event.meta.reservation.start_date = newStart;
+        console.log(newStart);
+        console.log(newEnd);
+        // event.meta.reservation.duration = differenceInHours(newEnd, newStart);
         event.meta.reservation.end_date = newEnd;
         event.meta.reservation.terrain = {id: event.meta.terrain.id+1};
+        let duration = Math.round(differenceInMinutes(newEnd, newStart)/60);
+        console.log(duration);
         this.service.patch(event.meta.reservation.id, {start_date: event.meta.reservation.start_date,
-          end_date: event.meta.reservation.end_date, terrain: event.meta.reservation.terrain.id})
+          duration: duration, terrain: event.meta.reservation.terrain.id})
           .subscribe((result) => console.log(result), error => console.log(error));
         return {
           ...event,
@@ -298,10 +307,14 @@ export class DashboardHomeComponent implements OnInit{
     let reservation: ReservationData  = new ReservationData();
     if (!edit) {
       reservation.start_date = event;
-      reservation.end_date = addMinutes(event, 59);
+      reservation.duration = 1;
+      reservation.end_date = addHours(event, 1);
       reservation.terrain = {id: 1};
     } else
+    {
       reservation = event.meta.reservation;
+      reservation.end_date = addHours(new Date(reservation.start_date), reservation.duration);;
+    }
 
     const dialogRef = this.dialog.open(ReservationdialogComponent, {
       width: '850px',

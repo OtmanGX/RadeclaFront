@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <div class="row mb-2 h-100">
+    <div class="col-3">
+      <mat-card class="p-0">
+        <mat-card-header class="gradient-title text-light p-1">
+          <mat-card-title class="font-weight-bold">
+            Adhérants
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-2">
+          <p class="mat-display-1">
+            {{nmembres}}
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-3">
+      <mat-card class="p-0">
+        <mat-card-header class="gradient-title text-light p-1">
+          <mat-card-title class="font-weight-bold">
+            Personnes externes
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-2">
+          <p class="mat-display-1">
+            {{nexternes}}
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-3">
+      <mat-card class="p-0">
+        <mat-card-header class="gradient-title text-light p-1">
+          <mat-card-title class="font-weight-bold">
+            Entraineurs
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-2">
+          <p class="mat-display-1">
+            {{nentraineurs}}
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-3">
+      <mat-card class="p-0">
+        <mat-card-header class="gradient-title text-light p-1">
+          <mat-card-title class="font-weight-bold">
+            Moyenne d'heures de jeu
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-2">
+          <p class="mat-display-1">
+            {{avg_hours}} h/jour
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+
+  </div>
+<div class="row h-100">
+  <div class="col-6 mb-2">
+    <mat-card class="p-0 h-100">
+      <mat-card-header class="mat-primary text-light p-1">
+        <mat-card-title class="font-weight-bold">
+          Le taux d'occupation des terrains
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="row align-self-center align-middle text-center p-3">
+          <canvas class="col-6 d-inline" #barChart></canvas>
+          <canvas class="col-6 d-inline" #barChart2></canvas>
+          <canvas class="col-6 d-inline" #barChart3></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-6 mb-2">
+    <mat-card class="p-0 mb-1">
+      <mat-card-header class="mat-primary text-light p-1">
+        <mat-card-title class="font-weight-bold">
+          le nombre d'heures jouées par chaque entraîneur
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas height="100px" #barHorizontalChart></canvas>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="p-0">
+      <mat-card-header class="mat-primary text-light p-1">
+        <mat-card-title class="font-weight-bold">
+          les heures les plus demandées
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas height="100px" #hourchart></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+<!--  <div class="col-6 mb-2">-->
+<!--    <mat-card class="p-0 h-100">-->
+<!--      <mat-card-header class="mat-primary text-light p-1">-->
+<!--        <mat-card-title class="font-weight-bold">-->
+<!--          les heures les plus demandées-->
+<!--        </mat-card-title>-->
+<!--      </mat-card-header>-->
+<!--      <mat-card-content>-->
+<!--        <canvas #hourchart></canvas>-->
+<!--      </mat-card-content>-->
+<!--    </mat-card>-->
+<!--  </div>-->
+</div>
+
+
+</div>
+
