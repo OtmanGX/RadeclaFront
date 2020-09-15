@@ -127,7 +127,7 @@ export class TvshowComponent implements OnInit {
               title: this.getExtraData(reservation),
               color: terrains[reservation.terrain.matricule-1].color,
               start: new Date(reservation.start_date),
-              end: new Date(reservation.end_date),
+              end: addMinutes(new Date(reservation.start_date), reservation.duration*60-1),
               meta: {
                 terrain: terrains[reservation.terrain.matricule-1],
                 reservation: reservation,
@@ -145,10 +145,10 @@ export class TvshowComponent implements OnInit {
   }
 
   getExtraData(reservation:ReservationData) {
-    if (reservation.membre2) {
-      return `${reservation.membre1.nom.toUpperCase()} <br> ${reservation.membre3.nom.toUpperCase()} <br>X<br>
-              ${reservation.membre2.nom} <br>${reservation.membre4.nom.toUpperCase()}`
-    } else return `${reservation.membre1.nom.toUpperCase()} <br>X <br> ${reservation.membre3.nom.toUpperCase()}`;
+    if (reservation.players.length>2) {
+      return `${reservation.players[0].nom.toUpperCase()} <br> ${reservation.players[1].nom.toUpperCase()} <br>X<br>
+              ${reservation.players[2].nom} <br>${reservation.players[3].nom.toUpperCase()}`
+    } else return `${reservation.players[0].nom.toUpperCase()} <br>X <br> ${reservation.players[1].nom.toUpperCase()}`;
   }
 
 }

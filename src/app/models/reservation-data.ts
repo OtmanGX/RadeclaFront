@@ -8,6 +8,7 @@ export class ReservationData {
   membre2 : any = null;
   membre3 : any = null;
   membre4 : any = null;
+  players: any;
   eclairage : boolean = false;
   eclairage_paye : boolean = false;
   entrainement : boolean = false;
