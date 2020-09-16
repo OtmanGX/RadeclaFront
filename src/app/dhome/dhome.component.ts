@@ -67,10 +67,9 @@ export class DhomeComponent implements OnInit {
       )
 
       this.createHorizontalBarChart(this.barHorizontalChart,
-        'Nombre d\'heures par entraineur',
-        value.entraineur.map(val => val.nom),
-        value.entraineur.map(val => val.total),
-        true
+        value.entraineur[0].map(val => val.nom),
+        value.entraineur.map(val => val.map(val => val.total)),
+        'Nombre d\'heures par entraineur'
       )
 
       this.nentraineurs = value.nentraineurs;
@@ -132,7 +131,9 @@ export class DhomeComponent implements OnInit {
             },
             ticks: {
               beginAtZero: true,
-              // stepSize: 1
+              autoSkip: true,
+              autoSkipPadding: 25,
+              stepSize: 1
             }
           }]
         }
@@ -140,18 +141,32 @@ export class DhomeComponent implements OnInit {
     });
   }
 
-  createHorizontalBarChart(chart, label, labels, data, legend?) {
+  createHorizontalBarChart(chart, labels, data, legend?) {
     let bars = new Chart(chart.nativeElement, {
       type: 'horizontalBar',
       data: {
         labels: labels,
-        datasets: [{
-          label: label,
-          data: data,
+        datasets: [
+          {
+          label: 'Ce mois',
+          data: data[0],
           backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
           borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
-          borderWidth: 1
-        }]
+        },
+        {
+          label: 'Cette semaine',
+          data: data[1],
+          backgroundColor: 'rgb(221,128,89)', // array should have same number of elements as number of dataset
+          borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+        },
+          {
+          label: 'Ce jour',
+          data: data[2],
+          backgroundColor: 'rgb(89,137,221)', // array should have same number of elements as number of dataset
+          borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+        },
+
+        ]
       },
       options: {
         legend: {
@@ -164,6 +179,10 @@ export class DhomeComponent implements OnInit {
         },
         scales: {
           xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Heures',
+            },
             gridLines: {
               display: true,
               drawBorder: true,
@@ -171,7 +190,9 @@ export class DhomeComponent implements OnInit {
             },
             ticks: {
               beginAtZero: true,
-              // stepSize: 1
+              autoSkip: true,
+              autoSkipPadding: 25,
+              stepSize: 1
             }
           }],
           yAxes: [{
