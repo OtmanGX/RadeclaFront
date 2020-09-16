@@ -95,7 +95,7 @@ export class AddGroupComponent implements OnInit {
       mail: [''],
       date_naissance: [null],
       age: [null],
-      categorie: [null, Validators.required],
+      categorie: [[]],
       licence_fideration: [false],
     }));
     this.formGroup.setControl("formArray", this._formBuilder.array(this.firstFormGroups));

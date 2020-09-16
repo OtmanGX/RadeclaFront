@@ -59,7 +59,7 @@ export class DhomeComponent implements OnInit {
       )
 
       this.createBarChart(this.hourchart,
-        value.hours.map(val => val.hour+":00"),
+        value.hours.map(val => val.hour+1+":00"),
         value.hours.map(val => val.nb),
         'Nombre de fois',
         'Heure',
@@ -132,7 +132,7 @@ export class DhomeComponent implements OnInit {
             },
             ticks: {
               beginAtZero: true,
-              stepSize: 1
+              // stepSize: 1
             }
           }]
         }
@@ -171,7 +171,7 @@ export class DhomeComponent implements OnInit {
             },
             ticks: {
               beginAtZero: true,
-              stepSize: 1
+              // stepSize: 1
             }
           }],
           yAxes: [{
@@ -182,7 +182,7 @@ export class DhomeComponent implements OnInit {
             },
             ticks: {
               beginAtZero: true,
-              stepSize: 1
+              // stepSize: 1
             }
           }]
         }

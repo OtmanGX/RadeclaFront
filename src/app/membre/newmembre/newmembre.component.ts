@@ -46,10 +46,10 @@ export class NewmembreComponent implements OnInit {
 
   memberId;
   member;
-  cotisation;
+  membreCotisation = null;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  categories = ['11ans', '12ans', '13-14 ans', '7-10 ans', 'Grade 1', 'Grade 2', 'Grade 3'];
+  categories = ['11ans', '12ans', '13-14 ans', '7-10 ans', 'Grade 1', 'Grade 2', 'Grade 3', 'Vétéran +35', 'Vétéran +45'];
 
   // Tree Section
   private _transformer = (node: FoodNode, level: number) => {
@@ -96,8 +96,9 @@ export class NewmembreComponent implements OnInit {
         this.cotisationService.get(membre.cotisation.id).subscribe(value =>
         {
           console.log(value);
-          this.cotisation = value;
-          this.cotisation.membres.forEach(elem => TREE_DATA[0].children.push({name: elem}))
+          this.membreCotisation = value;
+          console.log(this.membreCotisation);
+          this.membreCotisation.membres.forEach(elem => TREE_DATA[0].children.push({name: elem}))
           this.dataSource.data = TREE_DATA; // Tree
           console.log(TREE_DATA);
         });
@@ -111,18 +112,21 @@ export class NewmembreComponent implements OnInit {
         licence_fideration: [membre.licence_fideration],
         tournoi: [membre.tournoi],
         entraineur: [membre.entraineur],
-        categorie: [membre.categorie, Validators.required]
+        categorie: [membre.categorie]
       });
       if (membre.cotisation != null)
-      this.secondFormGroup = this._formBuilder.group({
-        _type: new FormControl({value: membre.cotisation.type, disabled: true}),
-        type: new FormControl({value: membre.cotisation.type, disabled: false}),
-        paye: [membre.cotisation.paye, Validators.required],
-        id: [membre.cotisation.id],
-        montant_paye: [membre.cotisation.montant_paye],
-        membres: [[membre.nom]],
-        reste_paye: [membre.cotisation.reste_paye],
-      });
+      {
+        this.membreCotisation = membre.cotisation;
+        this.secondFormGroup = this._formBuilder.group({
+          _type: new FormControl({value: membre.cotisation.type, disabled: true}),
+          type: new FormControl({value: membre.cotisation.type, disabled: false}),
+          paye: [membre.cotisation.paye, Validators.required],
+          id: [membre.cotisation.id],
+          montant_paye: [membre.cotisation.montant_paye],
+          membres: [[membre.nom]],
+          reste_paye: [membre.cotisation.reste_paye],
+        });
+      }
     });
     else
       this.firstFormGroup = this._formBuilder.group({
@@ -132,7 +136,7 @@ export class NewmembreComponent implements OnInit {
         mail: [''],
         date_naissance: [null],
         age: [null],
-        categorie: [null, Validators.required],
+        categorie: [[]],
         tournoi: [false],
         entraineur: [false],
         licence_fideration: [false],
@@ -172,6 +176,7 @@ export class NewmembreComponent implements OnInit {
               console.log(this.secondFormGroup.value);
               this.cotisationService.create(this.secondFormGroup.value).subscribe(() => {
                 this.openSnackBar('Membre a été ajouté avec succès', 'Ok');
+                this.router.navigate(['admin/membres']);
               });
             } else this.router.navigate(['admin/membres']);
           })

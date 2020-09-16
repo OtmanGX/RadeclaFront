@@ -148,7 +148,7 @@ export class TvshowComponent implements OnInit {
     if (reservation.players.length>2) {
       return `${reservation.players[0].nom.toUpperCase()} <br> ${reservation.players[1].nom.toUpperCase()} <br>X<br>
               ${reservation.players[2].nom} <br>${reservation.players[3].nom.toUpperCase()}`
-    } else return `${reservation.players[0].nom.toUpperCase()} <br>X <br> ${reservation.players[1].nom.toUpperCase()}`;
+    } else if (reservation.players.length ===2) return `${reservation.players[0].nom.toUpperCase()} <br>X <br> ${reservation.players[1].nom.toUpperCase()}`;
   }
 
 }
