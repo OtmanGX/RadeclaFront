@@ -2,7 +2,7 @@ div.cal-day-headers {
   background-color: rgb(255,215,0);
 }
 div.cal-header {
-  background-color: rgb(255,215,0);
+  background-color: rgb(255, 215, 0);
 }
 
 div.cal-hour-segment {
@@ -29,11 +29,11 @@ div.cal-hour-segment {
 }
 
 .cal-event-training {
-  background-color: #EF476F;
+  background-color: #503D42;
 }
 
 .cal-event-match {
-  background-color: blue
+  background-color: #0000ff
 }
 
 
