@@ -14,11 +14,10 @@ div.cal-hour-segment {
 }
 
  .cal-hour-pair {
-   background-color: #8AE234;
+   background-color: #8ae234;
  }
 
 .cal-week-view .cal-event {
-  background-color: darkblue;
   color: wheat;
   text-align: center;
   margin: 0;
@@ -29,6 +28,13 @@ div.cal-hour-segment {
   line-height: 1.3;
 }
 
+.cal-event-training {
+  background-color: #EF476F;
+}
+
+.cal-event-match {
+  background-color: blue
+}
 
 
 /*.cal-cell-row {*/

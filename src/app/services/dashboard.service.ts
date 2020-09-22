@@ -18,4 +18,8 @@ export class DashboardService extends APIService {
     return this.http.get(`${this.baseurl}`);
   }
 
+  terrain_stats(params) {
+    return this.http.get(`${this.baseurl}terrains`,{params: params});
+  }
+
 }

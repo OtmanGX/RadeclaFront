@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,6 +56,8 @@ import { AddGroupComponent } from './membre/add-group/add-group.component';
 import { EntraineurComponent } from './entraineur/entraineur.component';
 import {MatTreeModule} from '@angular/material/tree';
 import { DhomeComponent } from './dhome/dhome.component';
+import { TauxTerrainsComponent } from './history/taux-terrains/taux-terrains.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 registerLocaleData(localeFr);
 
@@ -76,50 +78,53 @@ registerLocaleData(localeFr);
     AddGroupComponent,
     EntraineurComponent,
     DhomeComponent,
+    TauxTerrainsComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        MatFormFieldModule,
-        MatIconModule,
-        BrowserAnimationsModule,
-        MatInputModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatDividerModule,
-        MatMenuModule,
-        LayoutModule,
-        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
-        FormsModule,
-        NgbModule,
-        MatDialogModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatToolbarModule,
-        MatBadgeModule,
-        MatSlideToggleModule,
-        MatTooltipModule,
-        MatRadioModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MatSnackBarModule,
-        MatSidenavModule,
-        MatListModule,
-        AppRoutingModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatAutocompleteModule,
-        MatExpansionModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatStepperModule,
-        MatChipsModule,
-        MatTreeModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatDividerModule,
+    MatMenuModule,
+    LayoutModule,
+    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
+    FormsModule,
+    NgbModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatToolbarModule,
+    MatBadgeModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatListModule,
+    AppRoutingModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatChipsModule,
+    MatTreeModule,
+    MatTabsModule,
+  ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {provide: LOCALE_ID, useValue: "fr-FR"}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

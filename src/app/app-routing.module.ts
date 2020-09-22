@@ -5,12 +5,13 @@ import { DashboardHomeComponent} from './dashboard/dashboard-home/dashboard-home
 import {AuthGuard} from './services/auth.guard';
 import {MainViewComponent} from './main-view/main-view.component';
 import {MembreComponent} from './membre/membre.component';
-import {HistoryComponent} from './history/history.component';
 import {TvshowComponent} from './tvshow/tvshow.component';
 import {NewmembreComponent} from './membre/newmembre/newmembre.component';
 import {AddGroupComponent} from './membre/add-group/add-group.component';
 import {EntraineurComponent} from './entraineur/entraineur.component';
 import {DhomeComponent} from './dhome/dhome.component';
+import {HistoryComponent} from './history/history.component';
+import {TauxTerrainsComponent} from './history/taux-terrains/taux-terrains.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
       {path:'calendar', component: DashboardHomeComponent},
       {path:'history', component: HistoryComponent},
       {path:'tvshow', component: TvshowComponent},
+      {path:'tauxTerrains', component: TauxTerrainsComponent},
     ]},
 ];
 

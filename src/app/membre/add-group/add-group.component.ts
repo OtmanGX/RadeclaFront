@@ -35,9 +35,9 @@ export class AddGroupComponent implements OnInit {
       _type: new FormControl({value: this.family?'famille':'couple', disabled: true}),
       type: new FormControl({value: this.family?'famille':'couple', disabled: false}),
       paye: [false, Validators.required],
+      montant: [null],
       montant_paye: [null],
       membres: [''],
-      reste_paye: [null],
     });
     this.formGroup = this._formBuilder.group({
       formArray: {}
@@ -95,6 +95,7 @@ export class AddGroupComponent implements OnInit {
       mail: [''],
       date_naissance: [null],
       age: [null],
+      tournoi: [false],
       categorie: [[]],
       licence_fideration: [false],
     }));
@@ -104,5 +105,10 @@ export class AddGroupComponent implements OnInit {
   deletePersonForm(index: number) {
     this.firstFormGroups.splice(index, 1);
     this.formGroup.setControl("formArray", this._formBuilder.array(this.firstFormGroups));
+  }
+
+  is_paye(state: boolean) {
+    if (state)
+      this.secondFormGroup.patchValue({'montant_paye': this.secondFormGroup.get('montant').value})
   }
 }

@@ -85,23 +85,36 @@ export class NewmembreComponent implements OnInit {
       _type: new FormControl({value: 'individuel', disabled: true}),
       type: new FormControl({value: 'individuel', disabled: false}),
       paye: [false, Validators.required],
+      montant: [null],
       montant_paye: [null],
       membres: [''],
-      reste_paye: [null],
     });
     if (this.memberId) this.membreService.get(this.memberId).subscribe(value => {
       let membre = <Membre>value;
       this.member = membre;
-      if (membre.cotisation && membre.cotisation?.type !== "individuel")
+      if (membre.cotisation)
         this.cotisationService.get(membre.cotisation.id).subscribe(value =>
         {
           console.log(value);
           this.membreCotisation = value;
           console.log(this.membreCotisation);
-          this.membreCotisation.membres.forEach(elem => TREE_DATA[0].children.push({name: elem}))
-          this.dataSource.data = TREE_DATA; // Tree
-          console.log(TREE_DATA);
-        });
+          if (membre.cotisation?.type !== "individuel")
+          {
+            this.membreCotisation.membres.forEach(elem => TREE_DATA[0].children.push({name: elem}))
+            this.dataSource.data = TREE_DATA; // Tree
+            console.log(TREE_DATA);
+          }
+          this.secondFormGroup = this._formBuilder.group({
+            _type: new FormControl({value: membre.cotisation.type, disabled: true}),
+            type: new FormControl({value: membre.cotisation.type, disabled: false}),
+            paye: [membre.cotisation.paye, Validators.required],
+            id: [membre.cotisation.id],
+            montant_paye: [membre.cotisation.montant_paye],
+            montant: [membre.cotisation.montant],
+            membres: [this.membreCotisation.membres],
+          });
+
+        }); else this.membreCotisation = membre.cotisation;
       this.firstFormGroup = this._formBuilder.group({
         nom: [membre.nom, Validators.required],
         sexe: [membre.sexe, Validators.required],
@@ -114,19 +127,6 @@ export class NewmembreComponent implements OnInit {
         entraineur: [membre.entraineur],
         categorie: [membre.categorie]
       });
-      if (membre.cotisation != null)
-      {
-        this.membreCotisation = membre.cotisation;
-        this.secondFormGroup = this._formBuilder.group({
-          _type: new FormControl({value: membre.cotisation.type, disabled: true}),
-          type: new FormControl({value: membre.cotisation.type, disabled: false}),
-          paye: [membre.cotisation.paye, Validators.required],
-          id: [membre.cotisation.id],
-          montant_paye: [membre.cotisation.montant_paye],
-          membres: [[membre.nom]],
-          reste_paye: [membre.cotisation.reste_paye],
-        });
-      }
     });
     else
       this.firstFormGroup = this._formBuilder.group({
@@ -181,5 +181,10 @@ export class NewmembreComponent implements OnInit {
             } else this.router.navigate(['admin/membres']);
           })
         }
+  }
+
+  is_paye(state: boolean) {
+    if (state)
+      this.secondFormGroup.patchValue({'montant_paye': this.secondFormGroup.get('montant').value})
   }
 }

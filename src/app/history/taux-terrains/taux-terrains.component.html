@@ -1,0 +1,26 @@
+<div class="container bg-light">
+  <mat-tab-group [selectedIndex]="3">
+    <mat-tab label="Aujourd'hui">
+
+    </mat-tab>
+    <mat-tab label="Semaine"> Semaine </mat-tab>
+    <mat-tab label="Mois">
+      <mat-form-field appearance="standard">
+        <mat-label>Choix du mois</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+      </mat-form-field><br>
+
+      <canvas class="col-6 d-inline" #barChart></canvas>
+
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+

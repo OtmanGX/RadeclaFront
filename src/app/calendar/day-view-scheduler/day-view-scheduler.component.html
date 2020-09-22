@@ -8,6 +8,8 @@
   let-tooltipDisabled="tooltipDisabled">
   <div
     class="cal-event font-weight-bold m-0 p-0"
+    [class.cal-event-training]="weekEvent.event.meta.reservation.entrainement"
+    [class.cal-event-match]="!weekEvent.event.meta.reservation.entrainement"
     [class.row]="extra"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"

@@ -21,7 +21,7 @@ import {CotisationService} from '../services/cotisation.service';
 })
 export class MembreComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail','cat','cot', 'paye', 'actions'];
+  displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail','age', 'date_naissance', 'tournoi', 'cat','cot', 'paye','montant', 'reste', 'actions'];
   membres$: Observable<any>;
   membres: Array<Membre>;
   length: number;
@@ -37,14 +37,18 @@ export class MembreComponent implements OnInit {
               private matPaginator: MatPaginatorIntl,
               private _snackBar: MatSnackBar,
               public dialog: MatDialog,
-              public router:Router) {
+              public router:Router,
+              public activatedRoute:ActivatedRoute,
+              ) {
   }
 
 
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
-    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false};
+    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false, cotisation:'', cotisation__paye:'', cotisation__isnull:''};
+    let filter = this.activatedRoute.snapshot.paramMap.get('cotisation__paye');
+    if (filter) this.httpParams.cotisation__paye = filter;
     this.matPaginator.itemsPerPageLabel = "Elements par page:";
     this.matPaginator.nextPageLabel = "Page suivante";
     this.matPaginator.previousPageLabel = "Page précédente";

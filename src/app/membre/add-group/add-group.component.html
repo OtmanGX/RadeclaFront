@@ -63,6 +63,7 @@
                         <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
                       </mat-select>
                     </mat-form-field> <br>
+                    <mat-slide-toggle formControlName="tournoi">Participe aux tournois</mat-slide-toggle><br>
                     <mat-slide-toggle formControlName="licence_fideration">Licence de fédération</mat-slide-toggle>
                   </div>
                 </form>
@@ -96,18 +97,20 @@
               </mat-form-field><br>
               <!--                <input type="hidden" formControlName="type" />-->
 
-              <mat-slide-toggle class="my-2" formControlName="paye">Payé</mat-slide-toggle>
+              <mat-slide-toggle class="my-2" formControlName="paye" (ngModelChange)="is_paye($event)">Payé</mat-slide-toggle>
               <br>
               <mat-form-field>
-                <mat-label>Montant payé</mat-label>
-                <input matInput formControlName="montant_paye" type="number">
+                <mat-label>Montant</mat-label>
+                <input matInput #montant formControlName="montant" type="number">
               </mat-form-field><br>
-
-
+              <mat-form-field>
+                <mat-label>Montant payé</mat-label>
+                <input #montant_paye matInput formControlName="montant_paye" type="number" min="0" [max]="montant.value">
+              </mat-form-field><br>
 
               <mat-form-field>
                 <mat-label>Reste à payer</mat-label>
-                <input matInput formControlName="reste_paye" type="number">
+                <input matInput disabled [value]="montant.value-montant_paye.value" type="number">
               </mat-form-field><br>
 
               <div class="mt-4">

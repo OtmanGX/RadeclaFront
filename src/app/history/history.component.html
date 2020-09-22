@@ -1,94 +1,23 @@
-<div class="container-fluid">
-  <mat-form-field style="float: right" appearance="fill">
-    <mat-label>Choisis une date</mat-label>
-    <input matInput (dateChange)="changeDate($event.value)" [value]="myDate" [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <table mat-table bgcolor="green" [dataSource]="dataSource" matSort class="mat-elevation-z2">
+<div role="main" class="container bg-light">
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+    <mat-grid-list cols="2" rowHeight="4:1">
+      <mat-grid-tile *ngFor="let option of options; index as i" >
+          <button [routerLink]=option.link mat-raised-button
+                  class="w-100 ml-4 mr-4"
+                  [matBadge]="i+1"
+                  matBadgePosition="above before before">
+            <span class="font-weight-bold">
+              {{option.name}}
+            </span>
 
-    <ng-container matColumnDef="terrain">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Terrain </th>
-      <td mat-cell *matCellDef="let element "> {{element.terrain.id}} </td>
-    </ng-container>
+          </button>
+<!--          <mat-divider></mat-divider>-->
+      </mat-grid-tile>
 
-    <ng-container matColumnDef="start_date">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Heure de début </th>
-      <td mat-cell *matCellDef="let element"> {{element.start_date | date: 'HH:mm'}} </td>
-    </ng-container>
+    </mat-grid-list>
 
-    <ng-container matColumnDef="end_date">
-      <th mat-header-cell *matHeaderCellDef> Heure de Fin </th>
-      <td mat-cell *matCellDef="let element"> {{element.end_date| date:'HH:mm'}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="joueur1">
-      <th mat-header-cell *matHeaderCellDef> Joueur1 </th>
-      <td mat-cell *matCellDef="let element"> {{element.membre1.nom}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="joueur2">
-      <th mat-header-cell *matHeaderCellDef> Joueur2 </th>
-      <td mat-cell *matCellDef="let element"> {{element.membre2?element.membre2.nom:''}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="joueur3">
-      <th mat-header-cell *matHeaderCellDef> Joueur3 </th>
-      <td mat-cell *matCellDef="let element"> {{element.membre3.nom}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="joueur4">
-      <th mat-header-cell *matHeaderCellDef> Joueur4 </th>
-      <td mat-cell *matCellDef="let element"> {{element.membre4?element.membre4.nom:''}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="type">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.entrainement?'Entrainement':'Match'}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="lightning">
-      <th mat-header-cell *matHeaderCellDef> Eclairage </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.eclairage ; else not" style="color: green">check_circle</mat-icon>
-        <ng-template #not>
-          <mat-icon color="warn">highlight_off</mat-icon>
-        </ng-template>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="paid">
-      <th mat-header-cell *matHeaderCellDef> Payé </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.eclairage_paye ; else not" style="color: green">check_circle</mat-icon>
-        <ng-template #not>
-          <mat-icon color="warn">highlight_off</mat-icon>
-        </ng-template>
-      </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-<!--    <ng-container matColumnDef="actions">-->
-<!--      <th mat-header-cell *matHeaderCellDef> Actions </th>-->
-<!--      <td mat-cell *matCellDef="let element; let i = index;">-->
-<!--        &lt;!&ndash;      <button mat-mini-fab color="accent" (click)="editEvent.emit(dataSource[i])" aria-label="edit butoon">&ndash;&gt;-->
-<!--        &lt;!&ndash;        <mat-icon>edit</mat-icon>&ndash;&gt;-->
-<!--        &lt;!&ndash;      </button>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <button mat-mini-fab color="warn" (click)="deleteEvent.emit(dataSource[i])" aria-label="delete button">&ndash;&gt;-->
-<!--        &lt;!&ndash;          <mat-icon>delete</mat-icon>&ndash;&gt;-->
-<!--        &lt;!&ndash;        </button>&ndash;&gt;-->
-<!--      </td>-->
-<!--    </ng-container>-->
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
 </div>
-
-
-
-
 
