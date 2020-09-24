@@ -312,8 +312,8 @@ export class DashboardHomeComponent implements OnInit{
       reservation.terrain = {id: this.terrains[event.col].id+1};
     } else
     {
-      reservation = event.date.meta.reservation;
-      reservation.end_date = addHours(new Date(reservation.start_date), reservation.duration);;
+      reservation = event.meta.reservation;
+      reservation.end_date = addHours(new Date(reservation.start_date), reservation.duration);
     }
 
     const dialogRef = this.dialog.open(ReservationdialogComponent, {
