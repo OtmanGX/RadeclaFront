@@ -298,21 +298,21 @@ export class DashboardHomeComponent implements OnInit{
     this.events = [...this.events];
   }
 
-  hourSegmentClicked(date) {
-    if (isAfter(date, subMinutes(new Date(), 30)))
-      this.openDialog(date);
+  hourSegmentClicked(event) {
+    if (isAfter(event.date, subMinutes(new Date(), 30)))
+      this.openDialog(event);
   }
 
   openDialog(event, edit= false): void {
     let reservation: ReservationData  = new ReservationData();
     if (!edit) {
-      reservation.start_date = event;
+      reservation.start_date = event.date;
       reservation.duration = 1;
-      reservation.end_date = addHours(event, 1);
-      reservation.terrain = {id: 1};
+      reservation.end_date = addHours(event.date, 1);
+      reservation.terrain = {id: this.terrains[event.col].id+1};
     } else
     {
-      reservation = event.meta.reservation;
+      reservation = event.date.meta.reservation;
       reservation.end_date = addHours(new Date(reservation.start_date), reservation.duration);;
     }
 

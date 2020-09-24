@@ -182,7 +182,7 @@
     >
       <div
         class="cal-day-column"
-        *ngFor="let column of view.hourColumns; trackBy: trackByHourColumn"
+        *ngFor="let column of view.hourColumns; trackBy: trackByHourColumn; index as colIndex"
       >
         <div
           *ngFor="let timeEvent of column.events; trackBy: trackByWeekTimeEvent"
@@ -290,7 +290,8 @@
             (mwlClick)="
               hourSegmentClicked.emit({
                 date: segment.date,
-                sourceEvent: $event
+                sourceEvent: $event,
+                col: colIndex
               })
             "
             [clickListenerDisabled]="hourSegmentClicked.observers.length === 0"
