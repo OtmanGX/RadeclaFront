@@ -13,6 +13,9 @@
     <button mat-mini-fab color="primary" (click)="opendialog()">
       <mat-icon>add</mat-icon>
     </button>
+    <button mat-mini-fab class="download" matTooltip="Excel" (click)="exportAsXLSX(this.dataSource.data)">
+      <mat-icon>get_app</mat-icon>
+    </button>
 
   </div>
 

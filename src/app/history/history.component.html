@@ -1,23 +1,18 @@
-<div role="main" class="container bg-light">
-
-    <mat-grid-list cols="2" rowHeight="4:1">
+<div role="main" class="container">
+  <app-bread *ngIf="!route.url.endsWith('history')" menuItem=""></app-bread>
+  <div class="bg-light">
+    <mat-grid-list cols="2" rowHeight="5:1">
       <mat-grid-tile *ngFor="let option of options; index as i" >
-          <button [routerLink]=option.link mat-raised-button
-                  class="w-100 ml-4 mr-4"
-                  [matBadge]="i+1"
-                  matBadgePosition="above before before">
+        <button [routerLink]=option.link mat-raised-button
+                class="w-100 ml-4 mr-4"
+                [matBadge]="i+1"
+                matBadgePosition="above before before" matBadgeSize="large">
             <span class="font-weight-bold">
               {{option.name}}
             </span>
-
-          </button>
-<!--          <mat-divider></mat-divider>-->
+        </button>
       </mat-grid-tile>
-
     </mat-grid-list>
-
-
-
+  </div>
 
 </div>
-

@@ -12,6 +12,11 @@ import {EntraineurComponent} from './entraineur/entraineur.component';
 import {DhomeComponent} from './dhome/dhome.component';
 import {HistoryComponent} from './history/history.component';
 import {TauxTerrainsComponent} from './history/taux-terrains/taux-terrains.component';
+import {TopHoursComponent} from "./history/top-hours/top-hours.component";
+import {TrainingStatsComponent} from "./history/training-stats/training-stats.component";
+import {TotalCotisationComponent} from "./history/total-cotisation/total-cotisation.component";
+import {CotisationToPayComponent} from "./history/cotisation-to-pay/cotisation-to-pay.component";
+import {MembresStatsComponent} from './history/membres-stats/membres-stats.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,8 +30,17 @@ const routes: Routes = [
       {path:'groupe', component: AddGroupComponent},
       {path:'calendar', component: DashboardHomeComponent},
       {path:'history', component: HistoryComponent},
+        {path:'history/adherants', component: HistoryComponent},
+        {path:'history/terrains', component: HistoryComponent},
+        {path:'history/entraineurs', component: HistoryComponent},
+        {path:'history/cotisations', component: HistoryComponent},
       {path:'tvshow', component: TvshowComponent},
       {path:'tauxTerrains', component: TauxTerrainsComponent},
+      {path:'hours', component: TopHoursComponent},
+      {path:'training', component: TrainingStatsComponent},
+      {path:'totalcotisation', component: TotalCotisationComponent},
+      {path:'cotisationtopay', component: CotisationToPayComponent},
+      {path:'membresStats', component: MembresStatsComponent},
     ]},
 ];
 

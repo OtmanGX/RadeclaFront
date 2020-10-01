@@ -1,0 +1,17 @@
+<div class="container">
+  <app-bread menuItem="Les heures les plus demandées"></app-bread>
+  <mat-card class="p-0">
+    <mat-card-header class="p-2">
+      <mat-card-title class="text-light font-weight-bold">
+        <h4>Les heures les plus demandées</h4>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p-2">
+      <section class="example-section">
+        <mat-checkbox [checked]="false" (change)="checkboxChange($event.checked)" class="example-margin">Par tranche d'âge</mat-checkbox>
+      </section>
+      <canvas #hourChart></canvas>
+    </mat-card-content>
+  </mat-card>
+</div>

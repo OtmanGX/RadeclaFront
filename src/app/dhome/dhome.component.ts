@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { Chart } from 'chart.js';
 import {DashboardService} from '../services/dashboard.service';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-dhome',
@@ -21,7 +23,10 @@ export class DhomeComponent implements OnInit {
   nmembres: number;
   nexternes: number;
 
-  constructor(private service:DashboardService) { }
+  constructor(private service:DashboardService,
+              pageTitle :Title) {
+    pageTitle.setTitle(environment.title + ' | Tableau de bord');
+  }
 
   ngOnInit(): void {
 

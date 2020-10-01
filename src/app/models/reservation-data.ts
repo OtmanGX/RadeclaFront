@@ -11,7 +11,7 @@ export class ReservationData {
   players: any;
   eclairage : boolean = false;
   eclairage_paye : boolean = false;
-  entrainement : boolean = false;
+  type_match : string = 'M';
   constructor() {
   }
 }

@@ -1,9 +1,52 @@
-<div class="container bg-light">
+
+<div class="container">
+  <app-bread menuItem="Taux d'occupation des terrains">
+  </app-bread>
+<mat-card class="p-0">
+  <mat-card-header class="p-2 card-header-colored">
+    <mat-card-title class="text-light font-weight-bold">
+      <h4>Taux d'occupation des terrains</h4>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="p-2">
   <mat-tab-group [selectedIndex]="3">
-    <mat-tab label="Aujourd'hui">
+    <mat-tab label="Jour">
+
+      <mat-form-field appearance="standard">
+        <mat-label>Choix du jour</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="dayChanged($event.value)" [value]="dateDay">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field><br>
+      <canvas class="col-6 d-inline" #barChartDay></canvas>
+    </mat-tab>
+
+
+    <mat-tab label="Semaine">
+      <mat-form-field appearance="standard" class="mr-2">
+        <mat-label>Choix de l'année</mat-label>
+        <mat-select #year [value]="2020" (valueChange)="weekChanged(year.value, week.value)">
+          <mat-option *ngFor="let year of [2020, 2021, 2023]" [value]="year">
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Choix du Semaine</mat-label>
+        <mat-select #week [value]="dateDay.week()" (valueChange)="weekChanged(year.value, week.value)">
+          <mat-option *ngFor="let week of weeks" [value]="week">
+            {{week}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+      <canvas class="col-6 d-inline" #barChartWeek></canvas>
 
     </mat-tab>
-    <mat-tab label="Semaine"> Semaine </mat-tab>
+
+
     <mat-tab label="Mois">
       <mat-form-field appearance="standard">
         <mat-label>Choix du mois</mat-label>
@@ -21,6 +64,6 @@
 
     </mat-tab>
   </mat-tab-group>
+  </mat-card-content>
+</mat-card>
 </div>
-
-

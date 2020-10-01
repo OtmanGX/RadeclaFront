@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+}
+
+.my-custom-scrollbar {
+  width: 90%;
+  position: relative;
+  height: 300px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.mat-header-cell {
+  color: black;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #FFD740;
+}
+
+.odd {
+  background-color: #f1f0f0;
+}

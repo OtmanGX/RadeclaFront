@@ -10,6 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AddMembreComponent} from '../membre/add-membre/add-membre.component';
+import {ExcelService} from '../services/excel.service';
 
 @Component({
   selector: 'app-entraineur',
@@ -33,10 +34,9 @@ export class EntraineurComponent implements OnInit {
     private matPaginator: MatPaginatorIntl,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
-    public router:Router) {
+    public router:Router,
+    private excelService:ExcelService) {
   }
-
-
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
@@ -47,6 +47,10 @@ export class EntraineurComponent implements OnInit {
     this.matPaginator.firstPageLabel = "Première Page";
     this.matPaginator.lastPageLabel = "Dernière Page";
     this.fetchData();
+  }
+
+  exportAsXLSX(data):void {
+    this.excelService.exportAsExcelFile(data, 'entraineurs');
   }
 
   fetchData() {

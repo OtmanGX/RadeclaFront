@@ -58,8 +58,15 @@ import {MatTreeModule} from '@angular/material/tree';
 import { DhomeComponent } from './dhome/dhome.component';
 import { TauxTerrainsComponent } from './history/taux-terrains/taux-terrains.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { TopHoursComponent } from './history/top-hours/top-hours.component';
+import { TrainingStatsComponent } from './history/training-stats/training-stats.component';
+import { TotalCotisationComponent } from './history/total-cotisation/total-cotisation.component';
+import { CotisationToPayComponent } from './history/cotisation-to-pay/cotisation-to-pay.component';
+import { MembresStatsComponent } from './history/membres-stats/membres-stats.component';
+import { BreadComponent } from './history/bread/bread.component';
+import { MenuComponent } from './history/menu/menu.component';
 
-registerLocaleData(localeFr);
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
@@ -79,6 +86,13 @@ registerLocaleData(localeFr);
     EntraineurComponent,
     DhomeComponent,
     TauxTerrainsComponent,
+    TopHoursComponent,
+    TrainingStatsComponent,
+    TotalCotisationComponent,
+    CotisationToPayComponent,
+    MembresStatsComponent,
+    BreadComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,7 +138,7 @@ registerLocaleData(localeFr);
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    {provide: LOCALE_ID, useValue: "fr-FR"}],
+    {provide: LOCALE_ID, useValue: "fr"}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

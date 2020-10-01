@@ -13,6 +13,7 @@ import {default as _rollupMoment, Moment} from 'moment';
 import {DashboardService} from '../../services/dashboard.service';
 
 const moment = _rollupMoment || _moment;
+Chart.defaults.global.defaultFontSize = 15;
 
 export const MY_FORMATS = {
   parse: {
@@ -45,9 +46,16 @@ export const MY_FORMATS = {
 })
 export class TauxTerrainsComponent implements OnInit {
   @ViewChild('barChart') barChart;
+  @ViewChild('barChartDay') barChartDay;
+  @ViewChild('barChartWeek') barChartWeek;
   monthChart;
+  dayChart;
+  weekChart;
   date = new FormControl(moment());
+  dateDay = moment();
+  dateWeek = moment();
   monthStats$;
+  weeks;
 
   chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.date.value;
@@ -64,13 +72,17 @@ export class TauxTerrainsComponent implements OnInit {
     datepicker.close();
     this.fetchMonthChart();
   }
-  constructor(private service:DashboardService) { }
+  constructor(private service:DashboardService) {
+    this.weeks = Array(52).fill(0).map((x,i)=>i+1);
+  }
 
   ngOnInit(): void {
     console.log(this.date.value.year(), this.date.value.month())
     this.fetchMonthChart();
+    this.dayChanged(moment());
+    this.weekChanged(this.dateDay.year(), this.dateDay.week());
+    console.log(moment());
   }
-
 
   fetchMonthChart() {
     this.monthStats$ = this.service.terrain_stats(
@@ -86,7 +98,7 @@ export class TauxTerrainsComponent implements OnInit {
         this.monthChart.data.datasets[1].data = value.map(val => val.heures2);
         this.monthChart.options.title.text = this.date.value.format('MMMM');
         this.monthChart.update();
-      } else this.createBarChart(this.barChart,
+      } else this.monthChart = this.createBarChart(this.barChart,
         value.map(val => val.matricule),
         [value.map(val => val.heures), value.map(val => val.heures2)],
         ['Match', 'Entrainement'],
@@ -99,7 +111,7 @@ export class TauxTerrainsComponent implements OnInit {
 
 
   createBarChart(chart, labels, data, legend, xLabel, yLabel?, title?) {
-    this.monthChart = new Chart(chart.nativeElement, {
+     return new Chart(chart.nativeElement, {
       type: 'bar',
       data: {
         labels: labels,
@@ -144,6 +156,7 @@ export class TauxTerrainsComponent implements OnInit {
             scaleLabel: {
               display: true,
               labelString: xLabel,
+              fontSize: 22,
             },
             gridLines: {
               display: true,
@@ -174,4 +187,51 @@ export class TauxTerrainsComponent implements OnInit {
     });
   }
 
+  dayChanged(event) {
+    const params = {date:'day', 'year': event.year(),
+      'month': event.month()+1, 'day':event.date()}
+    this.service.terrain_stats(params).subscribe(value => {
+      if (this.dayChart) {
+        console.log(this.dayChart.data.datasets[0]);
+        this.dayChart.data.labels = value.map(val => val.matricule);
+        this.dayChart.data.datasets[0].data = value.map(val => val.heures);
+        this.dayChart.data.datasets[1].data = value.map(val => val.heures2);
+        this.dayChart.options.title.text = event.format('LL');
+        this.dayChart.update();
+      } else {
+        this.dayChart = this.createBarChart(this.barChartDay,
+          value.map(val => val.matricule),
+          [value.map(val => val.heures), value.map(val => val.heures2)],
+          ['Match', 'Entrainement'],
+          'Terrain',
+          'Heures',
+          event.format('LL'),
+        )
+      }
+    }, error => console.log(error));
+  }
+
+  weekChanged(year, week) {
+    const params = {date:'week', 'year': year,
+      'week': week,}
+    this.service.terrain_stats(params).subscribe(value => {
+      if (this.weekChart) {
+        console.log(this.dayChart.data.datasets[0]);
+        this.weekChart.data.labels = value.map(val => val.matricule);
+        this.weekChart.data.datasets[0].data = value.map(val => val.heures);
+        this.weekChart.data.datasets[1].data = value.map(val => val.heures2);
+        this.weekChart.options.title.text = 'Année '+year+' Semaine '+week;
+        this.weekChart.update();
+      } else {
+        this.weekChart = this.createBarChart(this.barChartWeek,
+          value.map(val => val.matricule),
+          [value.map(val => val.heures), value.map(val => val.heures2)],
+          ['Match', 'Entrainement'],
+          'Terrain',
+          'Heures',
+          'Année '+year+' Semaine '+week,
+        )
+      }
+    }, error => console.log(error));
+  }
 }

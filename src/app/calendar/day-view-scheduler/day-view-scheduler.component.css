@@ -36,6 +36,9 @@ div.cal-hour-segment {
   background-color: #0000ff
 }
 
+.cal-event {
+  background-color: #6365ef;
+}
 
 /*.cal-cell-row {*/
 /*  height: 100%;*/

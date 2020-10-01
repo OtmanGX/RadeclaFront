@@ -124,6 +124,7 @@ export class NewmembreComponent implements OnInit {
         age: [membre.age],
         licence_fideration: [membre.licence_fideration],
         tournoi: [membre.tournoi],
+        profession: [membre.profession],
         entraineur: [membre.entraineur],
         categorie: [membre.categorie]
       });
@@ -139,6 +140,7 @@ export class NewmembreComponent implements OnInit {
         categorie: [[]],
         tournoi: [false],
         entraineur: [false],
+        profession: [null],
         licence_fideration: [false],
       });
   }

@@ -13,6 +13,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {CotisationService} from '../services/cotisation.service';
+import {ExcelService} from '../services/excel.service';
 
 @Component({
   selector: 'app-membre',
@@ -21,7 +22,8 @@ import {CotisationService} from '../services/cotisation.service';
 })
 export class MembreComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail','age', 'date_naissance', 'tournoi', 'cat','cot', 'paye','montant', 'reste', 'actions'];
+  displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail','age', 'date_naissance', 'profession',
+    'tournoi', 'cat','cot', 'paye','montant', 'reste', 'date_paiement', 'actions'];
   membres$: Observable<any>;
   membres: Array<Membre>;
   length: number;
@@ -39,10 +41,9 @@ export class MembreComponent implements OnInit {
               public dialog: MatDialog,
               public router:Router,
               public activatedRoute:ActivatedRoute,
+              private excelService:ExcelService
               ) {
   }
-
-
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
@@ -55,6 +56,10 @@ export class MembreComponent implements OnInit {
     this.matPaginator.firstPageLabel = "Première Page";
     this.matPaginator.lastPageLabel = "Dernière Page";
     this.fetchData();
+  }
+
+  exportAsXLSX(data):void {
+    this.excelService.exportAsExcelFile(data, 'membres');
   }
 
   fetchData() {

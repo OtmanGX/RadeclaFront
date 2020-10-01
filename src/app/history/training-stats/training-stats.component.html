@@ -1,0 +1,157 @@
+<div class="container">
+  <app-bread menuItem="La durée d'entrainement">
+  </app-bread>
+  <mat-card class="p-0">
+    <mat-card-header class="p-2 card-header-colored">
+      <mat-card-title class="text-light font-weight-bold">
+        <h4>La durée d'entrainement</h4>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p-2">
+      <mat-tab-group [selectedIndex]="1">
+        <mat-tab label="Semaine">
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #weekYear placeholder="2020" [value]="date.year()">
+          </mat-form-field>
+          <mat-form-field class="mt-3 mr-5">
+            <mat-label>Sélectionner la semaine</mat-label>
+            <mat-select #weekweek [value]="date.week()">
+              <mat-option *ngFor="let week of weeks" [value]="week">
+                {{week}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-checkbox class="mr-3" #checkboxWeek>Avec</mat-checkbox>
+          <mat-form-field [hidden]="!checkboxWeek.checked" class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'adhérant
+            </mat-label>
+            <input matInput
+                   [formControl]="weekControl"
+                   [matAutocomplete]="autoWeek">
+            <mat-autocomplete autoActiveFirstOption #autoWeek="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-raised-button class="ml-3" color="accent" (click)="fetchWeek(weekYear.value, weekweek.value, checkboxWeek.checked)">Valider</button>
+
+
+          <br>
+          <mat-list>
+            <span *ngFor="let trainer of (weekTraining$| async)">
+              <mat-list-item>
+                  <div class="w-25" >{{trainer.nom}}</div>
+                  <mat-chip-list>
+                  <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
+                  </mat-chip-list>
+
+              </mat-list-item>
+            <mat-divider></mat-divider>
+            </span>
+          </mat-list>
+
+        </mat-tab>
+
+        <mat-tab label="Mois">
+
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #monthYear placeholder="2020" [value]="date.year()">
+          </mat-form-field>
+          <mat-form-field class="mt-3 mr-5">
+            <mat-label>Sélectionner le mois</mat-label>
+            <mat-select #monthMonth  [value]="date.month()">
+              <mat-option *ngFor="let month of months; index as i" [value]="i">
+                {{month}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox class="mr-3" #checkboxMonth>Avec</mat-checkbox>
+          <mat-form-field [hidden]="!checkboxMonth.checked" class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'adhérant
+            </mat-label>
+            <input matInput
+                   [formControl]="monthControl"
+                   [matAutocomplete]="autoMonth">
+            <mat-autocomplete autoActiveFirstOption #autoMonth="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <button mat-raised-button color="accent" (click)="fetchMonth(monthYear.value, monthMonth.value, checkboxMonth.checked)">Valider</button>
+          <br>
+          <mat-list>
+            <span *ngFor="let trainer of (monthTraining$| async)">
+              <mat-list-item>
+                  <div class="w-25" >{{trainer.nom}}</div>
+                  <mat-chip-list>
+                  <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
+                  </mat-chip-list>
+
+              </mat-list-item>
+            <mat-divider></mat-divider>
+            </span>
+          </mat-list>
+
+
+        </mat-tab>
+
+        <mat-tab label="Année">
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #yearYear placeholder="2020" [value]="date.year()">
+          </mat-form-field>
+            <mat-checkbox class="mr-3" #checkboxYear>Avec</mat-checkbox>
+            <mat-form-field [hidden]="!checkboxYear.checked" class="mt-3 mr-2">
+              <mat-label>
+                Choisir l'adhérant
+              </mat-label>
+              <input matInput
+                     [formControl]="yearControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+          <button mat-raised-button class="ml-3" color="accent" (click)="fetchYear(yearYear.value, checkboxYear.checked)">Valider</button>
+          <br>
+          <mat-list>
+            <span *ngFor="let trainer of (yearTraining$| async)">
+              <mat-list-item>
+                  <div class="w-25" >{{trainer.nom}}</div>
+                  <mat-chip-list>
+                  <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
+                  </mat-chip-list>
+
+              </mat-list-item>
+            <mat-divider></mat-divider>
+            </span>
+          </mat-list>
+
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+
+  </mat-card>
+</div>

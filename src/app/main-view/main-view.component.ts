@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+import {DashboardService} from '../services/dashboard.service';
 
 @Component({
   selector: 'app-main-view',
@@ -12,13 +13,15 @@ export class MainViewComponent implements OnInit {
   events: string[] = [];
   opened: boolean;
   date: Date;
+  stats$;
   links: [
     {'name': 'Calendrier', link:'sss'},
     {'name': 'Membres', link:'sss'},
     {'name': 'Historique', link:'sss'},
   ];
   constructor(private matIconRegistry: MatIconRegistry,
-              private domSanitizer: DomSanitizer) {
+              private domSanitizer: DomSanitizer,
+              private dashboardService: DashboardService) {
     this.matIconRegistry.addSvgIcon(
       "tennis",
       this.domSanitizer.bypassSecurityTrustResourceUrl("../../assets/sports_tennis.svg")
@@ -26,6 +29,12 @@ export class MainViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.refreshDate();
+    setInterval(()=> {this.refreshDate()}, 10000);
+    this.stats$ = this.dashboardService.terrain_stats_hours();
+  }
+
+  refreshDate() {
     this.date = new Date();
   }
 

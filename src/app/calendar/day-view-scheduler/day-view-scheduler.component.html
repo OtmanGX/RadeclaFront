@@ -8,8 +8,8 @@
   let-tooltipDisabled="tooltipDisabled">
   <div
     class="cal-event font-weight-bold m-0 p-0"
-    [class.cal-event-training]="weekEvent.event.meta.reservation.entrainement"
-    [class.cal-event-match]="!weekEvent.event.meta.reservation.entrainement"
+    [class.cal-event-training]="weekEvent.event.meta.reservation.type_match=='E'"
+    [class.cal-event-match]="!weekEvent.event.meta.reservation.type_match=='M'"
     [class.row]="extra"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"
@@ -38,10 +38,11 @@
           view="week">
         </mwl-calendar-event-title>
       </div>
-      <div class="col-4 text-right align-content-end align-self-center p-0">
+      <div class="col-4 text-right align-content-end align-self-center p-0" [ngSwitch]="weekEvent.event.meta.reservation.type_match">
         <mat-icon style="font-size: 20px;" inline *ngIf="weekEvent.event.meta.reservation.eclairage_paye">attach_money</mat-icon><br>
-        <img *ngIf="!weekEvent.event.meta.reservation.entrainement" height="20px" src="../../../assets/player.png">
-        <img *ngIf="weekEvent.event.meta.reservation.entrainement" height="20px" src="../../../assets/trainer.png">
+        <img *ngSwitchCase="'M'" height="20px" src="../../../assets/player.png">
+        <img *ngSwitchCase="'E'" height="20px" src="../../../assets/trainer.png">
+        <mat-icon *ngSwitchCase="'T'" style="font-size: 20px;" inline>emoji_events</mat-icon>
       </div>
     </ng-template>
   </div>

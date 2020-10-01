@@ -1,0 +1,18 @@
+<div class="container">
+<app-bread menuItem="Total cotisation à payer"></app-bread>
+
+<div class="row align-content-center align-items-center text-center justify-content-center">
+  <mat-card class="p-0 col-4">
+    <mat-card-header class="gradient-title text-light p-1">
+      <mat-card-title class="font-weight-bold">
+        Total cotisation à payer
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-2">
+      <p class="mat-display-1">
+        {{(total$|async)?.total}} DH
+    </mat-card-content>
+  </mat-card>
+</div>
+
+</div>
