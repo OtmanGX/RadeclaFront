@@ -29,13 +29,14 @@ export class MainViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshDate();
-    setInterval(()=> {this.refreshDate()}, 10000);
-    this.stats$ = this.dashboardService.terrain_stats_hours();
+    this.fetchData();
+    setInterval(()=> {this.fetchData()}, 60000);
+
   }
 
-  refreshDate() {
+  fetchData() {
     this.date = new Date();
+    this.stats$ = this.dashboardService.terrain_stats_hours();
   }
 
 }
