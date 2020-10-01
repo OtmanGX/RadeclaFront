@@ -33,10 +33,10 @@ div.cal-hour-segment {
 }
 
 .cal-event-match {
-  background-color: #0000ff
+  background-color: #0000ff;
 }
 
-.cal-event {
+.cal-event-tournoi {
   background-color: #6365ef;
 }
 

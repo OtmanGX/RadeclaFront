@@ -9,7 +9,8 @@
   <div
     class="cal-event font-weight-bold m-0 p-0"
     [class.cal-event-training]="weekEvent.event.meta.reservation.type_match=='E'"
-    [class.cal-event-match]="!weekEvent.event.meta.reservation.type_match=='M'"
+    [class.cal-event-match]="weekEvent.event.meta.reservation.type_match=='M'"
+    [class.cal-event-tournoi]="weekEvent.event.meta.reservation.type_match=='T'"
     [class.row]="extra"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"

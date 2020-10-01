@@ -30,8 +30,8 @@ for res in Reservation.objects.all():
 for res in Reservation.objects.all():
   print(round((res.end_date-res.start_date).seconds/3600))
   
-  from core.models import *
-  from django.db.models import Value, When, Case
+from core.models import *
+from django.db.models import Value, When, Case
   Reservation.objects.update(type_match=Case(When(entrainement=True, then=Value("E")), default=Value("M")))
   
   
@@ -49,7 +49,6 @@ for res in Reservation.objects.all():
   
   
    {
-    user: "gxAdmin",
     pwd: "mgadtech@_@",
     roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
   }

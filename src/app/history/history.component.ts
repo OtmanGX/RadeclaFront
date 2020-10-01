@@ -41,7 +41,7 @@ export class HistoryComponent implements OnInit {
     } else  if (this.route.url.endsWith('adherants')) {
         this.options = [
           {name: 'Liste des adhérants', link: ['/admin/membres']},
-          {name: "Liste des adhérants à jour de leurs cotisations", link: ['/admin/membres', {cotisation__paye: false}]},
+          {name: "Liste des adhérants à jour de leurs cotisations", link: ['/admin/membres', {cotisation__paye: true}]},
           {name: "Liste des adhérants non à jour de leurs cotisations", link: ['/admin/membres', {cotisation__paye: false}]},
           {name: "Nombre d'heures jouées par adhérant", link: ['/admin/membresStats']},
           {name: "Nombre d'heures de match jouées par adhérant", link: ['/admin/membresStats']},
