@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   background-image: url("../../assets/tennis.jpg");
-  /*background-position: center;*/
+  background-position: center;
   background-repeat: round;
   background-attachment: fixed;
 }

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   title: 'Radecla',
-  apiUrl: 'http://192.168.1.144:8000'
+  apiUrl: 'http://radecla.myvnc.com:8088'
 };
 
 /*

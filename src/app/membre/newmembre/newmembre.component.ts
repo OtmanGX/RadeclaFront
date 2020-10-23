@@ -43,7 +43,7 @@ interface ExampleFlatNode {
 export class NewmembreComponent implements OnInit {
 
   @ViewChild('cotisation') isCotisation;
-
+  today = new Date();
   memberId;
   member;
   membreCotisation = null;
@@ -153,10 +153,16 @@ export class NewmembreComponent implements OnInit {
 
   submit() {
         console.log(this.firstFormGroup.value);
+        let birthday = this.firstFormGroup.get('date_naissance').value;
         if (this.firstFormGroup.get('age').value == "")
           this.firstFormGroup.patchValue({age: null});
-        if (this.firstFormGroup.get('date_naissance').value == "")
+        if (birthday == "")
           this.firstFormGroup.patchValue({date_naissance: null});
+        // else {
+        //   birthday = (<Date>this.firstFormGroup.get('date_naissance').value).toISOString();
+        //   console.log(birthday);
+        //   this.firstFormGroup.patchValue({'date_naissance': '2020-10-23'});
+        // }
 
         if (this.memberId) {
           let calls = [this.membreService.update(this.memberId, this.firstFormGroup.value)];

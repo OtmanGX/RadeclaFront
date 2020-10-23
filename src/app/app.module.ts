@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -65,6 +65,22 @@ import { CotisationToPayComponent } from './history/cotisation-to-pay/cotisation
 import { MembresStatsComponent } from './history/membres-stats/membres-stats.component';
 import { BreadComponent } from './history/bread/bread.component';
 import { MenuComponent } from './history/menu/menu.component';
+import { TauxTerrainsHoursComponent } from './history/taux-terrains-hours/taux-terrains-hours.component';
+import { WeatherComponent } from './weather/weather.component';
+
+import { DateFnsModule } from 'ngx-date-fns';
+import { OnlineReservationsComponent } from './history/online-reservations/online-reservations.component';
+import { PropComponent } from './prop/prop.component';
+import {MatSliderModule} from '@angular/material/slider';
+import { LightingStatsComponent } from './history/lighting-stats/lighting-stats.component';
+import { TournoiComponent } from './tournoi/tournoi.component';
+import { TournoiDialogComponent } from './tournoi/tournoi-dialog/tournoi-dialog.component';
+
+import {CounterModule} from 'angular-circle-counter';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { SchoolsComponent } from './schools/schools.component';
+import { SchoolDialogComponent } from './schools/school-dialog/school-dialog.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -93,49 +109,63 @@ registerLocaleData(localeFr, 'fr');
     MembresStatsComponent,
     BreadComponent,
     MenuComponent,
+    TauxTerrainsHoursComponent,
+    WeatherComponent,
+    OnlineReservationsComponent,
+    PropComponent,
+    LightingStatsComponent,
+    TournoiComponent,
+    TournoiDialogComponent,
+    SchoolsComponent,
+    SchoolDialogComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatIconModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatDividerModule,
-    MatMenuModule,
-    LayoutModule,
-    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
-    FormsModule,
-    NgbModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatBadgeModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatRadioModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatSnackBarModule,
-    MatSidenavModule,
-    MatListModule,
-    AppRoutingModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatAutocompleteModule,
-    MatExpansionModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatStepperModule,
-    MatChipsModule,
-    MatTreeModule,
-    MatTabsModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        MatFormFieldModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatDividerModule,
+        MatMenuModule,
+        LayoutModule,
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
+        FormsModule,
+        NgbModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatToolbarModule,
+        MatBadgeModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatRadioModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatSnackBarModule,
+        MatSidenavModule,
+        MatListModule,
+        AppRoutingModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatAutocompleteModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatStepperModule,
+        MatChipsModule,
+        MatTreeModule,
+        MatTabsModule,
+        DateFnsModule.forRoot(),
+        MatSliderModule,
+        CounterModule,
+        MatButtonToggleModule,
+    ],schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {provide: LOCALE_ID, useValue: "fr"}],

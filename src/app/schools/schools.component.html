@@ -1,0 +1,23 @@
+<div class="grid-container">
+  <mat-toolbar class="section-title mat-elevation-z5">
+    <h1>Écoles</h1>
+    <button mat-fab color="primary" class="ml-auto">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<div class="container pr-0 pl-0 mat-elevation-z3" style="background-color: rgba(245, 245, 245, 0.8);">
+
+    <mat-grid-list cols="2" rowHeight="4:2">
+      <mat-grid-tile *ngFor="let option of options; index as i" >
+        <button [routerLink]=option.link mat-raised-button
+                class="w-100 ml-4 mr-4 p-4"
+                [matBadge]="i+1"
+                matBadgePosition="above before before" matBadgeSize="large">
+            <h5 class="font-weight-bold">
+              {{option.name}}
+            </h5>
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+</div>

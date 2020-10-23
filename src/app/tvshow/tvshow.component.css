@@ -1,3 +1,8 @@
 .cal-time .ng-star-inserted {
   padding-top: 12px;
 }
+
+:host {
+  margin: 0;
+  padding: 0;
+}

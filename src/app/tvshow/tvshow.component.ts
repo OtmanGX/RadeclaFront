@@ -3,16 +3,9 @@ import {map} from 'rxjs/operators';
 // Calendar
 import {
   addHours,
-  isAfter,
   endOfDay,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
   startOfDay,
-  startOfMonth,
   addMinutes,
-  subMinutes,
-  endOfHour
 } from 'date-fns';
 import {Observable, Subject} from 'rxjs';
 import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, DAYS_OF_WEEK,} from 'angular-calendar';
@@ -109,16 +102,18 @@ export class TvshowComponent implements OnInit {
   params:any;
   @Output() dateChange = new EventEmitter<Date>();
 
-  constructor(private service:ReservationService) { }
+  constructor(public service:ReservationService) { }
 
   ngOnInit(): void {
 
-    setInterval(()=> {this.fetchData()}, 10000);
+    setInterval(()=> {
+      this.viewDate = new Date();
+      this.fetchData();
+    }, 10000);
     this.fetchData();
   }
 
   fetchData() {
-    this.viewDate = new Date();
     this.params = {start_date: addHours(startOfDay(this.viewDate),8).toISOString(), end_date: endOfDay(this.viewDate).toISOString()}
     this.events$ = this.service.getall(this.params)
       .pipe(map(( results: any ) => {

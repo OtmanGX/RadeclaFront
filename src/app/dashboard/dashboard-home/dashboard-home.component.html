@@ -16,7 +16,7 @@
   </div>
 </ng-template>
 <div class="grid-container">
-  <mat-toolbar>
+  <mat-toolbar class="section-title mat-elevation-z5">
     <h1>Calendrier des réservations</h1>
   </mat-toolbar>
 </div>
@@ -46,6 +46,7 @@
                 </div>
                 <div
                   class="btn btn-outline-secondary"
+                  mwlCalendarToday
                   mwlCalendarToday
                   [(viewDate)]="viewDate"
                   (viewDateChange)="closeOpenMonthViewDay()"

@@ -1,0 +1,68 @@
+
+<div class="container">
+  <app-bread menuItem="Nombre d'heures d'éclairage">
+  </app-bread>
+  <mat-card class="p-0">
+    <mat-card-header class="p-2 card-header-colored">
+      <mat-card-title class="text-light font-weight-bold">
+        <h4>Nombre d'heures d'éclairage</h4>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p-2">
+      <mat-tab-group [selectedIndex]="select">
+        <mat-tab label="Jour">
+
+          <mat-form-field appearance="standard">
+            <mat-label>Choix du jour</mat-label>
+            <input matInput [matDatepicker]="picker" (dateChange)="fetchDayChart($event.value)" [value]="dateDay.toISOString()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field><br>
+          <canvas class="col-6 d-inline" #barChartDay></canvas>
+        </mat-tab>
+
+
+
+        <mat-tab label="Mois">
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #monthYear placeholder="2020" [value]="dateDay.year()">
+          </mat-form-field>
+          <mat-form-field class="mt-3 mr-5">
+            <mat-label>Sélectionner le mois</mat-label>
+            <mat-select #monthMonth  [value]="dateDay.month()">
+              <mat-option *ngFor="let month of months; index as i" [value]="i">
+                {{month}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <button mat-raised-button color="accent" (click)="fetchMonthChart(monthYear.value, monthMonth.value)">Valider</button><br>
+
+          <canvas class="col-6 d-inline" #barChart></canvas><br>
+
+        </mat-tab>
+
+        <mat-tab label="Année">
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #yearYear placeholder="2020" [value]="dateDay.year()">
+          </mat-form-field>
+
+
+          <button mat-raised-button color="accent" (click)="fetchYearChart(yearYear.value)">Valider</button><br>
+
+          <canvas class="col-6 d-inline" #barChartYear></canvas>
+
+
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

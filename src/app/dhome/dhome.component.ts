@@ -44,7 +44,7 @@ export class DhomeComponent implements OnInit {
         'Nombre d\'heures par terrain',
         'Terrain',
         'Heures',
-        'Mensuel',
+        'Ce mois',
       )
       this.createBarChart(this.barChart2,
         value.terrainWeek.map(val => val.matricule),
@@ -52,7 +52,7 @@ export class DhomeComponent implements OnInit {
         undefined,
         'Terrain',
         'Heures',
-        'Hebdomadaire',
+        'Cette semaine',
       )
       this.createBarChart(this.barChart3,
         value.terrainDay.map(val => val.matricule),
@@ -60,7 +60,7 @@ export class DhomeComponent implements OnInit {
         undefined,
         'Terrain',
         'Heures',
-        'Journalier',
+        'Aujourd\'hui',
       )
 
       this.createBarChart(this.hourchart,

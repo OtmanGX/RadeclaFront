@@ -11,6 +11,7 @@ import * as _moment from 'moment';
 // @ts-ignore
 import {default as _rollupMoment, Moment} from 'moment';
 import {DashboardService} from '../../services/dashboard.service';
+import {ActivatedRoute} from '@angular/router';
 
 const moment = _rollupMoment || _moment;
 Chart.defaults.global.defaultFontSize = 15;
@@ -56,6 +57,7 @@ export class TauxTerrainsComponent implements OnInit {
   dateWeek = moment();
   monthStats$;
   weeks;
+  select = 3;
 
   chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.date.value;
@@ -72,7 +74,10 @@ export class TauxTerrainsComponent implements OnInit {
     datepicker.close();
     this.fetchMonthChart();
   }
-  constructor(private service:DashboardService) {
+  constructor(private service:DashboardService,
+              private activatedRoute :ActivatedRoute) {
+    if (this.activatedRoute.snapshot.paramMap.has('select'))
+      this.select = parseInt(this.activatedRoute.snapshot.paramMap.get('select'));
     this.weeks = Array(52).fill(0).map((x,i)=>i+1);
   }
 

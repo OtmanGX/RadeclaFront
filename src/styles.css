@@ -23,3 +23,10 @@ body {
   background-color: #673AB7;
 }
 
+.grid-container {
+  margin: 20px;
+}
+
+.section-title {
+  border-radius: 20px;
+}

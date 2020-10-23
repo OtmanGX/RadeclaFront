@@ -123,6 +123,16 @@
       <td mat-cell *matCellDef="let element"> {{element.cotisation?.created_at | date}} </td>
     </ng-container>
 
+    <ng-container matColumnDef='licence fédération'>
+      <th mat-header-cell *matHeaderCellDef> licence fédération </th>
+      <td mat-cell *matCellDef="let element"> {{element.cotisation?.licence_fideration}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef='Assurance'>
+      <th mat-header-cell *matHeaderCellDef> Assurance </th>
+      <td mat-cell *matCellDef="let element"> {{element.cotisation?.licence_fideration}} </td>
+    </ng-container>
+
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="actions">

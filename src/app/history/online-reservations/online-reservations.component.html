@@ -1,0 +1,31 @@
+<div class="container-fluid p-2">
+
+  <div class="grid-container">
+    <mat-toolbar color="primary">
+      <h1>Résérvations réalisées en ligne</h1>
+    </mat-toolbar>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Choix du jour</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="dayChanged($event.value)" [value]="todayDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <app-day-view-scheduler
+        [viewDate]="viewDate"
+        [events]="events"
+        [locale]="locale"
+        [terrains]="terrains"
+        [refresh]="refresh"
+        [dayStartHour]="8"
+        [hourSegments]="1"
+      >
+      </app-day-view-scheduler>
+    </mat-card-content>
+  </mat-card>
+
+
+</div>

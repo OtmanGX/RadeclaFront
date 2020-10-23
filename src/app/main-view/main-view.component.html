@@ -27,6 +27,30 @@
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['tournoi_tcmt']">
+          <mat-icon>emoji_events</mat-icon>Tournois TCMT
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['tournoi_frmt']">
+          <mat-icon>emoji_events</mat-icon>Tournois FRMT
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['schools']">
+          <mat-icon>school</mat-icon>Ecoles
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
+        <button mat-button [routerLink]="['props']">
+          <mat-icon>tune</mat-icon>Paramètrage
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="active-button">
         <button mat-button [routerLink]="['history']">
           <mat-icon>history</mat-icon>Historique
         </button>
@@ -37,29 +61,65 @@
           <mat-icon>assignment</mat-icon>Réservations du jour
         </button>
       </mat-list-item>
+
+
+      <mat-list-item class="mt-5" routerLinkActive="active-button">
+        <button mat-button (click)="logout()">
+          <mat-icon>power_settings_new</mat-icon>Se déconnecter
+        </button>
+      </mat-list-item>
     </mat-list>
 
   </mat-sidenav>
-  <p>
-    <mat-toolbar color="accent">
+    <mat-toolbar color="accent" class="mb-1">
       <div>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
       </div>
-      <span style="font-size: 1rem" class="font-weight-bold mr-auto"><mat-icon svgIcon="tennis"></mat-icon>Système Radecla</span>
-      <span style="font-size: 1rem">
-          Taux d'occupation des terrains
-        <span class="font-weight-bold text-dark">8h-14h:</span>  <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.h8_14}}%</span>,
-        <span class="font-weight-bold text-dark">14h-19h:</span> <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.h14_19}}%</span>,
-        <span class="font-weight-bold text-dark">19h-24h:</span> <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.h19_24}}%</span>
-        </span>
+      <span style="font-size: 1rem" class="font-weight-bold mr-auto"><mat-icon svgIcon="tennis"></mat-icon>Radecla TCMT SOUANI</span>
+
+      <div style="font-size: 1rem; line-height: 1.1" class="mr-2 text-center">
+        Facturation éclairage<br>
+        à partir de
+      </div>
+      <div class="d-flex flex-column bd-highlight mat-small mr-5">
+        <div class="font-weight-bold text-dark"> <span class="badge badge-secondary text-light">{{(stats$|async)?.lighting_hour}}h</span></div>
+      </div>
+
+      <div style="font-size: 1rem; line-height: 1.1" class="mr-2 text-center">
+        Total heures d'éclairage<br>
+        (Ce jour)
+      </div>
+      <div class="d-flex flex-column bd-highlight mat-small mr-5">
+        <div class="font-weight-bold text-dark"> <span class="badge badge-secondary text-light">{{(stats$|async)?.lighting_count}}</span></div>
+      </div>
+
+      <div style="font-size: 1rem; line-height: 1.1" class="mr-2 text-center">
+        Nombre d'heures<br>
+        (Ce jour)
+      </div>
+      <div class="d-flex flex-column bd-highlight mat-small mr-5">
+        <div class="font-weight-bold text-dark">Entrainements <span class="badge badge-secondary text-light">{{(stats$|async)?.entrainement}}</span></div>
+        <div class="font-weight-bold text-dark">Matchs <span class="badge badge-secondary text-light">{{(stats$|async)?.match}}</span></div>
+        <div class="font-weight-bold text-dark">Tournois <span class="badge badge-secondary text-light">{{(stats$|async)?.tournoi}}</span>
+          Défis <span class="badge badge-secondary text-light">{{(stats$|async)?.defi}}</span></div>
+      </div>
+
+      <div style="font-size: 1rem; line-height: 1.1" class="mr-2 ml-5 text-center">
+        Taux d'occupation des terrains<br>
+        (Ce jour)
+      </div>
+      <div class="d-flex flex-column bd-highlight mat-small">
+        <div class="font-weight-bold text-dark">8h-14h: <span class="badge badge-secondary text-light">{{(stats$|async)?.h8_14}}%</span></div>
+        <div class="font-weight-bold text-dark">14h-19h: <span class="badge badge-secondary text-light">{{(stats$|async)?.h14_19}}%</span></div>
+        <div class="font-weight-bold text-dark">19h-24h: <span class="badge badge-secondary text-light">{{(stats$|async)?.h19_24}}%</span></div>
+      </div>
+
       <div class="mr-0 ml-auto">
         <img src="../../assets/tcmt.jpg" height="60px" class="mr-2">
         <img src="../../assets/mglogo.png" height="50px">
       </div>
-
-
 <!--      <span class="example-spacer"></span>-->
 <!--      <div style="text-align: right;">-->
 <!--        <button mat-icon-button>-->
@@ -73,7 +133,6 @@
       <!--      <mat-icon>share</mat-icon>-->
       <!--    </button>-->
     </mat-toolbar>
-  </p>
 
   <router-outlet></router-outlet>
 <!--  <mat-toolbar style="clear: both;-->
@@ -93,6 +152,12 @@
   <span>Total Membres <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.total_membres}}</span>, &nbsp;</span>
   <span>Membres à jour de leurs cotisations <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.membres_paye}}</span>&nbsp;</span>
 </div>
+  <span class="text-center w-100" *ngIf="(stats$|async)?.birth_day !== false">
+    <mat-icon style="vertical-align: middle"  color="warn">cake</mat-icon>&nbsp;Happy Birthday :
+    <span style="font-size: 1.2rem">
+    {{(stats$|async)?.birth_day}}
+    </span>
+  </span>
   <div class="text-right d-inline-flex justify-content-end text-right align-self-end float-right"  style="vertical-align: middle">
       <mat-icon>
       email
@@ -104,6 +169,4 @@
       {{ date | date: 'short' }}
     </span>
   </div>
-
-
 </div>

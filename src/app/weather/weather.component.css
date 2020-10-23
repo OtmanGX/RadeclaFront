@@ -1,0 +1,9 @@
+:host {
+  width: 100%; padding: 0; margin: 0;
+}
+
+
+div, table {
+  margin: 0;
+  padding: 0;
+}

@@ -1,14 +1,19 @@
-<div class="container-fluid">
-    <app-day-view-scheduler
-      [viewDate]="viewDate"
-      [events]="events"
-      [locale]="locale"
-      [extra]="true"
-      [hourSegmentHeight]="55"
-      [terrains]="terrains"
-      [refresh]="refresh"
-      [dayStartHour]="8"
-      [hourSegments]="1"
-    >
+
+<div class="container-fluid mt-1">
+
+  <app-day-view-scheduler
+    [viewDate]="viewDate"
+    [events]="events"
+    [locale]="locale"
+    [extra]="true"
+    [hourSegmentHeight]="53"
+    [terrains]="terrains"
+    [refresh]="refresh"
+    [dayStartHour]="8"
+    [hourSegments]="1"
+  >
     </app-day-view-scheduler>
+  <app-weather [date]="viewDate">
+  </app-weather>
 </div>
+

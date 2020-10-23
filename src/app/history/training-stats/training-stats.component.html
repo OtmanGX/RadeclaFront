@@ -4,12 +4,12 @@
   <mat-card class="p-0">
     <mat-card-header class="p-2 card-header-colored">
       <mat-card-title class="text-light font-weight-bold">
-        <h4>La durée d'entrainement</h4>
+        <h4>Les durées d'entrainements</h4>
       </mat-card-title>
     </mat-card-header>
 
     <mat-card-content class="p-2">
-      <mat-tab-group [selectedIndex]="1">
+      <mat-tab-group [selectedIndex]="select">
         <mat-tab label="Semaine">
 
           <mat-form-field class="mt-3 mr-2">
@@ -44,19 +44,30 @@
 
 
           <br>
-          <mat-list>
-            <span *ngFor="let trainer of (weekTraining$| async)">
-              <mat-list-item>
-                  <div class="w-25" >{{trainer.nom}}</div>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let trainer of (weekTraining$| async)?.training">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="w-25">
+                  {{trainer.nom}}
+                </mat-panel-title>
+                <mat-panel-description>
                   <mat-chip-list>
-                  <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
+                    <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
                   </mat-chip-list>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item *ngFor="let member of (weekTraining$| async)?.members[trainer.nom]">
+                  <div class="w-25" >{{member.nom}}</div>
+                  <mat-chip-list>
+                    <mat-chip>{{member.total}}h</mat-chip>
+                  </mat-chip-list>
+                </mat-list-item>
 
-              </mat-list-item>
-            <mat-divider></mat-divider>
-            </span>
-          </mat-list>
-
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
         </mat-tab>
 
         <mat-tab label="Mois">
@@ -94,20 +105,30 @@
 
           <button mat-raised-button color="accent" (click)="fetchMonth(monthYear.value, monthMonth.value, checkboxMonth.checked)">Valider</button>
           <br>
-          <mat-list>
-            <span *ngFor="let trainer of (monthTraining$| async)">
-              <mat-list-item>
-                  <div class="w-25" >{{trainer.nom}}</div>
-                  <mat-chip-list>
-                  <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
-                  </mat-chip-list>
+            <mat-accordion>
+                   <mat-expansion-panel *ngFor="let trainer of (monthTraining$| async)?.training">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title class="w-25">
+                          {{trainer.nom}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <mat-chip-list>
+                            <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
+                            </mat-chip-list>
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <mat-list>
+                        <mat-divider></mat-divider>
+                        <mat-list-item *ngFor="let member of (monthTraining$| async)?.members[trainer.nom]">
+                            <div class="w-25" >{{member.nom}}</div>
+                            <mat-chip-list>
+                            <mat-chip>{{member.total}}h</mat-chip>
+                            </mat-chip-list>
+                        </mat-list-item>
 
-              </mat-list-item>
-            <mat-divider></mat-divider>
-            </span>
-          </mat-list>
-
-
+                      </mat-list>
+              </mat-expansion-panel>
+            </mat-accordion>
         </mat-tab>
 
         <mat-tab label="Année">
@@ -135,18 +156,30 @@
 
           <button mat-raised-button class="ml-3" color="accent" (click)="fetchYear(yearYear.value, checkboxYear.checked)">Valider</button>
           <br>
-          <mat-list>
-            <span *ngFor="let trainer of (yearTraining$| async)">
-              <mat-list-item>
-                  <div class="w-25" >{{trainer.nom}}</div>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let trainer of (yearTraining$| async)?.training">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="w-25">
+                  {{trainer.nom}}
+                </mat-panel-title>
+                <mat-panel-description>
                   <mat-chip-list>
-                  <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
+                    <mat-chip color="primary" selected>{{trainer.total}}h</mat-chip>
                   </mat-chip-list>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-list>
+                <mat-divider></mat-divider>
+                <mat-list-item *ngFor="let member of (yearTraining$| async)?.members[trainer.nom]">
+                  <div class="w-25" >{{member.nom}}</div>
+                  <mat-chip-list>
+                    <mat-chip>{{member.total}}h</mat-chip>
+                  </mat-chip-list>
+                </mat-list-item>
 
-              </mat-list-item>
-            <mat-divider></mat-divider>
-            </span>
-          </mat-list>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
 
         </mat-tab>
 

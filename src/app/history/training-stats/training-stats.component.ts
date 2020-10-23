@@ -9,6 +9,7 @@ import {Membre} from "../../models/membre";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 import {FormControl} from "@angular/forms";
+import {ActivatedRoute} from '@angular/router';
 
 const moment = _rollupMoment || _moment;
 
@@ -20,6 +21,7 @@ const moment = _rollupMoment || _moment;
 export class TrainingStatsComponent implements OnInit {
   months:Array<string> = [];
   weeks;
+  select = 1;
   date = moment();
   monthTraining$;
   yearTraining$;
@@ -33,8 +35,11 @@ export class TrainingStatsComponent implements OnInit {
 
   constructor(
     private dashboardService :DashboardService,
-    private membreService :MembreService
+    private membreService :MembreService,
+    private activatedRoute :ActivatedRoute,
   ) {
+    if (this.activatedRoute.snapshot.paramMap.has('select'))
+      this.select = parseInt(this.activatedRoute.snapshot.paramMap.get('select'));
     for (let i = 0; i < 12; i++) {
       this.months.push( fr.localize.month(i, { width: 'abbreviated' }) )
     }
@@ -59,14 +64,14 @@ export class TrainingStatsComponent implements OnInit {
     return this.membres.map(value1 => value1.nom).filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  fetchMonth(year, month, withMember) {
+  async fetchMonth(year, month, withMember) {
     let params = {};
     if (withMember) params = {date: 'month', year: year, month: month+1, with: this.monthControl.value};
     else params = {date: 'month', year: year, month: month+1};
     this.monthTraining$ = this.dashboardService.training_stats(params);
   }
 
-  fetchYear(year, withMember) {
+  async fetchYear(year, withMember) {
     console.log(this.yearControl.value);
     let params = {}
     if (withMember)
@@ -75,7 +80,7 @@ export class TrainingStatsComponent implements OnInit {
     this.yearTraining$ = this.dashboardService.training_stats(params);
   }
 
-  fetchWeek(year, week, withMember) {
+  async fetchWeek(year, week, withMember) {
     let params = {}
     if (withMember) params = {date: 'week', year: year, week: week, with: this.weekControl.value};
     else params = {date: 'week', year: year, week: week};

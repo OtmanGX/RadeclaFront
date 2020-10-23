@@ -11,6 +11,7 @@
     [class.cal-event-training]="weekEvent.event.meta.reservation.type_match=='E'"
     [class.cal-event-match]="weekEvent.event.meta.reservation.type_match=='M'"
     [class.cal-event-tournoi]="weekEvent.event.meta.reservation.type_match=='T'"
+    [class.cal-event-defi]="weekEvent.event.meta.reservation.type_match=='D'"
     [class.row]="extra"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"

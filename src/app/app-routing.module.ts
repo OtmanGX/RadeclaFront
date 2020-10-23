@@ -17,6 +17,12 @@ import {TrainingStatsComponent} from "./history/training-stats/training-stats.co
 import {TotalCotisationComponent} from "./history/total-cotisation/total-cotisation.component";
 import {CotisationToPayComponent} from "./history/cotisation-to-pay/cotisation-to-pay.component";
 import {MembresStatsComponent} from './history/membres-stats/membres-stats.component';
+import {TauxTerrainsHoursComponent} from './history/taux-terrains-hours/taux-terrains-hours.component';
+import {OnlineReservationsComponent} from './history/online-reservations/online-reservations.component';
+import {PropComponent} from './prop/prop.component';
+import {LightingStatsComponent} from './history/lighting-stats/lighting-stats.component';
+import {TournoiComponent} from './tournoi/tournoi.component';
+import {SchoolsComponent} from './schools/schools.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -24,23 +30,31 @@ const routes: Routes = [
   {path: 'admin',canActivate:[AuthGuard], component: MainViewComponent, children: [
       {path:'', redirectTo: 'dashboard', pathMatch: 'full'},
       {path:'dashboard', component: DhomeComponent},
-      {path:'membres', component: MembreComponent},
+      {path:'membres', component: MembreComponent, canActivate:[AuthGuard]},
       {path:'entraineur', component: EntraineurComponent},
       {path:'membre', component: NewmembreComponent},
       {path:'groupe', component: AddGroupComponent},
       {path:'calendar', component: DashboardHomeComponent},
+      {path:'tournoi_tcmt', component: TournoiComponent},
+      {path:'tournoi_frmt', component: TournoiComponent},
+      {path:'schools', component: SchoolsComponent},
       {path:'history', component: HistoryComponent},
         {path:'history/adherants', component: HistoryComponent},
         {path:'history/terrains', component: HistoryComponent},
         {path:'history/entraineurs', component: HistoryComponent},
         {path:'history/cotisations', component: HistoryComponent},
+        {path:'history/eclairage', component: HistoryComponent},
+        {path:'history/online', component: OnlineReservationsComponent},
+      {path:'props', component: PropComponent},
       {path:'tvshow', component: TvshowComponent},
       {path:'tauxTerrains', component: TauxTerrainsComponent},
+      {path:'tauxTerrainsHours', component: TauxTerrainsHoursComponent},
       {path:'hours', component: TopHoursComponent},
       {path:'training', component: TrainingStatsComponent},
       {path:'totalcotisation', component: TotalCotisationComponent},
       {path:'cotisationtopay', component: CotisationToPayComponent},
       {path:'membresStats', component: MembresStatsComponent},
+      {path:'lighting', component: LightingStatsComponent},
     ]},
 ];
 

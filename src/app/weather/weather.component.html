@@ -1,0 +1,24 @@
+<p *ngIf="weather.length == 0">Searching...</p>
+  <div *ngIf="weather.length > 0" style="background-color: rgba(245, 245, 245, 0.8);">
+    <table style="width: 100%; text-align: center">
+      <thead></thead>
+      <tbody>
+      <tr>
+        <td *ngFor="let forecast of weather | slice: 0:7; let i= index; let isFirst=first">
+          <h5 class="text-primary font-weight-bold" style="margin: 0; padding: 0">{{date | dfnsAddDays : i | dfnsFormat: 'EEEE': dateOptions}}</h5>
+          <strong>{{ forecast.temp.day }}<sup>°C</sup></strong>
+          <span [ngSwitch]="toTextualDescription(forecast.wind_deg)">
+            <mat-icon *ngSwitchCase="'Northerly'">arrow_upward</mat-icon>
+            <mat-icon *ngSwitchCase="'Southerly'">arrow_downward</mat-icon>
+            <mat-icon *ngSwitchCase="'Easterly'">arrow_forward</mat-icon>
+            <mat-icon *ngSwitchCase="'Westerly'">arrow_back</mat-icon>
+          </span>
+          <strong>{{ forecast.wind_speed*3.6 | number: '1.0-0'}}Km/h</strong>
+          <img height="55px" [src]="'http://openweathermap.org/img/wn/'+forecast.weather[0].icon+'@2x.png'" />
+<!--          <p></p>-->
+<!--          <p>{{ forecast.utcTime }}</p>-->
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>

@@ -15,6 +15,8 @@ import {
   isAfter,
   isBefore,
 } from 'date-fns';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {TournamentService} from '../../services/tournament.service';
 
 @Component({
   selector: 'app-reservationdialog',
@@ -46,15 +48,20 @@ export class ReservationdialogComponent implements OnInit{
   member3 = new Membre();
   member4 = new Membre();
 
+  tournois$;
+
   constructor(
     public dialogRef: MatDialogRef<ReservationdialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private resService:ReservationService,
     private memService:MembreService,
+    private tournamentService:TournamentService,
+    private _snackBar: MatSnackBar,
     ) {
   }
 
   ngOnInit(): void {
+    this.tournois$ = this.tournamentService.getAll({all: true});
     if (this.data.edit) {
       console.log("edit");
       this.editable = isAfter(new Date(), addDays(new Date(this.data.reservation.start_date), 1));
@@ -62,7 +69,11 @@ export class ReservationdialogComponent implements OnInit{
     this.memService.getAllByPage({all:true}).subscribe(value => {
       this.membres = value;
       this.setFiltering();
-      if (this.data.edit)
+      if (this.data.edit) {
+          if (this.data.reservation.tournoi !== null) {
+            console.log('not null');
+            this.data.reservation.tournoi = this.data.reservation.tournoi.id;
+          }
         if (this.data.reservation.players.length == 2) {
           if (this.data.reservation.players[0] !== null) {
             this.member1Verified = true;
@@ -94,6 +105,7 @@ export class ReservationdialogComponent implements OnInit{
             this.member4 = this.getMember(this.data.reservation.players[3].id);
           }
         }
+    }
 
     })
 
@@ -153,9 +165,11 @@ export class ReservationdialogComponent implements OnInit{
           let calls = this.membresProcessing(value);
           if (calls.length)
             forkJoin(calls).subscribe(allResults => {
-              this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
+              this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data),
+                  error => this.openSnackBar(error.error?.non_field_errors, 'Ok'));
             });
-          else this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data));
+          else this.resService.create(value).subscribe((result) => this.dialogRef.close(this.data),
+              error => this.openSnackBar(error.error?.non_field_errors, 'Ok'));
           break;
         case 'modify':
           value.start_date = this.data.reservation.start_date;
@@ -163,9 +177,11 @@ export class ReservationdialogComponent implements OnInit{
           let calls2 = this.membresProcessing(value);
           if (calls2.length)
             forkJoin(calls2).subscribe(allResults => {
-              this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
+              this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data),
+                  error => this.openSnackBar(error, 'Ok'));
             });
-          else this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data));
+          else this.resService.update(this.data.reservation.id, value).subscribe((result) => this.dialogRef.close(this.data),
+              error => this.openSnackBar(error, 'Ok'));
           break;
         case 'delete':
           console.log('delete');
@@ -208,6 +224,12 @@ export class ReservationdialogComponent implements OnInit{
         break;
       }
     return res;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 
   // changed($event: any, f) {

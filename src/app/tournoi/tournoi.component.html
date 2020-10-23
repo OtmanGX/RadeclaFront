@@ -1,0 +1,49 @@
+<div class="grid-container">
+  <mat-toolbar class="section-title mat-elevation-z5">
+    <h1>Tournois {{httpParams.type_tournoi}}</h1>
+    <button mat-fab (click)="openDialog()" color="primary" class="ml-auto">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<div class="container pr-0 pl-0 mat-elevation-z3" style="background-color: rgba(245, 245, 245, 0.8);">
+  <mat-grid-list *ngIf="tournaments" class="m-1" cols="4" rowHeight="200px">
+    <mat-grid-tile *ngFor="let t of tournaments" class="">
+      <mat-card class="p-0 w-100 m-2 h-100">
+        <mat-card-header class="mat-body-1 p-1 text-right ml-auto">
+          <mat-card-subtitle class="float-right text-right right my-0 pb-0">
+            {{t.date | date}}&nbsp;<mat-icon style="font-size: 1rem;">calendar_today</mat-icon>
+          </mat-card-subtitle>
+
+        </mat-card-header>
+<!--        <mat-divider></mat-divider>-->
+        <mat-card-content class="m-2 text-center h-50">
+          <mat-card-title>
+
+            <span class="ml-auto">
+              {{t.name}}
+            </span><mat-icon class="text-left" style="font-size: 2em" color="accent">emoji_events</mat-icon>
+
+          </mat-card-title>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions class="text-right m-0 p-0 mt-auto">
+          <button (click)="openDialog(t)" color="accent" mat-icon-button>
+            <mat-icon>create</mat-icon>
+          </button>
+          <button (click)="deleteTournoi(t.id)" color="warn" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-paginator color="primary"
+                 [length]="length"
+                 [pageIndex]="pageIndex"
+                 [showFirstLastButtons]="true"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]" (page)="setPageOptions($event)">
+  </mat-paginator>
+</div>

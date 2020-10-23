@@ -16,8 +16,21 @@
         <mat-radio-group name="type_match" value="E" [(ngModel)]="data.reservation.type_match" aria-label="Select an option">
           <mat-radio-button color="primary" class="ml-3 mr-2" value="E">Entrainement</mat-radio-button>
           <mat-radio-button color="primary" class="mr-2" value="M">Match</mat-radio-button>
-          <mat-radio-button color="primary" value="T">Tournoi</mat-radio-button>
+          <mat-radio-button color="primary" class="mr-2" value="T">Tournoi</mat-radio-button>
+          <mat-radio-button color="primary" value="D">Défi</mat-radio-button>
         </mat-radio-group> <br>
+
+        <mat-form-field *ngIf="data.reservation.type_match == 'T'">
+          <mat-label>
+            Tournoi
+          </mat-label>
+          <mat-select required name="tournoi" [(ngModel)]="data.reservation.tournoi">
+            <mat-option *ngFor="let tournoi of (tournois$ | async)" [value]="tournoi.id">
+            {{tournoi.name}} | {{tournoi.created_date| date}}
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field> <br>
 
 
 

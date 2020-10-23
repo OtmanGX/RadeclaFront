@@ -9,7 +9,13 @@
       </mat-card-header>
       <mat-card-content class="p-2">
         <p class="mat-display-1">
-          {{(total$|async)?.total}} DH
+          <span id="value" *ngIf="total">
+            <app-counter animationTime="1000" [showCircle]="false" [from]=0 [to]=total [of]=total>
+              <ng-counter-suffix>&nbsp;DH</ng-counter-suffix>
+            </app-counter>
+          </span>
+
+
       </mat-card-content>
     </mat-card>
   </div>

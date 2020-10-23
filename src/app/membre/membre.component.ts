@@ -23,7 +23,7 @@ import {ExcelService} from '../services/excel.service';
 export class MembreComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'nom', 'tel', 'E-mail','age', 'date_naissance', 'profession',
-    'tournoi', 'cat','cot', 'paye','montant', 'reste', 'date_paiement', 'actions'];
+    'tournoi', 'cat','cot', 'paye','montant', 'reste', 'date_paiement','licence fédération', 'Assurance', 'actions'];
   membres$: Observable<any>;
   membres: Array<Membre>;
   length: number;
@@ -47,9 +47,11 @@ export class MembreComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
-    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false, cotisation:'', cotisation__paye:'', cotisation__isnull:''};
+    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false, cotisation:'', cotisation__paye:'', cotisation__isnull:'', tournoi:''};
     let filter = this.activatedRoute.snapshot.paramMap.get('cotisation__paye');
     if (filter) this.httpParams.cotisation__paye = filter;
+    if (this.activatedRoute.snapshot.paramMap.get('tournoi'))
+      this.httpParams.tournoi = true;
     this.matPaginator.itemsPerPageLabel = "Elements par page:";
     this.matPaginator.nextPageLabel = "Page suivante";
     this.matPaginator.previousPageLabel = "Page précédente";

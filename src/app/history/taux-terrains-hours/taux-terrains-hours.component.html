@@ -1,0 +1,321 @@
+<div class="container">
+  <app-bread menuItem="Taux d'occupation des terrains"></app-bread>
+  <mat-card class="p-0">
+    <mat-card-header class="p-2 card-header-colored">
+      <mat-card-title class="text-light font-weight-bold">
+        <h4>Taux d'occupation des terrains</h4>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p-2">
+      <mat-tab-group [selectedIndex]="0">
+        <mat-tab label="Jour">
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>Choisir le jour</mat-label>
+            <input matInput [value]="date.toISOString()" [matDatepicker]="picker" (dateChange)="dayChanged($event.value)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <br>
+          <div class="row w-100 mb-2">
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 8-14h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.dayPercentage$ | async)?.h8_14}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 14-19h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.dayPercentage$ | async)?.h14_19}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 19-24h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      <span class="mat-display-1">
+                      {{(this.dayPercentage$ | async)?.h19_24}}
+                    </span>
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Semaine">
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #weekYear placeholder="2020" [value]="date.year()">
+          </mat-form-field>
+          <mat-form-field class="mt-3 mr-5">
+            <mat-label>Sélectionner la semaine</mat-label>
+            <mat-select #weekweek [value]="date.week()">
+              <mat-option *ngFor="let week of weeks" [value]="week">
+                {{week}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button class="ml-3" color="accent" (click)="fetchWeek(weekYear.value, weekweek.value)">Valider</button>
+          <br>
+          <div class="row w-100 mb-2">
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 8-14h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.weekPercentage$ | async)?.h8_14}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 14-19h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.weekPercentage$ | async)?.h14_19}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 19-24h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      <span class="mat-display-1">
+                      {{(this.weekPercentage$ | async)?.h19_24}}
+                    </span>
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Mois">
+
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #monthYear placeholder="2020" [value]="date.year()">
+          </mat-form-field>
+          <mat-form-field class="mt-3 mr-5">
+            <mat-label>Sélectionner le mois</mat-label>
+            <mat-select #monthMonth  [value]="date.month()">
+              <mat-option *ngFor="let month of months; index as i" [value]="i">
+                {{month}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <button mat-raised-button color="accent" (click)="fetchMonth(monthYear.value, monthMonth.value)">Valider</button>
+          <br>
+          <div class="row w-100 mb-2">
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 8-14h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.monthPercentage$ | async)?.h8_14}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 14-19h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.monthPercentage$ | async)?.h14_19}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 19-24h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      <span class="mat-display-1">
+                      {{(this.monthPercentage$ | async)?.h19_24}}
+                    </span>
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+
+          </div>
+
+        </mat-tab>
+
+        <mat-tab label="Année">
+
+          <mat-form-field class="mt-3 mr-2">
+            <mat-label>
+              Choisir l'année
+            </mat-label>
+            <input matInput #yearYear placeholder="2020" [value]="date.year()">
+          </mat-form-field>
+
+
+          <button mat-raised-button class="ml-3" (click)="fetchYear(yearYear.value)" color="accent">Valider</button>
+          <br>
+          <div class="row w-100 mb-2">
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 8-14h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.yearPercentage$ | async)?.h8_14}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 14-19h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      {{(this.yearPercentage$ | async)?.h14_19}}
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col-4">
+              <mat-card class="p-0">
+                <mat-card-header class="p-1">
+                  <mat-card-title class="text-muted">
+                    <span class="mat-display-1">
+                      <mat-icon>schedule</mat-icon> 19-24h
+                    </span>
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="p-2 text-center">
+                  <p>
+                    <span class="mat-display-1">
+                      <span class="mat-display-1">
+                      {{(this.yearPercentage$ | async)?.h19_24}}
+                    </span>
+                    </span>
+                    <span class="mat-display-2 text-info">%</span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+
+  </mat-card>
+</div>

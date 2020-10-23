@@ -42,8 +42,17 @@ export class DashboardService extends APIService {
     return this.http.get(`${this.baseurl}members_stats`, {params});
   }
 
-  terrain_stats_hours(params?): Observable<any> {
-    return this.http.get(`${this.baseurl}terrain_stats_hour`, {params});
+  main_stats(params?): Observable<any> {
+    return this.http.get(`${this.baseurl}main_stats`, {params});
   }
+
+  terrain_stats_hours(params?): Observable<any> {
+    return this.http.get(`${this.baseurl}terrain_stats_hours`, {params});
+  }
+
+  lighting_stats(params?): Observable<any> {
+    return this.http.get(`${this.baseurl}lighting_stats`, {params});
+  }
+
 
 }

@@ -12,10 +12,7 @@ import {
   startOfMonth,
   addMinutes,
   subMinutes,
-  endOfHour,
-  differenceInHours,
   differenceInMinutes
-  , isBefore,
 } from 'date-fns';
 import {Observable, Subject} from 'rxjs';
 import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, DAYS_OF_WEEK,} from 'angular-calendar';
@@ -148,10 +145,13 @@ export class DashboardHomeComponent implements OnInit{
       params = {start_date: addHours(startOfDay(this.viewDate),8).toISOString(), end_date: endOfDay(this.viewDate).toISOString()}
     }
      else
-       params = {start_date: startOfMonth(this.viewDate).toISOString(), end_date: endOfMonth(this.viewDate).toISOString()}
+       params = {start_date: startOfMonth(this.viewDate).toISOString(), end_date: endOfMonth(this.viewDate).toISOString(), lite: true}
     this.events$ = this.service.getall(params)
-      .pipe(map(( results: any ) => {
-        return results.map((reservation: ReservationData) => {
+      .pipe(map(( results: any ) =>
+
+      {
+
+        if (day) return results.map((reservation: ReservationData) => {
           return {
             title: 'Réservé',
             color: terrains[reservation.terrain.matricule-1].color,
@@ -167,8 +167,14 @@ export class DashboardHomeComponent implements OnInit{
             },
             draggable: true,
           };
-        });
-      })
+        }); else return results.map((reservation: ReservationData) => {
+        return {
+          start: new Date(reservation.start_date),
+          end: addMinutes(new Date(reservation.start_date), reservation.duration*60-1),
+        };
+      });
+      }
+      )
     );
   }
 

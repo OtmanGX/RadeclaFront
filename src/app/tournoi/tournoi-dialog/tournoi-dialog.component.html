@@ -1,0 +1,142 @@
+<div class="d-flex flex-column align-items-center justify-content-center">
+  <mat-toolbar color="primary" class="m-0 mb-2 text-center">
+    <h1 mat-dialog-title>Tournoi {{tournoi.type_tournoi}}</h1>
+  </mat-toolbar>
+  <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
+    <div mat-dialog-content class="pb-2">
+      <mat-form-field class="w-100">
+        <mat-label>Nom du tournoi</mat-label>
+        <input name="name" [(ngModel)]="tournoi.name" required matInput/>
+      </mat-form-field><br>
+
+      <mat-form-field>
+        <mat-label>Juges</mat-label>
+        <textarea [(ngModel)]="tournoi.juges" name="juges" matInput value="">
+        </textarea>
+      </mat-form-field> &nbsp;
+
+      <mat-form-field>
+        <mat-label>Entraineurs</mat-label>
+        <textarea [(ngModel)]="tournoi.trainers" name="trainers" matInput>
+        </textarea>
+      </mat-form-field><br>
+
+      <mat-form-field>
+        <mat-label>Directeur du tournoi</mat-label>
+        <input [(ngModel)]="tournoi.director" name="director" matInput/>
+      </mat-form-field><br>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Date du tournoi</mat-label>
+        <input matInput name="date" [(ngModel)]="tournoi.date" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field><br>
+      <mat-label style="border: 1px black solid" class="font-weight-bold text-primary mb-1">M</mat-label><br>
+      <mat-button-toggle-group value="9-10" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="7-8" (click)="setFiltreMembers('H',7, 8)">7-8 ans</mat-button-toggle>
+        <mat-button-toggle value="9-10" (click)="setFiltreMembers('H',9, 10)">9-10 ans</mat-button-toggle>
+        <mat-button-toggle value="11-12" (click)="setFiltreMembers('H',11, 12)">11-12 ans</mat-button-toggle>
+        <mat-button-toggle value="13-14" (click)="setFiltreMembers('H',13, 14)">13-14 ans</mat-button-toggle>
+        <mat-button-toggle value="15-18" (click)="setFiltreMembers('H',15, 18)">15-18 ans</mat-button-toggle>
+      </mat-button-toggle-group><br>
+      <mat-button-toggle-group>
+        <mat-button-toggle value="d12-18" (click)="setFiltreMembers('H',12, 18)">double 12-18 ans</mat-button-toggle>
+        <mat-button-toggle value="35" (click)="setFiltreMembers('H',35, 39)">Vétérans +35</mat-button-toggle>
+        <mat-button-toggle value="40" (click)="setFiltreMembers('H',40)">Vétérans +40</mat-button-toggle>
+        <mat-button-toggle value="d40" (click)="setFiltreMembers('H',40)">double Vétérans +40</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-selection-list (selectionChange)="selectChange($event.option)" style="max-height: 100px">
+        <mat-list-option [value]="member.nom" [selected]="tournoi.players.includes(member.nom)" *ngFor="let member of (filterMembres$|async) as filterMembres" >
+          {{member.nom}}
+        </mat-list-option>
+      </mat-selection-list><br>
+      <a [href]="downloadInitial()">
+        <button mat-raised-button type="button" class="mr-2 mb-4">Liste initiale</button>
+      </a>
+      <a *ngIf="tournoi.id" [href]="downloadInitial('H', tournoi.id)">
+      <button  mat-raised-button type="button" class="mb-4" color="primary">Liste définitive des participants</button>
+      </a>
+        <br>
+      <mat-label style="color: #a600ff; border: 1px black solid"  class="font-weight-bold mb-12">F</mat-label><br>
+      <mat-button-toggle-group value="9-10" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="7-8" (click)="setFiltreMembers('F',7, 8)">7-8 ans</mat-button-toggle>
+        <mat-button-toggle value="9-10" (click)="setFiltreMembers('F',9, 10)">9-10 ans</mat-button-toggle>
+        <mat-button-toggle value="11-12" (click)="setFiltreMembers('F',11, 12)">11-12 ans</mat-button-toggle>
+        <mat-button-toggle value="13-14" (click)="setFiltreMembers('F',13, 14)">13-14 ans</mat-button-toggle>
+        <mat-button-toggle value="15-18" (click)="setFiltreMembers('F',15, 18)">15-18 ans</mat-button-toggle>
+      </mat-button-toggle-group><br>
+      <mat-button-toggle-group>
+        <mat-button-toggle value="d12-18" (click)="setFiltreMembers('F',12, 18)">double 12-18 ans</mat-button-toggle>
+        <mat-button-toggle value="35" (click)="setFiltreMembers('F',35, 39)">Vétérans +35</mat-button-toggle>
+        <mat-button-toggle value="40" (click)="setFiltreMembers('F',40)">Vétérans +40</mat-button-toggle>
+        <mat-button-toggle value="d40" (click)="setFiltreMembers('F',40)">double Vétérans +40</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-selection-list (selectionChange)="selectChange($event.option)" style="max-height: 100px">
+        <mat-list-option [value]="member.nom" [selected]="tournoi.players.includes(member.nom)" *ngFor="let member of (filterMembres2$|async) as filterMembres" >
+          {{member.nom}}
+        </mat-list-option>
+      </mat-selection-list>
+      <a [href]="downloadInitial('F')">
+        <button mat-raised-button type="button" class="mr-2">Liste initiale</button>
+      </a>
+      <a *ngIf="tournoi.id" [href]="downloadInitial('F', tournoi.id)">
+      <button mat-raised-button type="button" color="primary">
+        Liste définitive des participantes</button>
+      </a>
+        <br>
+
+<!--      <mat-divider class="my-3"></mat-divider>-->
+<!--      <div>Les participants :-->
+<!--        <span *ngFor="let member of tournoi.players"> {{member}},</span>-->
+<!--      </div><br>-->
+
+
+
+      <!--      <mat-form-field>-->
+<!--        <mat-label>Participants</mat-label>-->
+<!--        <mat-select (selectionChange)="print($event)" [ngModel]="tournoi.players" name="players" multiple>-->
+<!--          <mat-option *ngFor="let option of (membres$|async)" [value]="option.nom">-->
+<!--            {{option.nom}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field><br>-->
+
+<!--      <mat-form-field class="example-full-width">-->
+<!--        <input type="text" placeholder="Select Users" aria-label="Select Users" matInput [matAutocomplete]="auto" [formControl]="userControl" #userInput>-->
+<!--        <mat-hint>Enter text to find users by name</mat-hint>-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">-->
+<!--        <mat-option *ngFor="let user of filteredUsers | async" [value]="selectedUsers">-->
+<!--          <div (click)="optionClicked($event, user)">-->
+<!--            <mat-checkbox [checked]="user.selected" (change)="toggleSelection(user)" (click)="$event.stopPropagation()">-->
+<!--              {{ user.firstname }} {{ user.lastname }}-->
+<!--            </mat-checkbox>-->
+<!--          </div>-->
+<!--        </mat-option>-->
+<!--      </mat-autocomplete>-->
+
+
+    </div>
+    <div class="d-flex justify-content-center align-items-center" mat-dialog-actions>
+      <!--      <button mat-button (click)="onNoClick()">Annuler</button>-->
+      <!--      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Valider</button>-->
+      <button type="button" mat-fab color="primary" matTooltip="Annuler" aria-label="cancel button" (click)="onNoClick()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <button type="submit" *ngIf="!data.edit" mat-fab color="accent" (click)="data.action = 'add'" matTooltip="Valider" aria-label="Add button" cdkFocusInitial>
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button type="submit" *ngIf="data.edit"  mat-fab color="accent" (click)="data.action = 'modify'" matTooltip="Modifier" aria-label="Add button" cdkFocusInitial>
+        <mat-icon>update</mat-icon>
+      </button>
+
+      <button *ngIf="data.edit" type="submit" (click)="data.action = 'delete'" mat-fab color="warn" matTooltip="Supprimer" aria-label="Add button" cdkFocusInitial>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

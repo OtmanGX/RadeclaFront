@@ -1,0 +1,188 @@
+<div class="container-fluid mt-1">
+<!--  <app-bread menuItem="Paramètrage"></app-bread>-->
+    <div class="row" *ngIf="config">
+    <div class="col-6 ">
+      <mat-card class="p-0">
+        <mat-card-header class="p-2 card-header-colored">
+          <mat-card-title class="text-light font-weight-bold">
+            <h5>Nombre limite de réservations des terrains par âge</h5>
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="p-4">
+          <form #f="ngForm" (ngSubmit)="submit(f.value)">
+
+          <mat-form-field appearance="standard">
+            <mat-label>Du</mat-label>
+            <mat-select name="From" [(ngModel)]="config.rule1.From">
+              <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                {{hour+8}}:00
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="ml-1" appearance="standard">
+            <mat-label>Au</mat-label>
+            <mat-select name="To" [(ngModel)]="config.rule1.To">
+              <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                {{hour+8}}:00
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <mat-label>Âge supérieur à</mat-label>
+            <mat-slider name="age" #slider [(ngModel)]="config.rule1.age" thumbLabel min="5" max="100" step="1" value="30" [displayWith]="formatLabel"></mat-slider>
+            {{slider.value}}
+          </div>
+          <mat-form-field>
+            <mat-label>
+              Nombre de terrains
+            </mat-label>
+            <input matInput name="nb" [(ngModel)]="config.rule1.nb" type="number" min="1" max="9">
+          </mat-form-field>
+
+          <div>
+            <button mat-raised-button type="submit" color="primary">Valider</button>
+          </div>
+
+          </form>
+
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+    <div class="col-6">
+      <mat-card class="p-0">
+        <mat-card-header class="p-2 card-header-colored">
+          <mat-card-title class="text-light font-weight-bold">
+            <h5>Nombre limite de réservations des terrains par les entraineurs</h5>
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="p-4">
+          <form #f2="ngForm" (ngSubmit)="submit(f2.value)">
+
+            <mat-form-field appearance="standard">
+              <mat-label>Du</mat-label>
+              <mat-select name="From" [(ngModel)]="config.rule2.From">
+                <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                  {{hour+8}}:00
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="ml-1" appearance="standard">
+              <mat-label>Au</mat-label>
+              <mat-select name="To" [(ngModel)]="config.rule2.To">
+                <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                  {{hour+8}}:00
+                </mat-option>
+              </mat-select>
+            </mat-form-field><br>
+            <mat-form-field>
+              <mat-label>
+                Nombre de terrains
+              </mat-label>
+              <input matInput name="nbTrainer" [(ngModel)]="config.rule2.nbTrainer" type="number" min="1" max="9">
+            </mat-form-field>
+
+            <div>
+              <button mat-raised-button type="submit" color="primary">Valider</button>
+            </div>
+
+          </form>
+
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+    <div class="col-6">
+      <mat-card class="p-0 h-100">
+        <mat-card-header class="p-2 card-header-colored">
+          <mat-card-title class="text-light font-weight-bold">
+            <h5>Nombre limite de réservations des terrains pour les jeunes</h5>
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="p-4">
+          <form #f3="ngForm" (ngSubmit)="submit(f3.value)">
+
+            <mat-form-field appearance="standard">
+              <mat-label>Du</mat-label>
+              <mat-select name="From" [(ngModel)]="config.rule3.From">
+                <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                  {{hour+8}}:00
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="ml-1" appearance="standard">
+              <mat-label>Au</mat-label>
+              <mat-select name="To" [(ngModel)]="config.rule3.To">
+                <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                  {{hour+8}}:00
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div>
+              <mat-label>Âge inférieur à</mat-label>
+              <mat-slider name="ageYoung" #slider3 [(ngModel)]="config.rule3.ageYoung" thumbLabel min="5" max="100" step="1" value="30" [displayWith]="formatLabel"></mat-slider>
+              {{slider3.value}}
+            </div>
+            <mat-form-field>
+              <mat-label>
+                Nombre de terrains
+              </mat-label>
+              <input matInput name="nb" [(ngModel)]="config.rule3.nb" type="number" min="1" max="9">
+            </mat-form-field>
+
+            <div>
+              <button mat-raised-button type="submit" color="primary">Valider</button>
+            </div>
+
+          </form>
+
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+    <div class="col-6">
+      <mat-card class="p-0 h-100">
+        <mat-card-header class="p-2 card-header-colored">
+          <mat-card-title class="text-light font-weight-bold">
+            <h5>Comptage d'heures d'éclairage à partir de </h5>
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="p-4">
+          <form #f4="ngForm" (ngSubmit)="submit(f4.value)">
+            <mat-form-field appearance="standard">
+              <mat-label>Heure</mat-label>
+              <mat-select name="hour" [(ngModel)]="config.rule4.hour">
+                <mat-option *ngFor="let hour of hours" [value]="hour+8">
+                  {{hour+8}}:00
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="mt-auto">
+              <button mat-raised-button color="primary" type="submit">Valider</button>
+            </div>
+          </form>
+
+
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+  </div>
+
+
+
+
+
+</div>

@@ -12,6 +12,8 @@ export class ReservationData {
   eclairage : boolean = false;
   eclairage_paye : boolean = false;
   type_match : string = 'M';
+  created_by: any;
+  tournoi;
   constructor() {
   }
 }

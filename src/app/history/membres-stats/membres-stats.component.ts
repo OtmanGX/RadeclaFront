@@ -9,6 +9,7 @@ import {map, startWith} from 'rxjs/operators';
 // @ts-ignore
 import {default as _rollupMoment, Moment} from 'moment';
 import * as _moment from "moment";
+import {ActivatedRoute} from '@angular/router';
 
 const moment = _rollupMoment || _moment;
 
@@ -29,7 +30,11 @@ export class MembresStatsComponent implements OnInit {
 
   constructor(
     private dashboardService :DashboardService,
+    private activatedRoute: ActivatedRoute
   ) {
+    if (this.activatedRoute.snapshot.paramMap.get('match')) {
+      this.displayedColumns = ['nom', 'match'];
+    }
     for (let i = 0; i < 12; i++) {
       this.months.push( fr.localize.month(i, { width: 'abbreviated' }) )
     }
@@ -43,17 +48,17 @@ export class MembresStatsComponent implements OnInit {
   }
 
 
-  fetchMonth(year, month) {
+  async fetchMonth(year, month) {
     let params = {date: 'month', year: year, month: month+1};
     this.monthMembers$ = this.dashboardService.membres_stats(params);
   }
 
-  fetchYear(year) {
+  async fetchYear(year) {
     let params = {date: 'year', year: year};
     this.yearMembers$ = this.dashboardService.membres_stats(params);
   }
 
-  fetchWeek(year, week) {
+  async fetchWeek(year, week) {
     let params = {date: 'week', year: year, week: week};
     this.weekMembers$ = this.dashboardService.membres_stats(params);
   }

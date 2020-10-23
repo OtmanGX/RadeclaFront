@@ -36,6 +36,10 @@ div.cal-hour-segment {
   background-color: #0000ff;
 }
 
+.cal-event-defi {
+  background-color: #a600ff;
+}
+
 .cal-event-tournoi {
   background-color: #6365ef;
 }
