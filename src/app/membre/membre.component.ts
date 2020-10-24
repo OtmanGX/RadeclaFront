@@ -45,13 +45,17 @@ export class MembreComponent implements OnInit {
               ) {
   }
 
-  ngOnInit(): void {
-    this.dataSource.sort = this.sort;
+  setParams() {
     this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false, cotisation:'', cotisation__paye:'', cotisation__isnull:'', tournoi:''};
     let filter = this.activatedRoute.snapshot.paramMap.get('cotisation__paye');
     if (filter) this.httpParams.cotisation__paye = filter;
     if (this.activatedRoute.snapshot.paramMap.get('tournoi'))
       this.httpParams.tournoi = true;
+  }
+
+  ngOnInit(): void {
+    this.setParams();
+    this.dataSource.sort = this.sort;
     this.matPaginator.itemsPerPageLabel = "Elements par page:";
     this.matPaginator.nextPageLabel = "Page suivante";
     this.matPaginator.previousPageLabel = "Page précédente";

@@ -1,7 +1,7 @@
 <div class="grid-container">
   <mat-toolbar class="section-title mat-elevation-z5">
     <h1>Écoles</h1>
-    <button mat-fab color="primary" class="ml-auto">
+    <button (click)="openDialog()" mat-fab color="primary" class="ml-auto">
       <mat-icon>add</mat-icon>
     </button>
   </mat-toolbar>
@@ -9,15 +9,39 @@
 <div class="container pr-0 pl-0 mat-elevation-z3" style="background-color: rgba(245, 245, 245, 0.8);">
 
     <mat-grid-list cols="2" rowHeight="4:2">
-      <mat-grid-tile *ngFor="let option of options; index as i" >
-        <button [routerLink]=option.link mat-raised-button
-                class="w-100 ml-4 mr-4 p-4"
-                [matBadge]="i+1"
-                matBadgePosition="above before before" matBadgeSize="large">
-            <h5 class="font-weight-bold">
-              {{option.name}}
-            </h5>
-        </button>
+      <mat-grid-tile *ngFor="let school of (schools$|async); index as i" >
+<!--        <button [routerLink]=option.link mat-raised-button-->
+<!--                class="w-100 ml-4 mr-4 p-4"-->
+<!--                [matBadge]="i+1"-->
+<!--                matBadgePosition="above before before" matBadgeSize="large">-->
+<!--            <h5 class="font-weight-bold">-->
+<!--              {{option.name}}-->
+<!--            </h5>-->
+<!--        </button>-->
+
+        <mat-card class="p-0 m-2">
+          <!--        <mat-divider></mat-divider>-->
+          <mat-card-content style="cursor: pointer" [routerLink]="['/admin/membreSchools']" class="p-3 text-center h-50">
+              <mat-card-title>
+
+            <span class="ml-auto">
+              {{school.name}}
+            </span><mat-icon class="text-left" style="font-size: 2em" color="primary">school</mat-icon>
+
+              </mat-card-title>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <mat-card-actions class="text-right m-0 p-0 mt-auto">
+            <button (click)="openDialog(school)" color="accent" mat-icon-button>
+              <mat-icon>create</mat-icon>
+            </button>
+            <button (click)="deleteSchool(school.id)" color="warn" mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
       </mat-grid-tile>
+
+
     </mat-grid-list>
 </div>

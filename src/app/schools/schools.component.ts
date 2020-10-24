@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
-import {Tournoi} from '../models/tournoi';
-import {TournoiDialogComponent} from '../tournoi/tournoi-dialog/tournoi-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {School} from '../models/school';
 import {SchoolDialogComponent} from './school-dialog/school-dialog.component';
+import {SchoolService} from '../services/school.service';
 
 const OPTIONS =  [
 
@@ -19,25 +18,22 @@ const OPTIONS =  [
   styleUrls: ['./schools.component.css']
 })
 export class SchoolsComponent implements OnInit {
-  schools= [];
+  schools$;
   options = OPTIONS;
-  length: number;
-  httpParams: any;
-  pageIndex: number = 0;
   constructor(public dialog: MatDialog,
-              private _snackBar: MatSnackBar,) { }
+              private _snackBar: MatSnackBar,
+              private schoolService: SchoolService) { }
 
   setPageOptions($event: PageEvent) {
-    this.httpParams.page_size = $event.pageSize;
-    this.httpParams.page = $event.pageIndex + 1;
     this.fetchData();
   }
 
   ngOnInit(): void {
+    this.fetchData();
   }
 
   private fetchData() {
-
+    this.schools$ = this.schoolService.getAll();
   }
 
   openDialog(e?: School) {
@@ -70,6 +66,14 @@ export class SchoolsComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 3000,
+    });
+  }
+
+  deleteSchool(id: any) {
+    this.schoolService.delete(id).subscribe(value =>
+    {
+      this.openSnackBar('L\'école  a été supprimé avec succès.' ,'Ok');
+      this.fetchData();
     });
   }
 }

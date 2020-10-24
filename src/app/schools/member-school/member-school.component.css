@@ -1,0 +1,35 @@
+table {
+  margin-top: 20px;
+  width: 100%;
+}
+
+button {
+  margin-right: 5px;
+}
+
+th {
+  font-weight: bold;
+}
+
+/*mat-label {*/
+/*  color: white;*/
+/*}*/
+
+.float-button {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+
+.mat-header-cell {
+  background-color: gold;
+  color: black;
+}
+
+.download {
+  background-color: #75be31;
+}
+
+/*mat-form-field {*/
+/*  color: white;*/
+/*}*/

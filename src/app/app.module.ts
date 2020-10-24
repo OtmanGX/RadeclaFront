@@ -81,6 +81,7 @@ import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { SchoolsComponent } from './schools/schools.component';
 import { SchoolDialogComponent } from './schools/school-dialog/school-dialog.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MemberSchoolComponent } from './schools/member-school/member-school.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -118,6 +119,7 @@ registerLocaleData(localeFr, 'fr');
     TournoiDialogComponent,
     SchoolsComponent,
     SchoolDialogComponent,
+    MemberSchoolComponent,
   ],
     imports: [
         BrowserModule,

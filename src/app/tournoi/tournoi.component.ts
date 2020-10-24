@@ -95,7 +95,10 @@ export class TournoiComponent implements OnInit {
   }
 
   deleteTournoi(id: number) {
-    this.tournamentService.delete(id).subscribe(value => this.fetchData());
-    this.openSnackBar('Le tournoi  a été supprimé avec succès.' ,'Ok');
+    this.tournamentService.delete(id).subscribe(value =>
+    {
+      this.openSnackBar('Le tournoi  a été supprimé avec succès.' ,'Ok');
+      this.fetchData()
+    });
   }
 }

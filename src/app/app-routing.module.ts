@@ -23,6 +23,7 @@ import {PropComponent} from './prop/prop.component';
 import {LightingStatsComponent} from './history/lighting-stats/lighting-stats.component';
 import {TournoiComponent} from './tournoi/tournoi.component';
 import {SchoolsComponent} from './schools/schools.component';
+import {MemberSchoolComponent} from './schools/member-school/member-school.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -31,6 +32,7 @@ const routes: Routes = [
       {path:'', redirectTo: 'dashboard', pathMatch: 'full'},
       {path:'dashboard', component: DhomeComponent},
       {path:'membres', component: MembreComponent, canActivate:[AuthGuard]},
+      {path:'membreSchools', component: MemberSchoolComponent},
       {path:'entraineur', component: EntraineurComponent},
       {path:'membre', component: NewmembreComponent},
       {path:'groupe', component: AddGroupComponent},
