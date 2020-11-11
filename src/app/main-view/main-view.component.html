@@ -152,21 +152,25 @@
   <span>Total Membres <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.total_membres}}</span>, &nbsp;</span>
   <span>Membres à jour de leurs cotisations <span style="font-size: 1rem" class="badge badge-secondary text-light">{{(stats$|async)?.membres_paye}}</span>&nbsp;</span>
 </div>
-  <span class="text-center w-100" *ngIf="(stats$|async)?.birth_day !== false">
+
+  <span class="container-fluid">
+<!--  <span class="scrolling-text" [@scroll]="state" (@scroll.done)="scrollDone()"  *ngIf="(stats$|async)?.birth_day !== false">-->
+  <span class="scrolling-text" *ngIf="(stats$|async)?.birth_day !== false">
     <mat-icon style="vertical-align: middle"  color="warn">cake</mat-icon>&nbsp;Happy Birthday :
     <span style="font-size: 1.2rem">
     {{(stats$|async)?.birth_day}}
     </span>
   </span>
-  <div class="text-right d-inline-flex justify-content-end text-right align-self-end float-right"  style="vertical-align: middle">
-      <mat-icon>
-      email
-    </mat-icon>
-    <a href="mailto:mgat.contact@gmail.com">
-    mgat.contact@gmail.com
-   </a>
-    <span style="color:indigo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{ date | date: 'short' }}
     </span>
-  </div>
+<!--  <div class="text-right d-inline-flex justify-content-end align-self-end float-right"  style="vertical-align: middle">-->
+<!--      <mat-icon>-->
+<!--      email-->
+<!--    </mat-icon>-->
+<!--    <a href="mailto:mgat.contact@gmail.com">-->
+<!--    mgat.contact@gmail.com-->
+<!--   </a>-->
+<!--    <span style="color:indigo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--      {{ date | date: 'short' }}-->
+<!--    </span>-->
+<!--  </div>-->
 </div>

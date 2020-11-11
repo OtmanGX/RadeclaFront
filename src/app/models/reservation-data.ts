@@ -14,6 +14,7 @@ export class ReservationData {
   type_match : string = 'M';
   created_by: any;
   tournoi;
+  school;
   constructor() {
   }
 }

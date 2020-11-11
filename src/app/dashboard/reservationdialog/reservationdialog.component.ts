@@ -17,6 +17,7 @@ import {
 } from 'date-fns';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TournamentService} from '../../services/tournament.service';
+import {SchoolService} from '../../services/school.service';
 
 @Component({
   selector: 'app-reservationdialog',
@@ -49,15 +50,18 @@ export class ReservationdialogComponent implements OnInit{
   member4 = new Membre();
 
   tournois$;
+  schools$;
 
   constructor(
     public dialogRef: MatDialogRef<ReservationdialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private resService:ReservationService,
     private memService:MembreService,
+    private schoolService:SchoolService,
     private tournamentService:TournamentService,
     private _snackBar: MatSnackBar,
     ) {
+    this.schools$ = this.schoolService.getAll();
   }
 
   ngOnInit(): void {
@@ -71,8 +75,9 @@ export class ReservationdialogComponent implements OnInit{
       this.setFiltering();
       if (this.data.edit) {
           if (this.data.reservation.tournoi !== null) {
-            console.log('not null');
             this.data.reservation.tournoi = this.data.reservation.tournoi.id;
+          } else if (this.data.reservation.school !== null) {
+            this.data.reservation.school = this.data.reservation.school.id;
           }
         if (this.data.reservation.players.length == 2) {
           if (this.data.reservation.players[0] !== null) {

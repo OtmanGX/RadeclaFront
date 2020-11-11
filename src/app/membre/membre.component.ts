@@ -34,19 +34,20 @@ export class MembreComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
-              private membreService: MembreService,
-              private cotisationService: CotisationService,
-              private matPaginator: MatPaginatorIntl,
-              private _snackBar: MatSnackBar,
-              public dialog: MatDialog,
-              public router:Router,
-              public activatedRoute:ActivatedRoute,
-              private excelService:ExcelService
+    protected membreService: MembreService,
+    private cotisationService: CotisationService,
+    private matPaginator: MatPaginatorIntl,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public router:Router,
+    public activatedRoute:ActivatedRoute,
+    private excelService:ExcelService
               ) {
   }
 
   setParams() {
-    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false, cotisation:'', cotisation__paye:'', cotisation__isnull:'', tournoi:''};
+    this.httpParams = {page_size: 10, page: this.pageIndex + 1, entraineur: false,
+      cotisation:'', cotisation__paye:'', cotisation__isnull:'', tournoi:'', no_school:true};
     let filter = this.activatedRoute.snapshot.paramMap.get('cotisation__paye');
     if (filter) this.httpParams.cotisation__paye = filter;
     if (this.activatedRoute.snapshot.paramMap.get('tournoi'))

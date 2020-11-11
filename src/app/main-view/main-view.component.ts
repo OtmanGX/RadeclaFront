@@ -4,17 +4,29 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {DashboardService} from '../services/dashboard.service';
 import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
+// Animation
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 
 @Component({
   selector: 'app-main-view',
   templateUrl: './main-view.component.html',
-  styleUrls: ['./main-view.component.css']
+  styleUrls: ['./main-view.component.css'],
+  animations: [
+    trigger('scroll', [
+      state('on', style({left: '0px'})),
+      transition('* => *', [
+        style({left: '0px'}),
+        animate(10000, style({left: '300px'}))
+      ])
+    ])
+  ]
 })
 export class MainViewComponent implements OnInit {
-
   events: string[] = [];
   opened: boolean;
   date: Date;
+  state = 0;
   stats$;
   links: [
     {'name': 'Calendrier', link:'sss'},
@@ -34,7 +46,7 @@ export class MainViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchData();
-    setInterval(()=> {this.fetchData()}, 60000);
+    setInterval(()=> {this.fetchData()}, 600000);
 
   }
 
@@ -46,5 +58,9 @@ export class MainViewComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['login']);
+  }
+
+  scrollDone() {
+    this.state++;
   }
 }

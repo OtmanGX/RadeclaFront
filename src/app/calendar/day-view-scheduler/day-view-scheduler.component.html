@@ -12,6 +12,7 @@
     [class.cal-event-match]="weekEvent.event.meta.reservation.type_match=='M'"
     [class.cal-event-tournoi]="weekEvent.event.meta.reservation.type_match=='T'"
     [class.cal-event-defi]="weekEvent.event.meta.reservation.type_match=='D'"
+    [class.cal-event-school]="weekEvent.event.meta.reservation.type_match=='S'"
     [class.row]="extra"
     [mwlCalendarTooltip]="!tooltipDisabled ? (weekEvent.event.title | calendarEventTitle:'weekTooltip':weekEvent.event) : ''"
     [tooltipPlacement]="tooltipPlacement"
@@ -45,6 +46,7 @@
         <img *ngSwitchCase="'M'" height="20px" src="../../../assets/player.png">
         <img *ngSwitchCase="'E'" height="20px" src="../../../assets/trainer.png">
         <mat-icon *ngSwitchCase="'T'" style="font-size: 20px;" inline>emoji_events</mat-icon>
+        <mat-icon *ngSwitchCase="'S'" style="font-size: 20px;" inline>school</mat-icon>
       </div>
     </ng-template>
   </div>

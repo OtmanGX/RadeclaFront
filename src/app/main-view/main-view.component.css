@@ -32,3 +32,13 @@ mat-sidenav {
   color: black;
 }
 
+.scrolling-text {
+  position: absolute;
+  white-space: nowrap;
+}
+
+.container-fluid {
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+}

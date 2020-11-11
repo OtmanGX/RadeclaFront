@@ -23,11 +23,10 @@
                   <mat-radio-button value="F">Femme</mat-radio-button>
                 </mat-radio-group><br>
 
-                <mat-radio-group formControlName="entraineur" [value]="false" aria-label="Selectionner">
+                <mat-radio-group *ngIf="!from_school" formControlName="entraineur" [value]="false" aria-label="Selectionner">
                   <mat-radio-button color="primary" class="mr-2" [value]="false">Joueur</mat-radio-button>
                   <mat-radio-button color="primary" [value]="true">Entraineur</mat-radio-button>
                 </mat-radio-group><br>
-
 
                 <mat-form-field>
                   <mat-label>Télephone</mat-label>
@@ -51,7 +50,14 @@
                   <input matInput formControlName="age" type="number" min="3" max="100">
                 </mat-form-field><br>
 
-                <mat-form-field>
+                <mat-form-field *ngIf="from_school" appearance="fill">
+                  <mat-label>Ecole</mat-label>
+                  <mat-select formControlName="school">
+                    <mat-option *ngFor="let school of (schools$|async)" [value]="school.name">{{school.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field> <br>
+
+                <mat-form-field *ngIf="!from_school">
                   <mat-label>Profession</mat-label>
                   <input matInput formControlName="profession">
                 </mat-form-field><br>
@@ -62,8 +68,8 @@
                     <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
                   </mat-select>
                 </mat-form-field> <br>
-                <mat-slide-toggle formControlName="tournoi">Participe aux tournois</mat-slide-toggle><br>
-                <mat-slide-toggle color="primary" formControlName="licence_fideration">Licence de fédération</mat-slide-toggle>
+                <mat-slide-toggle *ngIf="!from_school" formControlName="tournoi">Participe aux tournois</mat-slide-toggle><br>
+                <mat-slide-toggle *ngIf="!from_school" color="primary" formControlName="licence_fideration">Licence de fédération</mat-slide-toggle>
               </div>
               <div class="mt-4">
                 <button mat-button color="primary" matStepperNext>Suivant</button>

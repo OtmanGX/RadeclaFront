@@ -6,10 +6,11 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CotisationService} from '../../services/cotisation.service';
 import {forkJoin} from 'rxjs';
-
+import {Location} from '@angular/common';
 // Tree
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import {SchoolService} from '../../services/school.service';
 
 /**
  * Food data with nested structure.
@@ -46,6 +47,8 @@ export class NewmembreComponent implements OnInit {
   today = new Date();
   memberId;
   member;
+  from_school: boolean = false;
+  schools$;
   membreCotisation = null;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -70,12 +73,18 @@ export class NewmembreComponent implements OnInit {
   constructor(
               private activatedRoute: ActivatedRoute,
               private router: Router,
+              private _location: Location,
               private membreService: MembreService,
               private cotisationService: CotisationService,
+              private schoolService: SchoolService,
               private _formBuilder: FormBuilder,
               private _snackBar: MatSnackBar) {
 
     this.memberId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (this.activatedRoute.snapshot.paramMap.has('school')) {
+      this.from_school = true;
+      this.schools$ = this.schoolService.getAll({lite: true});
+    }
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
@@ -126,7 +135,8 @@ export class NewmembreComponent implements OnInit {
         tournoi: [membre.tournoi],
         profession: [membre.profession],
         entraineur: [membre.entraineur],
-        categorie: [membre.categorie]
+        categorie: [membre.categorie],
+        school: this.from_school?[membre.school, Validators.required]:[null],
       });
     });
     else
@@ -142,6 +152,7 @@ export class NewmembreComponent implements OnInit {
         entraineur: [false],
         profession: [null],
         licence_fideration: [false],
+        school: this.from_school?[null, Validators.required]:[null],
       });
   }
 
@@ -174,7 +185,8 @@ export class NewmembreComponent implements OnInit {
           forkJoin(calls)
             .subscribe(() => {
               this.openSnackBar('Membre a été modifié avec succès', 'Ok');
-              this.router.navigate(['admin/membres']);
+              // this.router.navigate([this.from_school?'admin/membreSchools':'admin/membres']);
+              this.backClicked();
             })
         } else if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
           this.membreService.create(this.firstFormGroup.value).subscribe(value => {
@@ -184,11 +196,17 @@ export class NewmembreComponent implements OnInit {
               console.log(this.secondFormGroup.value);
               this.cotisationService.create(this.secondFormGroup.value).subscribe(() => {
                 this.openSnackBar('Membre a été ajouté avec succès', 'Ok');
-                this.router.navigate(['admin/membres']);
+                // this.router.navigate([this.from_school?'admin/membreSchools':'admin/membres']);
+                this.backClicked();
               });
-            } else this.router.navigate(['admin/membres']);
+            } else this.backClicked();
+              // this.router.navigate([this.from_school?'admin/membreSchools':'admin/membres']);
           })
         }
+  }
+
+  backClicked() {
+    this._location.back();
   }
 
   is_paye(state: boolean) {

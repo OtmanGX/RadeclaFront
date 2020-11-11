@@ -9,7 +9,9 @@
         </mat-card-header>
         <mat-card-content class="p-2">
           <p class="mat-display-1">
-            {{nmembres}}
+            <app-counter animationTime="1000" [showCircle]="false" [from]=0 [to]=nmembres [of]=nmembres>
+            </app-counter>
+          </p>
         </mat-card-content>
       </mat-card>
     </div>
@@ -23,7 +25,9 @@
         </mat-card-header>
         <mat-card-content class="p-2">
           <p class="mat-display-1">
-            {{nexternes}}
+            <app-counter animationTime="1000" [showCircle]="false" [from]=0 [to]=nexternes [of]=nexternes>
+            </app-counter>
+          </p>
         </mat-card-content>
       </mat-card>
     </div>
@@ -37,7 +41,9 @@
         </mat-card-header>
         <mat-card-content class="p-2">
           <p class="mat-display-1">
-            {{nentraineurs}}
+            <app-counter animationTime="1000" [showCircle]="false" [from]=0 [to]=nentraineurs [of]=nentraineurs>
+            </app-counter>
+          </p>
         </mat-card-content>
       </mat-card>
     </div>

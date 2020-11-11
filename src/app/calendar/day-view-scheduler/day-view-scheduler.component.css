@@ -44,6 +44,11 @@ div.cal-hour-segment {
   background-color: #6365ef;
 }
 
+
+.cal-event-school {
+  background-color: #03035b;
+}
+
 /*.cal-cell-row {*/
 /*  height: 100%;*/
 /*}*/

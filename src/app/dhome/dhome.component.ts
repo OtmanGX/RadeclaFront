@@ -19,9 +19,9 @@ export class DhomeComponent implements OnInit {
   @ViewChild('barHorizontalChart') barHorizontalChart;
   @ViewChild('hourchart') hourchart;
   avg_hours: number;
-  nentraineurs: number;
-  nmembres: number;
-  nexternes: number;
+  nentraineurs: number = 0;
+  nmembres: number = 0;
+  nexternes: number = 0;
 
   constructor(private service:DashboardService,
               pageTitle :Title) {

@@ -12,12 +12,13 @@
           <mat-select name="terrain" value=1 [(ngModel)]="data.reservation.terrain.id">
             <mat-option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 9, 10]" [value]="num">{{num}}</mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field><br>
         <mat-radio-group name="type_match" value="E" [(ngModel)]="data.reservation.type_match" aria-label="Select an option">
-          <mat-radio-button color="primary" class="ml-3 mr-2" value="E">Entrainement</mat-radio-button>
+          <mat-radio-button color="primary" class="ml-1 mr-2" value="E">Entrainement</mat-radio-button>
           <mat-radio-button color="primary" class="mr-2" value="M">Match</mat-radio-button>
           <mat-radio-button color="primary" class="mr-2" value="T">Tournoi</mat-radio-button>
-          <mat-radio-button color="primary" value="D">Défi</mat-radio-button>
+          <mat-radio-button color="primary" class="mr-2" value="D">Défi</mat-radio-button>
+          <mat-radio-button color="primary" value="S">Ecole</mat-radio-button>
         </mat-radio-group> <br>
 
         <mat-form-field *ngIf="data.reservation.type_match == 'T'">
@@ -27,6 +28,17 @@
           <mat-select required name="tournoi" [(ngModel)]="data.reservation.tournoi">
             <mat-option *ngFor="let tournoi of (tournois$ | async)" [value]="tournoi.id">
             {{tournoi.name}} | {{tournoi.created_date| date}}
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.reservation.type_match == 'S'">
+          <mat-label>
+            Ecole
+          </mat-label>
+          <mat-select required name="school" [(ngModel)]="data.reservation.school">
+            <mat-option *ngFor="let school of (schools$ | async)" [value]="school.id">
+            {{school.name}}
             </mat-option>
 
           </mat-select>

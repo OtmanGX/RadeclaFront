@@ -21,11 +21,11 @@
 
         <mat-card class="p-0 m-2">
           <!--        <mat-divider></mat-divider>-->
-          <mat-card-content style="cursor: pointer" [routerLink]="['/admin/membreSchools']" class="p-3 text-center h-50">
+          <mat-card-content style="cursor: pointer" [routerLink]="['/admin/membreSchools', {'school': school.id}]" class="p-3 text-center h-50">
               <mat-card-title>
 
             <span class="ml-auto">
-              {{school.name}}
+              {{school.name}} {{school.created_date|date:'yyyy'}}
             </span><mat-icon class="text-left" style="font-size: 2em" color="primary">school</mat-icon>
 
               </mat-card-title>

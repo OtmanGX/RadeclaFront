@@ -9,7 +9,7 @@ import {School} from '../../models/school';
   styleUrls: ['./school-dialog.component.css']
 })
 export class SchoolDialogComponent implements OnInit {
-  private school: School;
+  public school: School;
 
   constructor(public dialogRef: MatDialogRef<SchoolDialogComponent>,
               private schoolService :SchoolService,

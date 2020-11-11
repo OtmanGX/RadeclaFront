@@ -7,6 +7,7 @@ export class Membre {
   entraineur: boolean;
   tournoi: boolean;
   categorie: string;
+  school: string;
   cotisation: any;
   licence_fideration: boolean;
   sexe: String;
