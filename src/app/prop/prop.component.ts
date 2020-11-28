@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ConfigService} from '../services/config.service';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-prop',
@@ -11,8 +13,11 @@ export class PropComponent implements OnInit {
 
   config;
   constructor(
-    private configService:ConfigService
-  ) { }
+    private configService:ConfigService,
+    private title:Title
+  ) {
+    this.title.setTitle(environment.title + ' | Paramètrage');
+  }
 
   ngOnInit(): void {
     this.configService.get().subscribe(value => {

@@ -23,6 +23,8 @@ import {ReservationData} from '../../models/reservation-data';
 import {ReservationService} from '../../services/reservation.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Membre} from '../../models/membre';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../../environments/environment';
 
 const colors: any = {
   red: {
@@ -131,7 +133,10 @@ export class DashboardHomeComponent implements OnInit{
   constructor(public dialog: MatDialog,
               private _snackBar: MatSnackBar,
               private service:ReservationService,
-              ) {}
+              private title:Title
+              ) {
+    this.title.setTitle(environment.title + ' | Calendrier');
+  }
 
   ngOnInit(): void {
     this.fetchData();

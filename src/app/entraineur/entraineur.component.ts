@@ -11,6 +11,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {AddMembreComponent} from '../membre/add-membre/add-membre.component';
 import {ExcelService} from '../services/excel.service';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-entraineur',
@@ -35,7 +37,9 @@ export class EntraineurComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     public router:Router,
-    private excelService:ExcelService) {
+    private excelService:ExcelService,
+    private title:Title) {
+    this.title.setTitle(environment.title + ' | Entraineurs');
   }
 
   ngOnInit(): void {

@@ -15,6 +15,8 @@ import {ReservationData} from '../models/reservation-data';
 import {ReservationService} from '../services/reservation.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Membre} from '../models/membre';
+import {environment} from '../../environments/environment.prod';
+import {Title} from '@angular/platform-browser';
 
 const colors: any = {
   red: {
@@ -102,7 +104,11 @@ export class TvshowComponent implements OnInit {
   params:any;
   @Output() dateChange = new EventEmitter<Date>();
 
-  constructor(public service:ReservationService) { }
+  constructor(public service:ReservationService,
+              protected title:Title
+              ) {
+    this.title.setTitle(environment.title + ' | Réservations du jour');
+  }
 
   ngOnInit(): void {
 

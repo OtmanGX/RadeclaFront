@@ -7,6 +7,8 @@ import {TournamentService} from '../services/tournament.service';
 import {Tournoi} from '../models/tournoi';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-tournoi',
@@ -23,13 +25,18 @@ export class TournoiComponent implements OnInit {
               public dialog: MatDialog,
               private _snackBar: MatSnackBar,
               public activatedRoute: ActivatedRoute,
-              private tournamentService :TournamentService,) {
+              private tournamentService :TournamentService,
+              private title:Title) {
 
     if (this.activatedRoute.snapshot.url[0].path === 'tournoi_tcmt')
     {
+      this.title.setTitle(environment.title + ' | Tournois TCMT');
       this.httpParams = {page_size: 10, page: this.pageIndex + 1, type_tournoi: 'TCMT'};
     }
-    else this.httpParams = {page_size: 10, page: this.pageIndex + 1, type_tournoi: 'FRMT'};
+    else {
+      this.title.setTitle(environment.title + ' | Tournois FRMT');
+      this.httpParams = {page_size: 10, page: this.pageIndex + 1, type_tournoi: 'FRMT'};
+    }
 
 
 

@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {AuthService} from '../../services/auth.service';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,9 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private title:Title) {
+    this.title.setTitle(environment.title + ' | Se connecter');
     this.authService.getCurrentUser().subscribe(() => this.router.navigate(['admin']));
   }
 

@@ -5,6 +5,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {School} from '../models/school';
 import {SchoolDialogComponent} from './school-dialog/school-dialog.component';
 import {SchoolService} from '../services/school.service';
+import {environment} from '../../environments/environment.prod';
+import {Title} from '@angular/platform-browser';
 
 const OPTIONS =  [
 
@@ -22,7 +24,10 @@ export class SchoolsComponent implements OnInit {
   options = OPTIONS;
   constructor(public dialog: MatDialog,
               private _snackBar: MatSnackBar,
-              private schoolService: SchoolService) { }
+              private schoolService: SchoolService,
+              private title:Title) {
+    this.title.setTitle(environment.title + ' | Ecoles');
+  }
 
   setPageOptions($event: PageEvent) {
     this.fetchData();

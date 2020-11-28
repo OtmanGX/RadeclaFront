@@ -6,6 +6,8 @@ import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
 // Animation
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import {BehaviorSubject} from 'rxjs';
+import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class MainViewComponent implements OnInit {
   opened: boolean;
   date: Date;
   state = 0;
+  stats = new BehaviorSubject<any>('');
   stats$;
   links: [
     {'name': 'Calendrier', link:'sss'},
@@ -45,15 +48,15 @@ export class MainViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchData();
-    setInterval(()=> {this.fetchData()}, 600000);
-
+    this.stats$ = this.stats.pipe(
+      distinctUntilChanged(),
+      switchMap(()=> {
+      this.date = new Date();
+      return this.dashboardService.main_stats();
+    }));
+    setInterval(()=> {this.stats.next('')}, 60000);
   }
 
-  fetchData() {
-    this.date = new Date();
-    this.stats$ = this.dashboardService.main_stats();
-  }
 
   logout() {
     this.authService.logout();

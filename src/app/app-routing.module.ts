@@ -24,10 +24,11 @@ import {LightingStatsComponent} from './history/lighting-stats/lighting-stats.co
 import {TournoiComponent} from './tournoi/tournoi.component';
 import {SchoolsComponent} from './schools/schools.component';
 import {MemberSchoolComponent} from './schools/member-school/member-school.component';
+import {AppComponent} from './app.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: '', component: LoginComponent},
+  {path: '', component: AppComponent},
   {path: 'admin',canActivate:[AuthGuard], component: MainViewComponent, children: [
       {path:'', redirectTo: 'dashboard', pathMatch: 'full'},
       {path:'dashboard', component: DhomeComponent},

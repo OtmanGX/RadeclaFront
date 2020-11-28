@@ -14,6 +14,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {CotisationService} from '../services/cotisation.service';
 import {ExcelService} from '../services/excel.service';
+import {environment} from '../../environments/environment.prod';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-membre',
@@ -41,8 +43,10 @@ export class MembreComponent implements OnInit {
     public dialog: MatDialog,
     public router:Router,
     public activatedRoute:ActivatedRoute,
-    private excelService:ExcelService
+    private excelService:ExcelService,
+    private title:Title
               ) {
+    this.title.setTitle(environment.title + ' | Membres');
   }
 
   setParams() {

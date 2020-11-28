@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ReservationData} from '../../models/reservation-data';
 import {ReservationService} from '../../services/reservation.service';
 import {TvshowComponent} from '../../tvshow/tvshow.component';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -11,8 +12,8 @@ import {TvshowComponent} from '../../tvshow/tvshow.component';
 })
 export class OnlineReservationsComponent extends TvshowComponent implements OnInit {
   todayDate = new Date();
-  constructor(public service:ReservationService) {
-    super(service);
+  constructor(public service:ReservationService, public title:Title) {
+    super(service, title);
   }
 
   ngOnInit(): void {
